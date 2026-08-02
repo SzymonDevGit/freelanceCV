@@ -1,0 +1,34 @@
+# https://szymonpecherski.online/robots.txt
+
+# --- Search engines: everything is open ------------------------------------
+User-agent: *
+Allow: /
+
+# --- AI assistants: retrieval bots are explicitly welcome -------------------
+# These are the crawlers that fetch a page in order to answer a user's question
+# and cite the source. Being in their index is how this site gets recommended
+# inside ChatGPT, Perplexity and Claude, so they stay allowed.
+# (Training-only crawlers are managed separately in the Cloudflare dashboard —
+#  see SEO.md. Cloudflare appends its managed block below this file.)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://szymonpecherski.online/sitemap.xml

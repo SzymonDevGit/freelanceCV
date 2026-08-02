@@ -1,0 +1,68 @@
+name: SEO gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: Audit HTML, schema, sitemap
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      # No dependencies: seo_audit.py is standard library only.
+      - name: Run SEO audit
+        run: python tools/seo_audit.py --strict
+
+  live:
+    name: Verify live site and ping IndexNow
+    needs: audit
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      # Cloudflare needs a moment to publish after the push.
+      - name: Wait for the deploy to land
+        id: wait
+        run: |
+          for i in $(seq 1 20); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' https://szymonpecherski.online/sitemap.xml || true)
+            if [ "$code" = "200" ]; then
+              echo "deployed=true" >> "$GITHUB_OUTPUT"
+              echo "sitemap live after ${i} attempt(s)"
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "deployed=false" >> "$GITHUB_OUTPUT"
+          echo "::warning::sitemap.xml is not live yet — is Cloudflare Pages connected to this repo?"
+
+      - name: Smoke-test the live URLs
+        if: steps.wait.outputs.deployed == 'true'
+        run: |
+          fail=0
+          for path in / /robots.txt /sitemap.xml /og-image.png /favicon.ico /site.webmanifest; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "https://szymonpecherski.online${path}")
+            printf '%-20s %s\n' "$path" "$code"
+            [ "$code" = "200" ] || fail=1
+          done
+          code=$(curl -s -o /dev/null -w '%{http_code}' https://szymonpecherski.online/definitely-not-a-page)
+          printf '%-20s %s (expect 404)\n' "/404 handling" "$code"
+          [ "$code" = "404" ] || fail=1
+          exit $fail
+
+      - name: Submit to IndexNow
+        if: steps.wait.outputs.deployed == 'true'
+        run: python tools/indexnow.py

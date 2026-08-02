@@ -1,0 +1,8 @@
+# Downloaded font sources + intermediate TTFs used only to build assets.
+# Everything the site actually serves lives in fonts/ and is committed.
+.cache/
+
+# Python
+__pycache__/
+*.pyc
+.venv/

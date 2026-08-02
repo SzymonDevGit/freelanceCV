@@ -5,11 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <title>Data Analyst &amp; BI Specialist in Cheltenham | Szymon Pecherski</title>
-<meta name="description" content="Freelance data analyst &amp; business intelligence specialist in Cheltenham. Dashboards, reporting and process automation for growing small brands across Gloucestershire and the UK.">
+<meta name="description" content="Freelance data analyst &amp; BI specialist in Cheltenham. Dashboards, reporting and process automation for small brands across Gloucestershire and the UK.">
 <meta name="author" content="Szymon Pecherski">
 <meta name="theme-color" content="#14100c">
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <link rel="canonical" href="https://szymonpecherski.online/">
+<link rel="alternate" hreflang="en-GB" href="https://szymonpecherski.online/">
+<link rel="alternate" hreflang="x-default" href="https://szymonpecherski.online/">
 
 <meta name="geo.region" content="GB-GLS">
 <meta name="geo.placename" content="Cheltenham, Gloucestershire">
@@ -26,16 +28,22 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Szymon Pecherski — data analyst and business intelligence specialist, Cheltenham">
+<meta property="og:image:type" content="image/png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Data Analyst &amp; BI Specialist in Cheltenham | Szymon Pecherski">
 <meta name="twitter:description" content="Dashboards, reporting and process automation for growing small brands across Gloucestershire and the UK.">
 <meta name="twitter:image" content="https://szymonpecherski.online/og-image.png">
+<meta name="twitter:image:alt" content="Szymon Pecherski — data analyst and business intelligence specialist, Cheltenham">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2314100c'/%3E%3Cg stroke='%23c9995f' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M7 11h18M7 16h18M7 21h11'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- Fonts are self-hosted (see tools/build_assets.py): no third-party request,
+     no render-blocking stylesheet, no data leaving the visitor's browser. -->
+<link rel="preload" href="/fonts/space-grotesk-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-tight-400.woff2" as="font" type="font/woff2" crossorigin>
 
 <script type="application/ld+json">
 {
@@ -49,10 +57,25 @@
       "description": "Freelance data analyst and business intelligence specialist based in Cheltenham. Business intelligence and reporting, process automation, AI workflow implementation and web data collection for small and growing businesses.",
       "url": "https://szymonpecherski.online/",
       "image": "https://szymonpecherski.online/og-image.png",
+      "logo": "https://szymonpecherski.online/logo.png",
+      "slogan": "Data analysis and automation that pays for itself.",
       "email": "szymonpecherski@gmail.com",
       "telephone": "+447738432031",
       "priceRange": "££",
       "currenciesAccepted": "GBP",
+      "knowsLanguage": "en-GB",
+      "sameAs": [
+        "https://www.linkedin.com/in/szy05/",
+        "https://github.com/SzymonDevGit"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "sales",
+        "email": "szymonpecherski@gmail.com",
+        "telephone": "+447738432031",
+        "areaServed": "GB",
+        "availableLanguage": "English"
+      },
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Cheltenham",
@@ -80,10 +103,34 @@
         "@type": "OfferCatalog",
         "name": "Data and automation services",
         "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Business intelligence & reporting", "description": "Dashboards and KPI reporting built from spreadsheets, CRMs and databases using Excel, SQL and Power BI." } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Process automation", "description": "Removing manual, repetitive business processes with Python and Excel automation, documented with SOPs." } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI workflow implementation", "description": "Building language models into existing business workflows with guardrails and human review steps." } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Web scraping & data collection", "description": "Custom data collectors for competitor pricing, market listings and supplier catalogues." } }
+          { "@type": "Offer", "itemOffered": {
+            "@type": "Service", "@id": "https://szymonpecherski.online/#svc-bi",
+            "name": "Business intelligence & reporting",
+            "serviceType": "Business intelligence consulting",
+            "description": "Dashboards and KPI reporting built from spreadsheets, CRMs and databases using Excel, SQL and Power BI.",
+            "provider": { "@id": "https://szymonpecherski.online/#business" },
+            "areaServed": { "@id": "https://szymonpecherski.online/#area" } } },
+          { "@type": "Offer", "itemOffered": {
+            "@type": "Service", "@id": "https://szymonpecherski.online/#svc-automation",
+            "name": "Process automation",
+            "serviceType": "Business process automation",
+            "description": "Removing manual, repetitive business processes with Python and Excel automation, documented with SOPs.",
+            "provider": { "@id": "https://szymonpecherski.online/#business" },
+            "areaServed": { "@id": "https://szymonpecherski.online/#area" } } },
+          { "@type": "Offer", "itemOffered": {
+            "@type": "Service", "@id": "https://szymonpecherski.online/#svc-ai",
+            "name": "AI workflow implementation",
+            "serviceType": "AI workflow consulting",
+            "description": "Building language models into existing business workflows with guardrails and human review steps.",
+            "provider": { "@id": "https://szymonpecherski.online/#business" },
+            "areaServed": { "@id": "https://szymonpecherski.online/#area" } } },
+          { "@type": "Offer", "itemOffered": {
+            "@type": "Service", "@id": "https://szymonpecherski.online/#svc-scraping",
+            "name": "Web scraping & data collection",
+            "serviceType": "Web data collection",
+            "description": "Custom data collectors for competitor pricing, market listings and supplier catalogues.",
+            "provider": { "@id": "https://szymonpecherski.online/#business" },
+            "areaServed": { "@id": "https://szymonpecherski.online/#area" } } }
         ]
       }
     },
@@ -96,7 +143,22 @@
       "email": "szymonpecherski@gmail.com",
       "telephone": "+447738432031",
       "homeLocation": { "@type": "Place", "name": "Cheltenham, Gloucestershire, UK" },
-      "sameAs": ["https://www.linkedin.com/in/szy05/"],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Cheltenham",
+        "addressRegion": "Gloucestershire",
+        "addressCountry": "GB"
+      },
+      "hasOccupation": {
+        "@type": "Occupation",
+        "name": "Data Analyst",
+        "occupationLocation": { "@type": "City", "name": "Cheltenham" },
+        "skills": "Business intelligence, data analysis, process automation, Python, SQL, Power BI"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/szy05/",
+        "https://github.com/SzymonDevGit"
+      ],
       "knowsAbout": ["Business Intelligence","Data Analysis","Process Automation","Python","SQL","Microsoft Excel","Power BI","pandas","Web Scraping","AI Workflow Design","KPI Reporting","Data Cleaning"],
       "worksFor": { "@type": "Organization", "name": "GE Aerospace" }
     },
@@ -107,6 +169,24 @@
       "name": "Szymon Pecherski — Data Analyst & BI Specialist, Cheltenham",
       "inLanguage": "en-GB",
       "publisher": { "@id": "https://szymonpecherski.online/#person" }
+    },
+    {
+      "@type": "AdministrativeArea",
+      "@id": "https://szymonpecherski.online/#area",
+      "name": "United Kingdom — on site across Gloucestershire, the Cotswolds and the South West; remote UK-wide"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://szymonpecherski.online/#webpage",
+      "url": "https://szymonpecherski.online/",
+      "name": "Data Analyst & BI Specialist in Cheltenham | Szymon Pecherski",
+      "description": "Freelance data analyst and business intelligence specialist in Cheltenham. Dashboards, reporting and process automation for growing small brands across Gloucestershire and the UK.",
+      "inLanguage": "en-GB",
+      "isPartOf": { "@id": "https://szymonpecherski.online/#website" },
+      "about": { "@id": "https://szymonpecherski.online/#business" },
+      "mainEntity": { "@id": "https://szymonpecherski.online/#business" },
+      "primaryImageOfPage": "https://szymonpecherski.online/og-image.png",
+      "dateModified": "2026-08-02"
     },
     {
       "@type": "FAQPage",
@@ -135,6 +215,20 @@
 </script>
 
 <style>
+/* ============================================================
+   SELF-HOSTED WEBFONTS — subsetted, inlined, zero third-party
+   requests. Regenerate with: python tools/build_assets.py
+   ============================================================ */
+/* FONTS:BEGIN — generated by tools/build_assets.py, do not edit */
+@font-face{ font-family: 'Space Grotesk'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/space-grotesk-400.woff2) format('woff2'); }
+@font-face{ font-family: 'Space Grotesk'; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/space-grotesk-500.woff2) format('woff2'); }
+@font-face{ font-family: 'Space Grotesk'; font-style: normal; font-weight: 600; font-display: swap; src: url(/fonts/space-grotesk-600.woff2) format('woff2'); }
+@font-face{ font-family: 'Inter Tight'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/inter-tight-400.woff2) format('woff2'); }
+@font-face{ font-family: 'Inter Tight'; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/inter-tight-500.woff2) format('woff2'); }
+@font-face{ font-family: 'Inter Tight'; font-style: normal; font-weight: 600; font-display: swap; src: url(/fonts/inter-tight-600.woff2) format('woff2'); }
+@font-face{ font-family: 'Space Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/space-mono-400.woff2) format('woff2'); }
+/* FONTS:END */
+
 /* ============================================================
    PALETTE — dark wood. Change here to rebrand.
    ============================================================ */
@@ -165,6 +259,9 @@ h1,h2,h3,h4{margin:0;font-family:var(--disp);font-weight:500;color:var(--text);
 :focus-visible{outline:2px solid var(--oak);outline-offset:3px;border-radius:3px}
 .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
   clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--oak);color:#16110c;
+  padding:12px 20px;border-radius:0 0 5px 0;font-family:var(--disp);font-weight:500}
+.skip:focus{left:0}
 
 .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 32px;position:relative;z-index:1}
 section{position:relative;z-index:1;padding:clamp(70px,9vw,124px) 0}
@@ -241,12 +338,12 @@ nav.links a:hover::after{transform:scaleX(1);transform-origin:left}
   max-width:15ch;font-weight:600}
 .hero h1 .hl{color:var(--oak)}
 .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.14em;margin-bottom:-.14em}
-.w > i{display:inline-block;font-style:normal;transform:translateY(105%);animation:rise .95s var(--ease) forwards}
+.w > i{display:inline-block;font-style:normal;transform:translateY(105%);animation:rise .55s var(--ease) forwards}
 @keyframes rise{to{transform:none}}
 .hero-sub{font-size:clamp(16px,1.85vw,18px);color:var(--muted);max-width:54ch;margin-bottom:32px}
 .hero-sub strong{color:var(--body);font-weight:600}
 .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px}
-.fade-up{opacity:0;transform:translateY(16px);animation:fu .9s var(--ease) forwards}
+.fade-up{opacity:0;transform:translateY(16px);animation:fu .6s var(--ease) forwards}
 @keyframes fu{to{opacity:1;transform:none}}
 .trust{border-top:1px solid var(--line);padding-top:22px}
 .trust b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
@@ -256,7 +353,7 @@ nav.links a:hover::after{transform:scaleX(1);transform-origin:left}
 
 /* ---------- interactive 3D deck ---------- */
 .stage{perspective:1300px;perspective-origin:60% 45%;opacity:0;
-  animation:fu .9s var(--ease) .9s forwards, bob 9s ease-in-out 1.9s infinite}
+  animation:fu .7s var(--ease) .3s forwards, bob 9s ease-in-out 1.4s infinite}
 @keyframes bob{50%{transform:translateY(-9px)}}
 .stage:hover,.stage:focus-within{animation-play-state:paused}
 .deck{position:relative;transform-style:preserve-3d;transform:rotateY(9deg) rotateX(3.5deg);
@@ -271,7 +368,7 @@ nav.links a:hover::after{transform:scaleX(1);transform-origin:left}
   background:linear-gradient(90deg,var(--deep),#241c14);border-radius:3px 0 0 3px;
   transform-origin:100% 50%;transform:rotateY(-90deg)}
 .panel-hd{padding:15px 18px 0;border-radius:7px 7px 0 0;background:var(--card-2)}
-.panel-hd .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+.panel-hd .lbl{margin:0 0 12px;font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:.09em;text-transform:uppercase;
   color:var(--faint);margin-bottom:12px;display:block}
 .tabs{display:flex;gap:4px;flex-wrap:wrap}
 .tab{appearance:none;background:transparent;border:1px solid transparent;border-bottom:none;
@@ -352,7 +449,7 @@ nav.links a:hover::after{transform:scaleX(1);transform-origin:left}
 .step:hover{border-top-color:var(--oak)}
 .step b{display:block;font-family:var(--mono);font-size:11px;color:var(--oak);margin-bottom:12px;
   font-weight:400;letter-spacing:.04em}
-.step h4{font-size:19px;margin-bottom:9px;font-weight:500}
+.step h3{font-size:19px;margin-bottom:9px;font-weight:500}
 .step p{font-size:14.5px;color:var(--muted)}
 
 /* ---------- work ---------- */
@@ -392,7 +489,7 @@ nav.links a:hover::after{transform:scaleX(1);transform-origin:left}
 .tl-foot b{color:var(--muted);font-weight:500}
 .notes{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:46px;padding-top:34px;
   border-top:1px solid var(--line)}
-.note h4{font-size:17px;margin-bottom:9px;font-weight:500}
+.note h3{font-size:17px;margin-bottom:9px;font-weight:500}
 .note p{font-size:14.2px;color:var(--muted)}
 
 /* ---------- AI policy ---------- */
@@ -505,6 +602,8 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:42px 0 44
 </head>
 <body>
 
+<a class="skip" href="#main">Skip to content</a>
+
 <header id="hdr">
   <div class="wrap hd">
     <a href="#top" class="name">Szymon Pecherski<span>.</span></a>
@@ -532,7 +631,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:42px 0 44
   <a href="#contact" class="btn btn-solid">Start a project</a>
 </div>
 
-<main>
+<main id="main">
 <!-- ===================== HERO ===================== -->
 <section class="hero" id="top">
   <div class="floor" aria-hidden="true"><div class="floor-g"></div></div>
@@ -542,14 +641,14 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:42px 0 44
 
       <h1 id="h1">Data analysis and automation that <span class="hl">pays for itself.</span></h1>
 
-      <p class="hero-sub fade-up" style="animation-delay:.62s">
+      <p class="hero-sub fade-up" style="animation-delay:.16s">
         I'm a <strong>data analyst and business intelligence specialist in Cheltenham</strong>. I help small
         and growing UK businesses replace manual, error-prone processes with automated systems, clean data
         and reporting people actually use — the same work I've done inside regulated financial services,
         national wholesale and now aerospace.
       </p>
 
-      <div class="hero-cta fade-up" style="animation-delay:.72s">
+      <div class="hero-cta fade-up" style="animation-delay:.24s">
         <a href="#contact" class="btn btn-solid">
           Book a free scoping call
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 6l6 6-6 6"/></svg>
@@ -557,7 +656,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:42px 0 44
         <a href="#work" class="btn btn-line">See the results</a>
       </div>
 
-      <div class="trust fade-up" style="animation-delay:.82s">
+      <div class="trust fade-up" style="animation-delay:.32s">
         <b>Analyst experience across</b>
         <div class="trust-row">
           <span>GE Aerospace</span><span>St. James's Place</span><span>Creed Foodservice</span><span>Oriel Collections</span>
@@ -571,7 +670,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:42px 0 44
         <div class="ghost g1" aria-hidden="true"></div>
         <aside class="panel">
           <div class="panel-hd">
-            <span class="lbl">Selected results</span>
+            <h2 class="lbl">Selected results</h2>
             <div class="tabs" role="tablist" aria-label="Selected results">
               <button class="tab" role="tab" id="tab-a" aria-controls="view-a" aria-selected="true" tabindex="0">Commercial</button>
               <button class="tab" role="tab" id="tab-b" aria-controls="view-b" aria-selected="false" tabindex="-1">Automation</button>
@@ -751,10 +850,10 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:42px 0 44
       <div><h2>Low risk, in four steps.</h2></div>
     </div>
     <div class="steps">
-      <div class="step rv"><b>Step one</b><h4>Free scoping call</h4><p>Thirty minutes. You show me the process that's costing you time; I tell you honestly whether it's worth automating and roughly what it takes.</p></div>
-      <div class="step rv"><b>Step two</b><h4>Fixed proposal</h4><p>A written scope with a fixed price, a deadline and a defined outcome. No hourly drift, no surprise invoices.</p></div>
-      <div class="step rv"><b>Step three</b><h4>Build &amp; review</h4><p>I build in short cycles and show you working output early, so course-corrections happen in week one rather than at handover.</p></div>
-      <div class="step rv"><b>Step four</b><h4>Handover that lasts</h4><p>Documentation and SOPs written in plain English, plus a walkthrough for your team. You own everything I build.</p></div>
+      <div class="step rv"><b>Step one</b><h3>Free scoping call</h3><p>Thirty minutes. You show me the process that's costing you time; I tell you honestly whether it's worth automating and roughly what it takes.</p></div>
+      <div class="step rv"><b>Step two</b><h3>Fixed proposal</h3><p>A written scope with a fixed price, a deadline and a defined outcome. No hourly drift, no surprise invoices.</p></div>
+      <div class="step rv"><b>Step three</b><h3>Build &amp; review</h3><p>I build in short cycles and show you working output early, so course-corrections happen in week one rather than at handover.</p></div>
+      <div class="step rv"><b>Step four</b><h3>Handover that lasts</h3><p>Documentation and SOPs written in plain English, plus a walkthrough for your team. You own everything I build.</p></div>
     </div>
   </div>
 </section>
@@ -892,9 +991,9 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:42px 0 44
     </div>
 
     <div class="notes rv">
-      <div class="note"><h4>Continuous training</h4><p>DataCamp — Python for Data Analysis track (Introduction, Intermediate, Data Manipulation &amp; Joining with pandas), Communicating Data Insights.</p></div>
-      <div class="note"><h4>Cloud &amp; infrastructure</h4><p>AWS Concepts; AWS Cloud Technology &amp; Services Concepts (2026). Hands-on AWS support experience at St. James's Place.</p></div>
-      <div class="note"><h4>Working with people</h4><p>LinkedIn Learning — Delivering Support Across Languages, De-Escalating Conversations. Comfortable with technical and non-technical stakeholders.</p></div>
+      <div class="note"><h3>Continuous training</h3><p>DataCamp — Python for Data Analysis track (Introduction, Intermediate, Data Manipulation &amp; Joining with pandas), Communicating Data Insights.</p></div>
+      <div class="note"><h3>Cloud &amp; infrastructure</h3><p>AWS Concepts; AWS Cloud Technology &amp; Services Concepts (2026). Hands-on AWS support experience at St. James's Place.</p></div>
+      <div class="note"><h3>Working with people</h3><p>LinkedIn Learning — Delivering Support Across Languages, De-Escalating Conversations. Comfortable with technical and non-technical stakeholders.</p></div>
     </div>
   </div>
 </section>
@@ -1024,7 +1123,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:42px 0 44
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
           07738 432 031
         </a>
-        <a class="btn btn-line" href="https://www.linkedin.com/in/szy05/" target="_blank" rel="noopener noreferrer">
+        <a class="btn btn-line" href="https://www.linkedin.com/in/szy05/" target="_blank" rel="me noopener noreferrer">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0M.25 8.25h4.5V24h-4.5zM8.5 8.25h4.31v2.15h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.4 3 5.4 6.9V24h-4.5v-7.9c0-1.88-.03-4.3-2.62-4.3-2.62 0-3.02 2.05-3.02 4.16V24H8.5z"/></svg>
           LinkedIn
         </a>
@@ -1046,7 +1145,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:42px 0 44
         <a href="#ai">AI policy</a><a href="#areas">Areas</a><a href="#faq">FAQ</a>
         <a href="mailto:szymonpecherski@gmail.com">Email</a>
         <a href="tel:+447738432031">07738 432 031</a>
-        <a href="https://www.linkedin.com/in/szy05/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/szy05/" target="_blank" rel="me noopener noreferrer">LinkedIn</a>
       </div>
     </div>
     <p class="f-note">
@@ -1055,6 +1154,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:42px 0 44
       consulting for small and growing businesses across Gloucestershire, the Cotswolds, Bristol, Bath and
       the UK. I use AI tools in my workflow and review every deliverable personally; the full policy is
       <a href="#ai" class="ul">here</a>.
+      Last updated <time datetime="2026-08-02">2 August 2026</time>.
     </p>
   </div>
 </footer>
@@ -1075,7 +1175,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:42px 0 44
     var tail = html.slice(cut + 17, html.indexOf('</span>')).trim().split(/\s+/);
     var n = 0, out = '';
     var wrapWord = function(w){
-      var s = '<span class="w"><i style="animation-delay:' + (0.12 + n*0.05).toFixed(2) + 's">' + w + '</i></span> ';
+      var s = '<span class="w"><i style="animation-delay:' + (0.03 + n*0.022).toFixed(3) + 's">' + w + '</i></span> ';
       n++; return s;
     };
     head.forEach(function(w){ out += wrapWord(w); });
