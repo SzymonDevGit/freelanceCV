@@ -127,6 +127,53 @@ push to `main` waits for the deploy, smoke-tests the live URLs (including that
 
 ---
 
+## Seobility audit — findings triaged (2 Aug 2026)
+
+Verified each against the live site rather than taking the tool's word for it.
+
+| Finding | Verdict | Action |
+|---|---|---|
+| "Redirect to HTTPS not configured correctly" | **Real.** `http://szymonpecherski.online/` returns `200 OK` with the full page — no redirect at all | **Cloudflare dashboard** (below) |
+| "Uses both www and non-www URLs" | **False positive.** `www.szymonpecherski.online` is `NXDOMAIN` — no A record, no CNAME. There is no www version to duplicate; the tool flags this whenever it can't observe a www→apex 301, without checking whether www resolves | Worth adding anyway, for dead links |
+| "Charset missing in HTTP header" | **Real.** `Content-Type: text/html` with no charset | **Fixed** in `_headers` |
+| "Some anchor texts used more than once" | **Non-issue.** The six nav anchors appear 3× (header, mobile nav, footer) and every instance points at the *same* target. Duplicate anchor text to an identical destination cannot dilute or confuse anything | None |
+| "33 headings… should be more in proportion to text" | **Non-issue.** 2,348 visible words across 36 headings = **65 words per heading**, normal for a sectioned landing page. Removing headings would make it harder to scan and harder for AI systems to extract | None |
+| "Few social sharing options" | **Declined.** Share widgets mean third-party JavaScript, which would destroy the zero-third-party-request property and add main-thread work that hurts INP. Nobody shares a freelancer's homepage via a button | None |
+| "Only 5 backlinks / 5 referring domains" | **Real, and the biggest remaining constraint.** Not fixable in code | See below |
+
+### The two Cloudflare settings (2 minutes, can't be done from a git push)
+
+These are DNS and zone settings — they live in Cloudflare, not in this repo.
+
+1. **SSL/TLS → Edge Certificates → Always Use HTTPS → On.** This is the entire
+   fix for the HTTPS error. Note the HSTS header alone does *not* cover it:
+   browsers ignore `Strict-Transport-Security` on plain-HTTP responses (RFC
+   6797), so the first request still needs a real 301.
+2. **www:** DNS → add CNAME `www` → `szymonpecherski.online`, proxied. Then add
+   `www.szymonpecherski.online` as a custom domain on the Pages project, and a
+   Redirect Rule `www` → apex, 301.
+
+Do **not** enable HSTS preload while you're in there — it is baked into browsers
+and effectively irreversible for months.
+
+Verify both afterwards with:
+
+```bash
+python tools/seo_audit.py --live
+```
+
+Then delete the `continue-on-error: true` line from `.github/workflows/seo.yml`
+so a future regression actually fails the build.
+
+### On the backlinks warning
+
+5 referring domains is the honest bottleneck, and no amount of on-page work
+substitutes for it. Cheapest real links, in order: Google Business Profile,
+your Companies House listing, Cheltenham/Gloucestershire chamber and business
+directories, any client or supplier happy to add a "who built this" credit,
+plus your LinkedIn profile and posts. One piece of original data — a survey of
+SME reporting habits, say — is worth more than fifty directory submissions.
+
 ## Deliberate omissions, and why
 
 - **No `llms.txt`.** Google confirmed in June 2026 it doesn't use them, John

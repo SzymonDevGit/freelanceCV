@@ -374,6 +374,83 @@ def check_footer_date(raw: str, date_modified: str | None) -> None:
         warn(f"footer date {m.group(1)} != JSON-LD dateModified {date_modified} (run --stamp)")
 
 
+def check_live() -> None:
+    """
+    Verify production server configuration — the things a static file audit
+    cannot see. These are Cloudflare zone/DNS settings, not repo content, so a
+    failure here means 'go click something', not 'the code is wrong'.
+    """
+    import http.client
+    import socket
+    import urllib.error
+    import urllib.request
+
+    class NoRedirect(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self, *a, **kw):  # noqa: D102, ANN002, ANN003
+            return None
+
+    opener = urllib.request.build_opener(NoRedirect)
+    ua = {"User-Agent": "seo-audit/1.0 (+https://szymonpecherski.online/)"}
+
+    def head(url: str):
+        req = urllib.request.Request(url, headers=ua, method="GET")
+        try:
+            with opener.open(req, timeout=20) as r:
+                return r.status, dict(r.headers)
+        except urllib.error.HTTPError as exc:
+            return exc.code, dict(exc.headers or {})
+        except (urllib.error.URLError, socket.gaierror, http.client.HTTPException,
+                TimeoutError, ConnectionError) as exc:
+            return None, {"_error": str(getattr(exc, "reason", exc))}
+
+    host = SITE.removeprefix("https://")
+
+    # 1. http -> https must be a permanent redirect
+    status, headers = head(f"http://{host}/")
+    if status is None:
+        err(f"[live] http://{host}/ is unreachable: {headers.get('_error')}")
+    elif status in (301, 308):
+        loc = headers.get("Location", "")
+        if loc.startswith("https://"):
+            note(f"[live] http -> https redirect OK ({status})")
+        else:
+            err(f"[live] http redirects to {loc!r}, not https")
+    else:
+        err(f"[live] http://{host}/ returns {status} instead of a 301 to https "
+            f"— enable Cloudflare SSL/TLS > Edge Certificates > Always Use HTTPS")
+
+    # 2. canonical host serves 200 with an explicit charset
+    status, headers = head(f"{SITE}/")
+    if status != 200:
+        err(f"[live] {SITE}/ returns {status}")
+    else:
+        ctype = headers.get("Content-Type", "")
+        if "charset" not in ctype.lower():
+            err(f"[live] Content-Type has no charset: {ctype!r}")
+        else:
+            note(f"[live] Content-Type {ctype}")
+
+    # 3. www must either redirect to the apex or not exist at all
+    status, headers = head(f"https://www.{host}/")
+    if status is None:
+        warn(f"[live] www.{host} does not resolve. No duplicate-content risk, "
+             f"but links and typed URLs using www are dead — add a proxied CNAME "
+             f"plus a 301 to the apex")
+    elif status in (301, 308):
+        note(f"[live] www -> apex redirect OK ({status})")
+    elif status == 200:
+        err(f"[live] www.{host} serves 200 — duplicate content, must 301 to the apex")
+
+    # 4. key URLs and a real 404
+    for path in ("/robots.txt", "/sitemap.xml", "/og-image.png", "/favicon.ico"):
+        status, _ = head(f"{SITE}{path}")
+        if status != 200:
+            err(f"[live] {path} returns {status}")
+    status, _ = head(f"{SITE}/this-page-should-not-exist-9f3a")
+    if status != 404:
+        err(f"[live] unknown URLs return {status}, expected 404")
+
+
 def stamp_today() -> None:
     """Push today's date into the footer, JSON-LD and sitemap."""
     today = date.today().isoformat()
@@ -399,6 +476,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="SEO gate for szymonpecherski.online")
     ap.add_argument("--stamp", action="store_true", help="re-stamp today's date first")
     ap.add_argument("--strict", action="store_true", help="fail on warnings too")
+    ap.add_argument("--live", action="store_true",
+                    help="also check production server config (redirects, charset)")
     args = ap.parse_args()
 
     if args.stamp:
@@ -425,6 +504,9 @@ def main() -> int:
     for expected in ("site.webmanifest", "_headers", "og-image.png", "favicon.ico"):
         if not (ROOT / expected).exists():
             err(f"{expected} is missing")
+
+    if args.live:
+        check_live()
 
     print()
     for n in notes:

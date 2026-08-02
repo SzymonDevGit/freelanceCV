@@ -30,7 +30,13 @@
   Cache-Control: public, max-age=604800
 
 # The page itself must revalidate so edits go live immediately.
+# Content-Type carries an explicit charset: without it the encoding is only
+# declared in the <meta> tag, which some crawlers and proxies never read.
 /
   Cache-Control: public, max-age=0, must-revalidate
+  Content-Type: text/html; charset=utf-8
 /index.html
   Cache-Control: public, max-age=0, must-revalidate
+  Content-Type: text/html; charset=utf-8
+/404.html
+  Content-Type: text/html; charset=utf-8

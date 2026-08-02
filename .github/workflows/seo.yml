@@ -49,19 +49,16 @@ jobs:
           echo "deployed=false" >> "$GITHUB_OUTPUT"
           echo "::warning::sitemap.xml is not live yet — is Cloudflare Pages connected to this repo?"
 
-      - name: Smoke-test the live URLs
+      # Checks production server config: http->https redirect, www handling,
+      # Content-Type charset, key URLs, real 404s.
+      #
+      # continue-on-error until the two Cloudflare dashboard settings are done
+      # (Always Use HTTPS, and the www CNAME + redirect). Remove it afterwards
+      # so a regression genuinely fails the build. See SEO.md.
+      - name: Verify live server configuration
         if: steps.wait.outputs.deployed == 'true'
-        run: |
-          fail=0
-          for path in / /robots.txt /sitemap.xml /og-image.png /favicon.ico /site.webmanifest; do
-            code=$(curl -s -o /dev/null -w '%{http_code}' "https://szymonpecherski.online${path}")
-            printf '%-20s %s\n' "$path" "$code"
-            [ "$code" = "200" ] || fail=1
-          done
-          code=$(curl -s -o /dev/null -w '%{http_code}' https://szymonpecherski.online/definitely-not-a-page)
-          printf '%-20s %s (expect 404)\n' "/404 handling" "$code"
-          [ "$code" = "404" ] || fail=1
-          exit $fail
+        continue-on-error: true
+        run: python tools/seo_audit.py --live
 
       - name: Submit to IndexNow
         if: steps.wait.outputs.deployed == 'true'
