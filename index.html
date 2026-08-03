@@ -531,6 +531,25 @@ nav.links a:hover::after{transform:scaleX(1);transform-origin:left}
 .faq .ans{padding:0 60px 26px 0;color:var(--muted);font-size:15.5px;max-width:70ch;
   animation:fu .5s var(--ease) both}
 
+/* ---------- notes ---------- */
+.note-card{display:grid;grid-template-columns:170px 1fr;gap:0 34px;padding:34px 0;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  transition:background .3s;color:inherit}
+.note-card:hover{background:rgba(205,156,96,.035)}
+.note-when{font-family:var(--mono);font-size:11.5px;color:var(--faint);padding-top:.45em;
+  line-height:1.8}
+.note-card h3{font-size:clamp(21px,2.7vw,28px);margin-bottom:14px;max-width:24ch;font-weight:500;
+  transition:color .25s}
+.note-card:hover h3{color:var(--oak)}
+.note-card p{color:var(--muted);font-size:15.5px;max-width:62ch}
+.note-figs{display:flex;flex-wrap:wrap;gap:14px 30px;margin-top:22px;padding-top:18px;
+  border-top:1px solid var(--line)}
+.note-figs div{display:flex;flex-direction:column;gap:2px}
+.note-figs b{font-family:var(--disp);font-size:19px;font-weight:600;color:var(--oak);
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.note-figs span{font-size:12.5px;color:var(--faint);line-height:1.4}
+.note-more{margin-top:28px;font-family:var(--disp);font-size:15px}
+
 /* ---------- contact ---------- */
 .contact{text-align:center}
 .contact h2{font-size:clamp(30px,5vw,52px);max-width:16ch;margin:0 auto 20px;font-weight:600;letter-spacing:-.04em}
@@ -566,6 +585,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:42px 0 44
   .res{border-left:none;border-top:1px solid var(--line);padding-left:0;padding-top:8px}
   .ai-cols,.areas{grid-template-columns:1fr;gap:28px}
   .steps{grid-template-columns:1fr 1fr;gap:26px}
+  .note-card{grid-template-columns:132px 1fr;gap:0 24px}
   .notes{grid-template-columns:1fr;gap:22px}
   .floor{display:none}
 }
@@ -577,8 +597,9 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:42px 0 44
   .sec-no{padding-top:0}
   .steps,.figs,.who-grid{grid-template-columns:1fr}
   .who-grid > :last-child{grid-column:auto}
-  .tl-item{grid-template-columns:1fr;gap:10px}
-  .tl-when{padding-top:0}
+  .tl-item,.note-card{grid-template-columns:1fr;gap:10px}
+  .tl-when,.note-when{padding-top:0}
+  .note-figs{gap:16px 22px}
   .hero-cta .btn,.cbtns .btn{flex:1 1 100%}
   .faq .ans{padding-right:0}
   .f-top{flex-direction:column;align-items:flex-start}
@@ -611,7 +632,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:42px 0 44
       <a href="#ai">AI policy</a>
       <a href="#areas">Areas</a>
       <a href="#faq">FAQ</a>
-      <a href="/blog/">Notes</a>
+      <a href="#notes">Notes</a>
     </nav>
     <a href="#contact" class="btn btn-solid btn-sm">Start a project</a>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mnav">
@@ -626,7 +647,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:42px 0 44
   <a href="#ai">AI policy</a>
   <a href="#areas">Areas</a>
   <a href="#faq">FAQ</a>
-  <a href="/blog/">Notes</a>
+  <a href="#notes">Notes</a>
   <a href="#contact" class="btn btn-solid">Start a project</a>
 </div>
 
@@ -1104,6 +1125,37 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:42px 0 44
         <div class="ans">You walk me through the process that's costing you time or money. I ask questions, and by the end you'll have an honest view of whether it's worth fixing, roughly what it would take, and whether I'm the right person for it. Free, no obligation, about thirty minutes.</div>
       </details>
     </div>
+  </div>
+</section>
+
+<!-- ===================== NOTES ===================== -->
+<section id="notes">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-no">09</div>
+      <div>
+        <h2>Notes on data, automation and AI</h2>
+        <p class="lede">Occasional write-ups where I do the analysis myself rather than repeat someone else's statistic. Every figure comes from data you can download and check.</p>
+      </div>
+    </div>
+
+    <a class="note-card rv" href="/blog/ai-hallucination-rates-2024-vs-2026/">
+      <div class="note-when">2 August 2026<br>Analysis</div>
+      <div>
+        <h3>AI hallucination rates went up, not down</h3>
+        <p>I compared 157 model results across two snapshots of Vectara's hallucination
+        leaderboard. The average model got measurably worse at summarising a document without
+        inventing things — and a pattern appeared that wasn't there in 2024: the longer a model's
+        output, the more it makes up.</p>
+        <div class="note-figs">
+          <div><b>6.25% to 10.24%</b><span>mean hallucination rate,<br>2024 to 2026</span></div>
+          <div><b>44% to 9%</b><span>share of models scoring<br>under 5%</span></div>
+          <div><b>+0.02 to +0.42</b><span>correlation between length<br>and hallucination</span></div>
+        </div>
+      </div>
+    </a>
+
+    <p class="note-more rv"><a href="/blog/" class="ul">All notes</a></p>
   </div>
 </section>
 
