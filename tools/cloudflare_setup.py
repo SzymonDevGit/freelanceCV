@@ -217,10 +217,11 @@ def ensure_redirect(zid: str, zone: str, rule: dict, apply: bool) -> None:
     # keep every other rule in the phase untouched
     merged = [r for r in rules if r.get("description") != rule["description"]]
     merged.append(rule)
-    payload = {"rules": [strip_rule(r) for r in merged]}
-    if not entry:
-        payload |= {"name": "default", "kind": "zone", "phase": PHASE}
-    call("PUT", f"/zones/{zid}/rulesets/phases/{PHASE}/entrypoint", payload)
+    # The phase-entrypoint endpoint takes "rules" only — sending name/kind/phase
+    # is rejected with: invalid JSON: unknown field "kind". It creates the
+    # entrypoint ruleset implicitly when one does not exist yet.
+    call("PUT", f"/zones/{zid}/rulesets/phases/{PHASE}/entrypoint",
+         {"rules": [strip_rule(r) for r in merged]})
     done(f"{zone}: redirect rule {rule['description']!r} deployed")
 
 
