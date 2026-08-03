@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>AI hallucination rates went up, not down: 2024 vs 2026</title>
+<meta name="description" content="I compared 157 models on Vectara's hallucination leaderboard. The average rate rose from 6.25% to 10.24%, and summary length now predicts hallucination.">
+<meta name="author" content="Szymon Pecherski">
+<meta name="theme-color" content="#14100c">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://cheltenhamdata.co.uk/blog/ai-hallucination-rates-2024-vs-2026/">
+<link rel="alternate" hreflang="en-GB" href="https://cheltenhamdata.co.uk/blog/ai-hallucination-rates-2024-vs-2026/">
+<link rel="alternate" hreflang="x-default" href="https://cheltenhamdata.co.uk/blog/ai-hallucination-rates-2024-vs-2026/">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Szymon Pecherski">
+<meta property="og:title" content="AI hallucination rates went up, not down: 2024 vs 2026">
+<meta property="og:description" content="157 models compared. The average hallucination rate rose from 6.25% to 10.24% — and length now predicts it.">
+<meta property="og:url" content="https://cheltenhamdata.co.uk/blog/ai-hallucination-rates-2024-vs-2026/">
+<meta property="og:locale" content="en_GB">
+<meta property="og:image" content="https://cheltenhamdata.co.uk/blog/ai-hallucination-rates-2024-vs-2026/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="AI hallucination rates went up, not down — mean rate 6.25% in 2024 versus 10.24% in 2026">
+<meta property="article:published_time" content="2026-08-02">
+<meta property="article:modified_time" content="2026-08-02">
+<meta property="article:author" content="Szymon Pecherski">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI hallucination rates went up, not down: 2024 vs 2026">
+<meta name="twitter:description" content="157 models compared. The average hallucination rate rose from 6.25% to 10.24% — and length now predicts it.">
+<meta name="twitter:image" content="https://cheltenhamdata.co.uk/blog/ai-hallucination-rates-2024-vs-2026/og.png">
+<meta name="twitter:image:alt" content="AI hallucination rates went up, not down — mean rate 6.25% in 2024 versus 10.24% in 2026">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/fonts/space-grotesk-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-tight-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/blog/blog.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://cheltenhamdata.co.uk/blog/ai-hallucination-rates-2024-vs-2026/#post",
+      "headline": "AI hallucination rates went up, not down: 2024 vs 2026",
+      "description": "A comparison of 157 model results on Vectara's hallucination leaderboard between 2024 and 2026, showing the mean rate rising from 6.25% to 10.24% and a new positive relationship between summary length and hallucination.",
+      "url": "https://cheltenhamdata.co.uk/blog/ai-hallucination-rates-2024-vs-2026/",
+      "datePublished": "2026-08-02",
+      "dateModified": "2026-08-02",
+      "inLanguage": "en-GB",
+      "image": "https://cheltenhamdata.co.uk/blog/ai-hallucination-rates-2024-vs-2026/og.png",
+      "wordCount": 1600,
+      "keywords": ["AI hallucination rate", "LLM benchmarks", "Vectara", "AI workflow design", "data analysis"],
+      "author": { "@id": "https://cheltenhamdata.co.uk/#person" },
+      "publisher": { "@id": "https://cheltenhamdata.co.uk/#business" },
+      "isPartOf": { "@id": "https://cheltenhamdata.co.uk/blog/#blog" },
+      "mainEntityOfPage": { "@id": "https://cheltenhamdata.co.uk/blog/ai-hallucination-rates-2024-vs-2026/" },
+      "citation": [
+        { "@type": "CreativeWork", "name": "Vectara hallucination leaderboard", "url": "https://github.com/vectara/hallucination-leaderboard" }
+      ]
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://cheltenhamdata.co.uk/blog/ai-hallucination-rates-2024-vs-2026/#dataset",
+      "name": "Vectara hallucination leaderboard, 2024 and 2026 snapshots (tidy CSV)",
+      "description": "157 rows: model name, hallucination rate, factual consistency rate, answer rate and average summary length, for 52 models in 2024 and 105 models in 2026.",
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creator": { "@id": "https://cheltenhamdata.co.uk/#person" },
+      "isAccessibleForFree": true,
+      "distribution": {
+        "@type": "DataDownload",
+        "encodingFormat": "text/csv",
+        "contentUrl": "https://cheltenhamdata.co.uk/blog/ai-hallucination-rates-2024-vs-2026/data/vectara-hallucination-2024-vs-2026.csv"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://cheltenhamdata.co.uk/blog/ai-hallucination-rates-2024-vs-2026/#crumbs",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cheltenhamdata.co.uk/" },
+        { "@type": "ListItem", "position": 2, "name": "Notes", "item": "https://cheltenhamdata.co.uk/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "AI hallucination rates: 2024 vs 2026" }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap wide">
+    <a class="brand" href="/">Szymon Pecherski<span>.</span></a>
+    <nav aria-label="Primary">
+      <a href="/#services">Services</a>
+      <a href="/blog/">Notes</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a><span>/</span><a href="/blog/">Notes</a><span>/</span>Hallucination rates
+  </nav>
+</div>
+
+<main id="main">
+<article class="wrap">
+
+  <h1>AI hallucination rates went up, not down</h1>
+
+  <div class="meta">
+    <span>By Szymon Pecherski</span>
+    <span><time datetime="2026-08-02">2 August 2026</time></span>
+    <span>7 min read</span>
+  </div>
+
+  <p class="standfirst">Everyone assumes models get more reliable with each release. I pulled two
+  snapshots of Vectara's hallucination leaderboard — 52 models from 2024, 105 from 2026 — and
+  the average got noticeably worse. More usefully, something changed in <em>how</em> models fail.</p>
+
+  <div class="tldr">
+    <b>The short version</b>
+    <p>On Vectara's summarisation benchmark, the mean hallucination rate across tested models rose
+    from <strong>6.25% in 2024 to 10.24% in 2026</strong>, and the median from 5.10% to 9.60%. The
+    share of models hallucinating on under 5% of summaries collapsed from 44% to 9%. A new pattern
+    also appeared: in 2026 longer summaries hallucinate more (13.0% at 125+ words versus 8.1% under
+    75 words), a relationship that did not exist in 2024.</p>
+  </div>
+
+  <div class="tiles">
+    <div class="tile"><div class="n">10.24%</div><div class="t">Mean hallucination rate in 2026 &mdash; up from 6.25% in 2024</div></div>
+    <div class="tile"><div class="n">9%</div><div class="t">Of models now score under 5% &mdash; it was 44% in 2024</div></div>
+    <div class="tile"><div class="n">47%</div><div class="t">Of models hallucinate on 10% or more &mdash; it was 10%</div></div>
+    <div class="tile"><div class="n">+0.42</div><div class="t">2026 rank correlation between summary length and hallucination, up from +0.02</div></div>
+  </div>
+
+  <h2>What is actually being measured</h2>
+
+  <p>This matters more than the numbers, so it goes first. Vectara's leaderboard does not measure
+  "how often an AI lies". It measures one narrow, well-defined thing: given a source document and an
+  instruction to summarise using only facts from that document, how often does the model introduce
+  something the document does not support. The judge is Vectara's own HHEM-2.3 model, run over 7,700+
+  articles that are deliberately kept private so nobody can train against them.</p>
+
+  <p>That design has real consequences for how far you can stretch the result:</p>
+
+  <ul>
+    <li>It is <strong>summarisation faithfulness</strong>, not general factual accuracy. A model that
+    invents things when asked open questions could still score well here.</li>
+    <li>Vectara notes it does not capture every way a model can hallucinate, and calls the benchmark
+    "a good start" rather than definitive.</li>
+    <li>Models that refuse to answer, or return very short responses, are filtered out — so the
+    answer rate column matters alongside the headline number.</li>
+    <li>The judge is itself a model. It has its own error rate.</li>
+  </ul>
+
+  <p>So: a useful, consistent yardstick for one important behaviour. Not a verdict on which AI is
+  "best". Everything below should be read inside those walls.</p>
+
+  <h2>The average model got worse</h2>
+
+  <p>The 2024 snapshot covers 52 models; the 2026 snapshot covers 105. Mean hallucination rate rose
+  from 6.25% to 10.24% and the median from 5.10% to 9.60% — so this is not one outlier dragging an
+  average around, the whole distribution moved.</p>
+
+  <figure>
+    <!--CHART:bands:BEGIN-->
+<svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="c2t c2d" style="width:100%;height:auto">
+<title id="c2t">Share of models by hallucination band, 2024 versus 2026</title>
+<desc id="c2d">In 2024, 44% of the 52 models tested hallucinated on under 5% of summaries and only 10% hit 10% or worse. By 2026, across 105 models, just 9% were under 5% while 47% hallucinated on 10% or more.</desc>
+<text x="54" y="72.0" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="#f0e7da">2024</text>
+<text x="54" y="88.0" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=52</text>
+<rect x="66.0" y="44" width="282.2" height="46" fill="#8aa17f"/>
+<text x="207.1" y="73.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="#16110c">44%</text>
+<rect x="348.2" y="44" width="294.5" height="46" fill="#cd9c60"/>
+<text x="495.4" y="73.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="#16110c">46%</text>
+<rect x="642.7" y="44" width="61.3" height="46" fill="#8a5a30"/>
+<text x="673.3" y="73.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="#16110c">10%</text>
+<text x="54" y="148.0" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="#f0e7da">2026</text>
+<text x="54" y="164.0" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=105</text>
+<rect x="66.0" y="120" width="54.7" height="46" fill="#8aa17f"/>
+<text x="93.3" y="149.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="#16110c">9%</text>
+<rect x="120.7" y="120" width="285.6" height="46" fill="#cd9c60"/>
+<text x="263.5" y="149.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="#16110c">45%</text>
+<rect x="406.3" y="120" width="297.7" height="46" fill="#8a5a30"/>
+<text x="555.1" y="149.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="#16110c">47%</text>
+<rect x="66" y="224" width="11" height="11" fill="#8aa17f" rx="2"/>
+<text x="83" y="234" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#9b8b79">Under 5%</text>
+<rect x="151.2" y="224" width="11" height="11" fill="#cd9c60" rx="2"/>
+<text x="168.2" y="234" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#9b8b79">5–10%</text>
+<rect x="214.2" y="224" width="11" height="11" fill="#8a5a30" rx="2"/>
+<text x="231.2" y="234" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#9b8b79">10% or more</text>
+</svg>
+<!--CHART:bands:END-->
+    <figcaption><b>Share of tested models by hallucination band.</b> The "under 5%" group — the models
+    you could point a summarisation pipeline at without much thought — went from 44% of the field to
+    9%. Source: Vectara hallucination leaderboard, 2024 and 2026 snapshots.</figcaption>
+  </figure>
+
+  <p>The obvious objection is sample composition: the 2026 board has twice as many models and includes
+  a lot of small open-weight ones that would drag any average down. That is a fair challenge, so
+  here is the same question asked of flagships only, where the comparison is like for like.</p>
+
+  <div class="tbl">
+  <table>
+    <caption class="sr">Flagship model hallucination rates, 2024 versus 2026</caption>
+    <thead>
+      <tr><th>2024 flagship</th><th class="num">Rate</th><th>2026 flagship</th><th class="num">Rate</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>GPT-4 Turbo</td><td class="num">2.5%</td><td>GPT-5.5</td><td class="num">9.3%</td></tr>
+      <tr><td>GPT-4o</td><td class="num">3.7%</td><td>GPT-5.4</td><td class="num">7.0%</td></tr>
+      <tr><td>Gemini 1.5 Pro</td><td class="num">4.6%</td><td>Gemini 3 Pro</td><td class="num">13.6%</td></tr>
+      <tr><td>Claude 3.5 Sonnet</td><td class="num">6.7%</td><td>Claude Sonnet 4.6</td><td class="num">10.6%</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The pattern holds. On this specific task, today's flagship models are less faithful to the source
+  document than their two-year-old equivalents. Meanwhile the <em>best</em> score on the board
+  improved slightly, from 2.50% to 1.80%. The ceiling rose; the floor fell out.</p>
+
+  <div class="note">Worth being precise about what this does and does not say. Newer models are better
+  at plenty of things — reasoning, code, instruction following, tool use. Summarising a document
+  without embellishing it is simply not one of the things that improved, and it happens to be the
+  behaviour most business AI workflows depend on.</div>
+
+  <h2>The finding that changes how you build</h2>
+
+  <p>This is the part I did not expect. I bucketed every model by its average summary length and
+  compared the hallucination rate in each bucket.</p>
+
+  <figure>
+    <!--CHART:length:BEGIN-->
+<svg viewBox="0 0 720 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="c1t c1d" style="width:100%;height:auto">
+<title id="c1t">Mean hallucination rate by summary length, 2024 versus 2026</title>
+<desc id="c1d">In 2024 the hallucination rate was flat across summary lengths (7.1% under 75 words down to 5.0% at 125-plus words, but only one model sat in that longest bucket). In 2026 the rate climbs steadily with length: 8.1% under 75 words, 8.4% at 75 to 100, 9.8% at 100 to 125, and 13.0% at 125-plus words.</desc>
+<line x1="54" y1="316.0" x2="704" y2="316.0" stroke="#332a20" stroke-width="1"/>
+<text x="44" y="320.0" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="#7d6e5e">0%</text>
+<line x1="54" y1="277.4" x2="704" y2="277.4" stroke="#332a20" stroke-width="1"/>
+<text x="44" y="281.4" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="#7d6e5e">2%</text>
+<line x1="54" y1="238.9" x2="704" y2="238.9" stroke="#332a20" stroke-width="1"/>
+<text x="44" y="242.9" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="#7d6e5e">4%</text>
+<line x1="54" y1="200.3" x2="704" y2="200.3" stroke="#332a20" stroke-width="1"/>
+<text x="44" y="204.3" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="#7d6e5e">6%</text>
+<line x1="54" y1="161.7" x2="704" y2="161.7" stroke="#332a20" stroke-width="1"/>
+<text x="44" y="165.7" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="#7d6e5e">8%</text>
+<line x1="54" y1="123.1" x2="704" y2="123.1" stroke="#332a20" stroke-width="1"/>
+<text x="44" y="127.1" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="#7d6e5e">10%</text>
+<line x1="54" y1="84.6" x2="704" y2="84.6" stroke="#332a20" stroke-width="1"/>
+<text x="44" y="88.6" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="#7d6e5e">12%</text>
+<line x1="54" y1="46.0" x2="704" y2="46.0" stroke="#332a20" stroke-width="1"/>
+<text x="44" y="50.0" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="#7d6e5e">14%</text>
+<rect x="86.8" y="178.2" width="45.5" height="137.8" fill="#9b8b79" rx="2"/>
+<text x="109.5" y="171.2" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="#f0e7da">7.1%</text>
+<text x="109.5" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=18</text>
+<rect x="138.2" y="160.6" width="45.5" height="155.4" fill="#cd9c60" rx="2"/>
+<text x="161.0" y="153.6" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="#f0e7da">8.1%</text>
+<text x="161.0" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=14</text>
+<text x="135.2" y="352.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#9b8b79">&lt;75</text>
+<rect x="249.2" y="203.3" width="45.5" height="112.7" fill="#9b8b79" rx="2"/>
+<text x="272.0" y="196.3" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="#f0e7da">5.8%</text>
+<text x="272.0" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=27</text>
+<rect x="300.8" y="153.7" width="45.5" height="162.3" fill="#cd9c60" rx="2"/>
+<text x="323.5" y="146.7" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="#f0e7da">8.4%</text>
+<text x="323.5" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=28</text>
+<text x="297.8" y="352.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#9b8b79">75–100</text>
+<rect x="411.8" y="207.4" width="45.5" height="108.6" fill="#9b8b79" rx="2"/>
+<text x="434.5" y="200.4" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="#f0e7da">5.6%</text>
+<text x="434.5" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=6</text>
+<rect x="463.2" y="127.5" width="45.5" height="188.5" fill="#cd9c60" rx="2"/>
+<text x="486.0" y="120.5" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="#f0e7da">9.8%</text>
+<text x="486.0" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=29</text>
+<text x="460.2" y="352.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#9b8b79">100–125</text>
+<rect x="574.2" y="219.6" width="45.5" height="96.4" fill="#9b8b79" rx="2"/>
+<text x="597.0" y="212.6" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="#f0e7da">5.0%</text>
+<text x="597.0" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=1</text>
+<rect x="625.8" y="64.4" width="45.5" height="251.6" fill="#cd9c60" rx="2"/>
+<text x="648.5" y="57.4" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="#f0e7da">13.0%</text>
+<text x="648.5" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=34</text>
+<text x="622.8" y="352.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#9b8b79">125+</text>
+<text x="54" y="372" font-family="'Space Mono',ui-monospace,monospace" font-size="10.5" fill="#7d6e5e">AVERAGE SUMMARY LENGTH (WORDS)</text>
+<rect x="54" y="14" width="11" height="11" fill="#9b8b79" rx="2"/>
+<text x="71" y="24" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#9b8b79">2024</text>
+<rect x="136" y="14" width="11" height="11" fill="#cd9c60" rx="2"/>
+<text x="153" y="24" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#9b8b79">2026</text>
+</svg>
+<!--CHART:length:END-->
+    <figcaption><b>Mean hallucination rate by average summary length.</b> In 2024 the line is
+    essentially flat — Spearman's rank correlation between length and hallucination was <b>+0.02</b>,
+    which is no relationship at all. In 2026 it is <b>+0.42</b>: a clear, consistent climb. Note the
+    2024 "125+" bucket contains only one model, so read that bar with caution.</figcaption>
+  </figure>
+
+  <p>In 2024, how long a model's summaries ran told you nothing about whether it would make things
+  up. In 2026 it tells you a lot: models averaging 125+ words hallucinate at 13.0%, against 8.1% for
+  those staying under 75 words. That is a 60% higher rate for the verbose group.</p>
+
+  <p>The mechanism is visible in the model names. The longest-output models on the 2026 board are
+  overwhelmingly the reasoning-tuned ones, and they cluster at the bad end: o3-pro at 23.3%,
+  Grok 4 Fast Reasoning at 20.2%, GPT-5.1-high at 12.1% while averaging 254 words per summary —
+  three times the length of GPT-4 Turbo's summaries in 2024. Models trained to elaborate, elaborate.
+  When the task is "repeat only what this document says", elaboration is failure.</p>
+
+  <p>It is a correlation, not a law. The single most faithful model in the 2026 set,
+  <code>antgroup/finix_s1_32b</code> at 1.8%, averages 172 words — long <em>and</em> accurate. Length
+  is a risk factor, not a verdict.</p>
+
+  <h2>What I'd actually do with this</h2>
+
+  <p>Four things, if you are putting a model anywhere near a document your business relies on:</p>
+
+  <ol>
+    <li><strong>Constrain the output length.</strong> The cheapest reliability win available. If you
+    ask for a summary, cap it — "no more than 60 words" is a guardrail, not a style preference.</li>
+    <li><strong>Do not assume the newest model is the safest.</strong> For extraction and
+    summarisation, benchmark the model you are replacing before you replace it. On this task, several
+    two-year-old models beat their own successors.</li>
+    <li><strong>Do not use a reasoning model for faithful extraction.</strong> They are built to add
+    reasoning. That is exactly the wrong instinct when the requirement is "add nothing".</li>
+    <li><strong>Keep a human in the loop where the output is load-bearing.</strong> At a 10% average
+    rate, one in ten summaries contains something the source did not say. If that feeds a decision,
+    a report or a client, it needs checking.</li>
+  </ol>
+
+  <h2>About that "$100 billion" number</h2>
+
+  <p>The figure doing the rounds is $67.4bn of global business losses to AI hallucinations in 2024.
+  Scale it by the rise in the mean rate — 10.24 ÷ 6.25 = 1.64 — and you land somewhere north of
+  $110bn for 2026, which makes a very shareable headline.</p>
+
+  <div class="callout">
+    <b class="h">I am not going to stand behind that number, and here's why</b>
+    <p>I could not trace the $67.4bn to a primary source. It is widely repeated across AI statistics
+    round-ups, each citing the last. Until someone shows me the methodology, it is a number of unknown
+    origin, and multiplying an unverifiable figure by a real one produces an unverifiable figure with
+    a false air of precision.</p>
+    <p>The scaling is also wrong on its own terms: it assumes losses move with the hallucination rate
+    alone, while AI adoption has grown enormously over the same period. If anything that makes the
+    true figure larger — but "larger than an unverifiable number" is not analysis.</p>
+    <p>The rate change is real, measured, and reproducible from the data below. That is the part worth
+    quoting.</p>
+  </div>
+
+  <h2>Method and data</h2>
+
+  <p>Two snapshots of the Vectara leaderboard, one from 2024 and one from 2026, tidied into a single
+  CSV: model name, hallucination rate, factual consistency rate, answer rate and average summary
+  length. Every figure in this post is computed from that file — the charts are generated from it
+  directly, so they cannot drift from the numbers.</p>
+
+  <p>Length buckets are non-overlapping (&lt;75, 75–100, 100–125, 125+ words) and I have shown the
+  sample size in each, because the 2024 tail is thin. The correlation is Spearman's rank rather than
+  Pearson, since the relationship is monotonic rather than linear and there are outliers at both ends.</p>
+
+  <p><a class="dl" href="data/vectara-hallucination-2024-vs-2026.csv" download>
+    Download the tidy CSV (157 rows)
+  </a></p>
+
+  <p class="note">Take it, check it, disagree with it. If you find an error in my working I would
+  genuinely like to know.</p>
+
+  <div class="refs">
+    <h2>Sources</h2>
+    <ol>
+      <li>Vectara, <a href="https://github.com/vectara/hallucination-leaderboard" target="_blank" rel="noopener noreferrer">hallucination leaderboard</a> — HHEM-2.3 evaluation model, 7,700+ private source articles. 2024 and 2026 snapshots.</li>
+      <li>Suprmind, <a href="https://suprmind.ai/hub/ai-hallucination-rates-and-benchmarks/" target="_blank" rel="noopener noreferrer">AI hallucination rates and benchmarks</a> — where the $67.4bn figure is cited; the underlying source is not given.</li>
+    </ol>
+  </div>
+
+  <div class="cta">
+    <h2>Putting AI into a process that matters?</h2>
+    <p>This is the kind of thing I check before it goes near a client's data. I'm a data analyst and
+    BI specialist in Cheltenham, and I build <a href="/#services">AI workflows with guardrails and
+    human review steps</a> — or tell you when AI is the wrong tool. Free 30-minute scoping call, no
+    obligation.</p>
+    <p style="margin-top:20px"><a class="btn" href="/#contact">Book a scoping call</a></p>
+  </div>
+
+</article>
+</main>
+
+<footer class="site">
+  <div class="wrap wide">
+    <div class="f-row">
+      <a href="/">Home</a>
+      <a href="/blog/">Notes</a>
+      <a href="/#services">Services</a>
+      <a href="/#ai">AI policy</a>
+      <a href="mailto:szymonpecherski@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/szy05/" target="_blank" rel="me noopener noreferrer">LinkedIn</a>
+    </div>
+    <p style="margin:0">© 2026 Szymon Pecherski — data analyst and business intelligence specialist,
+    Cheltenham, Gloucestershire. Analysis written by me; figures computed from the linked dataset and
+    reproducible from it.</p>
+  </div>
+</footer>
+
+</body>
+</html>

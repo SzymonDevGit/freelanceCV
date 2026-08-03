@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Pre-deploy SEO / correctness gate for szymonpecherski.online.
+Pre-deploy SEO / correctness gate for cheltenhamdata.co.uk.
 
   python tools/seo_audit.py            # audit, exit 1 on any ERROR
   python tools/seo_audit.py --stamp    # re-stamp today's date everywhere, then audit
@@ -29,9 +29,16 @@ from pathlib import Path
 from xml.etree import ElementTree
 
 ROOT = Path(__file__).resolve().parent.parent
-SITE = "https://szymonpecherski.online"
-PAGES = ["index.html", "404.html"]
-INDEXABLE = "index.html"
+SITE = "https://cheltenhamdata.co.uk"
+# file on disk -> the canonical path it must declare, or None if it must be
+# noindex. Add a row when you add a page; the sitemap check reads the same map.
+PAGES: dict[str, str | None] = {
+    "index.html": "/",
+    "blog/index.html": "/blog/",
+    "blog/ai-hallucination-rates-2024-vs-2026/index.html":
+        "/blog/ai-hallucination-rates-2024-vs-2026/",
+    "404.html": None,
+}
 
 TITLE_MIN, TITLE_MAX = 15, 65
 DESC_MIN, DESC_MAX = 70, 165
@@ -72,6 +79,7 @@ class Page(HTMLParser):
         self.images: list[dict[str, str]] = []
         self.jsonld: list[str] = []
         self._in_ld = False
+        self._svg_depth = 0
         self.asset_refs: set[str] = set()
 
     def handle_starttag(self, tag: str, attrs_list) -> None:
@@ -80,7 +88,11 @@ class Page(HTMLParser):
             self.lang = a.get("lang")
         if "id" in a and a["id"]:
             self.ids.add(a["id"])
-        if tag == "title":
+        if tag == "svg":
+            self._svg_depth += 1
+        # inline SVGs carry their own <title>/<desc> for accessibility — those are
+        # not the document title, and must not be concatenated into it
+        if tag == "title" and not self._svg_depth:
             self._in_title = True
         elif tag == "meta":
             self.metas.append(a)
@@ -104,7 +116,9 @@ class Page(HTMLParser):
             self.jsonld.append("")
 
     def handle_endtag(self, tag: str) -> None:
-        if tag == "title":
+        if tag == "svg":
+            self._svg_depth = max(0, self._svg_depth - 1)
+        elif tag == "title":
             self._in_title = False
         elif tag == "script":
             self._in_ld = False
@@ -144,10 +158,10 @@ def png_size(path: Path) -> tuple[int, int] | None:
 
 
 # ---------------------------------------------------------------- checks ---
-def check_page(name: str, raw: str) -> Page:
+def check_page(name: str, raw: str, canon_path: str | None) -> Page:
     p = Page()
     p.feed(raw)
-    idx = name == INDEXABLE
+    idx = canon_path is not None
     tag = f"[{name}]"
 
     if not p.lang:
@@ -180,8 +194,8 @@ def check_page(name: str, raw: str) -> Page:
     if idx:
         if not canonical:
             err(f"{tag} no rel=canonical")
-        elif canonical != f"{SITE}/":
-            err(f"{tag} canonical is {canonical!r}, expected {SITE}/")
+        elif canonical != f"{SITE}{canon_path}":
+            err(f"{tag} canonical is {canonical!r}, expected {SITE}{canon_path}")
 
     h1s = [t for lvl, t in p.headings if lvl == 1]
     if idx:
@@ -227,6 +241,11 @@ def check_page(name: str, raw: str) -> Page:
                 err(f"{tag} anchor {href} points at an id that does not exist")
         elif href.startswith("/"):
             p.asset_refs.add(href.split("#")[0].split("?")[0])
+        elif href and not re.match(r"(https?:|mailto:|tel:|#)", href):
+            # relative link — resolve against this page's folder
+            rel = (Path(name).parent / href.split("#")[0].split("?")[0]).as_posix()
+            if not (ROOT / rel).exists():
+                err(f"{tag} relative link points at a missing file: {href}")
         if a.get("target") == "_blank" and "noopener" not in a.get("rel", ""):
             warn(f"{tag} target=_blank without rel=noopener: {href}")
 
@@ -311,7 +330,7 @@ def check_jsonld(p: Page) -> str | None:
 
         biz = next((n for n in graph if "ProfessionalService" in str(n.get("@type"))), None)
         if biz:
-            for field in ("name", "url", "address", "areaServed", "telephone"):
+            for field in ("name", "url", "address", "areaServed", "email"):
                 if field not in biz:
                     warn(f"[index.html] ProfessionalService missing {field!r}")
 
@@ -350,8 +369,13 @@ def check_sitemap(date_modified: str | None) -> None:
 
     ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     locs = [e.text.strip() for e in root.findall(".//s:loc", ns) if e.text]
-    if f"{SITE}/" not in locs:
-        err(f"sitemap.xml does not list {SITE}/")
+
+    # every indexable page must be listed, and nothing else may be
+    expected = {f"{SITE}{path}" for path in PAGES.values() if path is not None}
+    for url in sorted(expected - set(locs)):
+        err(f"sitemap.xml is missing an indexable page: {url}")
+    for url in sorted(set(locs) - expected):
+        warn(f"sitemap.xml lists a URL that is not a known page: {url}")
     for loc in locs:
         if not loc.startswith(SITE):
             err(f"sitemap.xml lists an off-site URL: {loc}")
@@ -390,7 +414,7 @@ def check_live() -> None:
             return None
 
     opener = urllib.request.build_opener(NoRedirect)
-    ua = {"User-Agent": "seo-audit/1.0 (+https://szymonpecherski.online/)"}
+    ua = {"User-Agent": "seo-audit/1.0 (+https://cheltenhamdata.co.uk/)"}
 
     def head(url: str):
         req = urllib.request.Request(url, headers=ua, method="GET")
@@ -456,12 +480,12 @@ def stamp_today() -> None:
     today = date.today().isoformat()
     pretty = f"{date.today().day} {date.today():%B %Y}"
 
-    idx = ROOT / INDEXABLE
-    s = idx.read_text(encoding="utf-8")
+    page = ROOT / "index.html"
+    s = page.read_text(encoding="utf-8")
     s = re.sub(r'"dateModified": "\d{4}-\d{2}-\d{2}"', f'"dateModified": "{today}"', s)
     s = re.sub(r'<time datetime="\d{4}-\d{2}-\d{2}">[^<]*</time>',
                f'<time datetime="{today}">{pretty}</time>', s)
-    idx.write_text(s, encoding="utf-8")
+    page.write_text(s, encoding="utf-8")
 
     sm = ROOT / "sitemap.xml"
     if sm.exists():
@@ -473,7 +497,7 @@ def stamp_today() -> None:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="SEO gate for szymonpecherski.online")
+    ap = argparse.ArgumentParser(description="SEO gate for cheltenhamdata.co.uk")
     ap.add_argument("--stamp", action="store_true", help="re-stamp today's date first")
     ap.add_argument("--strict", action="store_true", help="fail on warnings too")
     ap.add_argument("--live", action="store_true",
@@ -485,14 +509,14 @@ def main() -> int:
 
     index_page = None
     index_raw = ""
-    for name in PAGES:
+    for name, canon_path in PAGES.items():
         path = ROOT / name
         if not path.exists():
             err(f"{name} is missing")
             continue
         raw = path.read_text(encoding="utf-8")
-        page = check_page(name, raw)
-        if name == INDEXABLE:
+        page = check_page(name, raw, canon_path)
+        if name == "index.html":
             index_page, index_raw = page, raw
 
     date_modified = check_jsonld(index_page) if index_page else None

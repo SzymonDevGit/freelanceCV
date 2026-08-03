@@ -1,4 +1,4 @@
-# https://szymonpecherski.online/robots.txt
+# https://cheltenhamdata.co.uk/robots.txt
 
 # --- Search engines: everything is open ------------------------------------
 User-agent: *
@@ -31,4 +31,4 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-Sitemap: https://szymonpecherski.online/sitemap.xml
+Sitemap: https://cheltenhamdata.co.uk/sitemap.xml

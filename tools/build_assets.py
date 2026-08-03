@@ -300,6 +300,52 @@ def build_og() -> None:
     print("  wrote og-image.png (1200x630)")
 
 
+def build_og_post() -> None:
+    """Social card for the hallucination post — the finding, not a stock graphic."""
+    dest = ROOT / "blog/ai-hallucination-rates-2024-vs-2026/og.png"
+    if not dest.parent.exists():
+        print("  ! blog post folder missing, skipping post OG card")
+        return
+
+    W, H = 1200, 630
+    img = Image.new("RGB", (W, H), BG)
+    d = ImageDraw.Draw(img, "RGBA")
+    draw_grid(d, W, H, 56, (205, 156, 96, 14))
+    d.rectangle([0, 0, 6, H], fill=OAK)
+
+    f_eyebrow = load("Space Mono", 400, 20)
+    f_head = load("Space Grotesk", 600, 60)
+    f_sub = load("Inter Tight", 400, 24)
+    f_big = load("Space Grotesk", 600, 76)
+    f_lab = load("Inter Tight", 400, 19)
+    f_by = load("Space Mono", 400, 18)
+
+    PAD = 74
+    d.text((PAD, 62), "SZYMON PECHERSKI  ·  ANALYSIS", font=f_eyebrow, fill=OAK)
+    d.text((PAD, 118), "AI hallucination rates", font=f_head, fill=TEXT)
+    d.text((PAD, 188), "went up, not down", font=f_head, fill=OAK)
+    d.text((PAD, 278), "157 models across two snapshots of Vectara's leaderboard",
+           font=f_sub, fill=MUTED)
+
+    # the finding, as a before/after. The arrow is drawn, not typed: none of the
+    # brand fonts ship U+2192 and Pillow has no glyph fallback, so it would tofu.
+    by = 372
+    d.line([(PAD, by - 26), (W - PAD, by - 26)], fill=LINE, width=1)
+    d.text((PAD, by), "6.25%", font=f_big, fill=MUTED)
+
+    ax, ay = PAD + 246, by + 44
+    d.line([(ax, ay), (ax + 62, ay)], fill=WALNUT, width=7)
+    d.polygon([(ax + 58, ay - 15), (ax + 88, ay), (ax + 58, ay + 15)], fill=WALNUT)
+
+    d.text((ax + 112, by), "10.24%", font=f_big, fill=OAK)
+    d.text((PAD, by + 96), "mean hallucination rate, 2024 to 2026", font=f_lab, fill=FAINT)
+
+    d.text((PAD, H - 68), "cheltenhamdata.co.uk", font=f_by, fill=FAINT)
+
+    img.save(dest, "PNG", optimize=True)
+    print(f"  wrote {dest.relative_to(ROOT)} (1200x630)")
+
+
 def mark(size: int, radius_ratio: float = 0.1875, bg: str = BG) -> Image.Image:
     """The three-bar mark used across favicons and the logo."""
     S = size * 4  # supersample
@@ -343,11 +389,44 @@ def build_icons() -> None:
     print("  wrote icon-512/192, apple-touch-icon, logo, favicon.ico, favicon.svg")
 
 
+def check_glyph_coverage() -> int:
+    """
+    Warn if any character used in the site's HTML is missing from the subsetted
+    fonts. Browsers fall back per glyph so it still renders, but in a mismatched
+    face — and anything drawn with Pillow (the OG cards) tofus outright.
+    """
+    from fontTools.ttLib import TTFont
+
+    used: set[str] = set()
+    for page in ROOT.glob("**/*.html"):
+        if ".cache" in page.parts:
+            continue
+        text = re.sub(r"<[^>]+>", " ", page.read_text(encoding="utf-8"))
+        text = re.sub(r"&[#\w]+;", " ", text)
+        used |= {c for c in text if ord(c) > 0x7E and not c.isspace()}
+
+    problems = 0
+    for font_path in sorted(FONT_DIR.glob("*.woff2")):
+        cmap: set[int] = set()
+        for table in TTFont(str(font_path))["cmap"].tables:
+            cmap |= set(table.cmap)
+        missing = sorted(c for c in used if ord(c) not in cmap)
+        if missing:
+            names = ", ".join(f"U+{ord(c):04X}" for c in missing)
+            print(f"  ! {font_path.name} lacks glyphs used on the site: {names}")
+            problems += 1
+    if not problems:
+        print(f"  glyph coverage OK ({len(used)} non-ASCII characters used)")
+    return problems
+
+
 def main() -> int:
     print("Building assets ...")
     build_webfonts()
     build_og()
+    build_og_post()
     build_icons()
+    check_glyph_coverage()
     print("Done.")
     return 0
 

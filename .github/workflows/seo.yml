@@ -38,7 +38,7 @@ jobs:
         id: wait
         run: |
           for i in $(seq 1 20); do
-            code=$(curl -s -o /dev/null -w '%{http_code}' https://szymonpecherski.online/sitemap.xml || true)
+            code=$(curl -s -o /dev/null -w '%{http_code}' https://cheltenhamdata.co.uk/sitemap.xml || true)
             if [ "$code" = "200" ]; then
               echo "deployed=true" >> "$GITHUB_OUTPUT"
               echo "sitemap live after ${i} attempt(s)"

@@ -3,13 +3,29 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://szymonpecherski.online/</loc>
+    <loc>https://cheltenhamdata.co.uk/</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://szymonpecherski.online/og-image.png</image:loc>
+      <image:loc>https://cheltenhamdata.co.uk/og-image.png</image:loc>
       <image:title>Szymon Pecherski — Data Analyst &amp; BI Specialist, Cheltenham</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://cheltenhamdata.co.uk/blog/</loc>
+    <lastmod>2026-08-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://cheltenhamdata.co.uk/blog/ai-hallucination-rates-2024-vs-2026/</loc>
+    <lastmod>2026-08-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://cheltenhamdata.co.uk/blog/ai-hallucination-rates-2024-vs-2026/og.png</image:loc>
+      <image:title>AI hallucination rates went up, not down: 2024 vs 2026</image:title>
     </image:image>
   </url>
 </urlset>

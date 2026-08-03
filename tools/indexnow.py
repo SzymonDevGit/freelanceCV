@@ -5,7 +5,7 @@ changes in minutes instead of waiting for a crawl.
 
   python tools/indexnow.py --dry-run     # show what would be submitted
   python tools/indexnow.py               # submit every URL in sitemap.xml
-  python tools/indexnow.py https://szymonpecherski.online/   # submit one URL
+  python tools/indexnow.py https://cheltenhamdata.co.uk/   # submit one URL
 
 Google does not support IndexNow — for Google, the sitemap plus Search Console
 is the path. Participating engines: Bing, Yandex, Seznam, Naver.
@@ -25,7 +25,7 @@ from pathlib import Path
 from xml.etree import ElementTree
 
 ROOT = Path(__file__).resolve().parent.parent
-HOST = "szymonpecherski.online"
+HOST = "cheltenhamdata.co.uk"
 ENDPOINT = "https://api.indexnow.org/IndexNow"
 KEY_RE = re.compile(r"^[0-9a-f]{8,128}\.txt$")
 
@@ -64,7 +64,7 @@ def submit(urls: list[str], key: str, key_location: str) -> int:
         ENDPOINT,
         data=payload,
         headers={"Content-Type": "application/json; charset=utf-8",
-                 "User-Agent": "szymonpecherski.online-indexnow/1.0"},
+                 "User-Agent": "cheltenhamdata.co.uk-indexnow/1.0"},
         method="POST",
     )
     try:

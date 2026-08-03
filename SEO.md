@@ -1,31 +1,73 @@
 # SEO — what was done, what you still need to do
 
-Site: <https://szymonpecherski.online/> · Last reviewed: 2 August 2026
+Site: <https://cheltenhamdata.co.uk/> · Last reviewed: 2 August 2026
 
 ---
 
-## ⚠️ Read this first: the repo and the live site are not in sync
+## ⚠️ Domain move: finish this or you will split your own signals
 
-On the live site, `/` serves exactly the HTML that was in `index_2.html`, but
-`/index_2.html` returns **404**. So Cloudflare is *not* serving this repo's file
-layout — the page was almost certainly uploaded to Cloudflare separately rather
-than built from this repository.
+The canonical domain is now **cheltenhamdata.co.uk**. Every canonical tag,
+schema `@id`, sitemap entry, robots directive and tool constant points there.
 
-**That matters because every new file below (`/fonts/*`, `og-image.png`,
-`sitemap.xml`, `robots.txt`, the icons) will 404 unless they get deployed too.**
-The page will still render, but with fallback fonts and no social image.
+**But `szymonpecherski.online` still serves the same site on a 200.** Two domains
+returning identical content is textbook duplicate content. The canonical tag
+tells Google which one to keep, so the damage is contained, but the fix is a
+five-minute job you should not leave:
 
-Fix it once, properly:
+1. Cloudflare → the `szymonpecherski.online` zone → **Rules → Redirect Rules**.
+2. Create a rule: *if hostname equals `szymonpecherski.online`* →
+   **static/dynamic redirect** to `https://cheltenhamdata.co.uk` + the original
+   path, **301 permanent**, preserve query string.
+3. Keep that domain registered and redirecting **permanently**. It costs a few
+   pounds a year and it is what carries any existing links and typed traffic.
+4. In Search Console, add a property for the old domain (if not already there),
+   then use **Settings → Change of Address** to declare the move.
 
-1. Cloudflare dashboard → **Workers & Pages** → create/select a **Pages** project.
-2. **Connect to Git** → `SzymonDevGit/freelanceCV`, branch `main`.
-3. Build command: *(none)*. Build output directory: `/`.
-4. Custom domains → add `szymonpecherski.online` and `www.szymonpecherski.online`.
-5. Push to `main` → Cloudflare deploys automatically.
+Two other Cloudflare settings still outstanding on the new zone:
 
-After that, `git push` is the whole deploy process. (Wrangler CLI is the other
-option but it needs Node, which this machine doesn't have — so the Git
-integration is the right route.)
+- **SSL/TLS → Edge Certificates → Always Use HTTPS → On.** `http://` currently
+  serves a 200 instead of redirecting.
+- **www:** `www.cheltenhamdata.co.uk` does not resolve. Add a proxied CNAME to
+  the apex plus a 301, so typed and linked www URLs don't die.
+
+Verify all of it with `python tools/seo_audit.py --live`.
+
+---
+
+## The blog
+
+`/blog/` now exists, with the first post at
+`/blog/ai-hallucination-rates-2024-vs-2026/`. This is the single biggest
+structural SEO gain available to the site: it turns a one-page brochure into
+something with topical depth, real internal linking and a reason for other
+people to link to you.
+
+What makes that post worth having, in SEO terms:
+
+- **Original analysis, not a stat round-up.** Every figure is computed from a
+  157-row dataset that ships alongside the post as a downloadable CSV, with
+  `Dataset` + `DataDownload` schema. Original data is the format most likely to
+  earn citations and links, from both people and AI assistants.
+- **An answer-first summary block** under the H1, which is the shape generative
+  systems lift most readily.
+- **Method and caveats stated openly** — what the benchmark does and does not
+  measure, sample sizes per bucket, and why a rank correlation was used.
+- **A number I refused to publish.** The widely-repeated "$67.4bn of losses"
+  figure could not be traced to a primary source, so the post says so instead
+  of scaling it into a bigger unverifiable number. That refusal is the credible
+  move, and it is consistent with what your own AI policy page promises.
+
+Charts are generated from the CSV by `tools/build_charts.py` and injected
+between markers, so they cannot drift from the data. Re-run it if the data
+changes.
+
+### Adding another post
+
+1. Create `blog/<slug>/index.html` (copy the existing post's `<head>`).
+2. Add a row to `PAGES` in `tools/seo_audit.py` and a `<url>` to `sitemap.xml` —
+   the audit fails if a known page is missing from the sitemap.
+3. Add a card to `blog/index.html` and the `blogPost` array in its schema.
+4. `python tools/seo_audit.py --strict`, then push.
 
 ---
 
@@ -97,7 +139,7 @@ push to `main` waits for the deploy, smoke-tests the live URLs (including that
    until `sitemap.xml` and `og-image.png` return 200.
 2. **Google Search Console** — <https://search.google.com/search-console>. Add a
    **Domain property** (DNS TXT record in Cloudflare, covers every subdomain and
-   protocol). Submit `https://szymonpecherski.online/sitemap.xml`. Then
+   protocol). Submit `https://cheltenhamdata.co.uk/sitemap.xml`. Then
    **immediately turn on the BigQuery bulk export** (Settings → Bulk data
    export): it is not backfilled, so every day you delay is data you never get.
    That's also the cleanest source for the kind of dashboard you build for
@@ -133,8 +175,8 @@ Verified each against the live site rather than taking the tool's word for it.
 
 | Finding | Verdict | Action |
 |---|---|---|
-| "Redirect to HTTPS not configured correctly" | **Real.** `http://szymonpecherski.online/` returns `200 OK` with the full page — no redirect at all | **Cloudflare dashboard** (below) |
-| "Uses both www and non-www URLs" | **False positive.** `www.szymonpecherski.online` is `NXDOMAIN` — no A record, no CNAME. There is no www version to duplicate; the tool flags this whenever it can't observe a www→apex 301, without checking whether www resolves | Worth adding anyway, for dead links |
+| "Redirect to HTTPS not configured correctly" | **Real.** `http://cheltenhamdata.co.uk/` returns `200 OK` with the full page — no redirect at all | **Cloudflare dashboard** (below) |
+| "Uses both www and non-www URLs" | **False positive.** `www.cheltenhamdata.co.uk` is `NXDOMAIN` — no A record, no CNAME. There is no www version to duplicate; the tool flags this whenever it can't observe a www→apex 301, without checking whether www resolves | Worth adding anyway, for dead links |
 | "Charset missing in HTTP header" | **Real.** `Content-Type: text/html` with no charset | **Fixed** in `_headers` |
 | "Some anchor texts used more than once" | **Non-issue.** The six nav anchors appear 3× (header, mobile nav, footer) and every instance points at the *same* target. Duplicate anchor text to an identical destination cannot dilute or confuse anything | None |
 | "33 headings… should be more in proportion to text" | **Non-issue.** 2,348 visible words across 36 headings = **65 words per heading**, normal for a sectioned landing page. Removing headings would make it harder to scan and harder for AI systems to extract | None |
@@ -149,8 +191,8 @@ These are DNS and zone settings — they live in Cloudflare, not in this repo.
    fix for the HTTPS error. Note the HSTS header alone does *not* cover it:
    browsers ignore `Strict-Transport-Security` on plain-HTTP responses (RFC
    6797), so the first request still needs a real 301.
-2. **www:** DNS → add CNAME `www` → `szymonpecherski.online`, proxied. Then add
-   `www.szymonpecherski.online` as a custom domain on the Pages project, and a
+2. **www:** DNS → add CNAME `www` → `cheltenhamdata.co.uk`, proxied. Then add
+   `www.cheltenhamdata.co.uk` as a custom domain on the Pages project, and a
    Redirect Rule `www` → apex, 301.
 
 Do **not** enable HSTS preload while you're in there — it is baked into browsers
