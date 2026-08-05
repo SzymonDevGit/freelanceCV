@@ -269,14 +269,19 @@ def build_og() -> None:
     f_body = load("Inter Tight", 400, 26)
     f_stat = load("Space Grotesk", 600, 42)
     f_lab = load("Inter Tight", 400, 19)
+    f_by = load("Inter Tight", 400, 22)
 
     y = PAD
     d.text((PAD, y), "CHELTENHAM  ·  GLOUCESTERSHIRE  ·  UK", font=f_eyebrow, fill=OAK)
     y += 58
-    d.text((PAD, y), "Szymon Pecherski", font=f_name, fill=TEXT)
-    y += 88
+    # The card leads with the trading name people see in emails, with the
+    # person behind it named directly underneath.
+    d.text((PAD, y), "Cheltenham Data", font=f_name, fill=TEXT)
+    y += 84
+    d.text((PAD, y), "Szymon Pecherski", font=f_by, fill=MUTED)
+    y += 38
     d.text((PAD, y), "Data Analyst & BI Specialist", font=f_role, fill=OAK)
-    y += 66
+    y += 62
     d.text((PAD, y),
            "Dashboards, reporting and process automation",
            font=f_body, fill=MUTED)

@@ -21,9 +21,16 @@ already correct:
     - redirect rule: www -> apex, 301, path and query preserved
     - Always Use HTTPS: on
     - TXT _dmarc (p=none, monitor only — cannot affect mail delivery)
+    - Email Routing: szymon@cheltenhamdata.co.uk -> the personal inbox, so the
+      address on the site is a real one. Forwarding only; nothing is stored at
+      Cloudflare and replies still land in the same inbox.
 
 Redirect rules are merged by description: an existing rule with the same
 description is replaced, everything else in the ruleset is left alone.
+
+Email Routing needs one manual step the API cannot do for you: Cloudflare sends
+the destination inbox a verification link, and forwarding stays inactive until
+that link is clicked. The script says so when it hits that state.
 """
 from __future__ import annotations
 
@@ -39,6 +46,11 @@ OLD = "szymonpecherski.online"
 NEW = "cheltenhamdata.co.uk"
 DUMMY_IP = "192.0.2.1"          # RFC 5737 TEST-NET-1: reserved, never routable
 DMARC = "v=DMARC1; p=none; rua=mailto:szymonpecherski@gmail.com"
+
+# The address published on the site, and the inbox it forwards to.
+MAIL_FROM = f"szymon@{NEW}"
+MAIL_TO = "szymonpecherski@gmail.com"
+MAIL_RULE = "site contact address"
 
 RESET, RED, YEL, GRN, DIM, BOLD = (
     "\033[0m", "\033[31m", "\033[33m", "\033[32m", "\033[2m", "\033[1m")
@@ -98,14 +110,19 @@ def done(msg: str) -> None:
     print(f"  {GRN}done{RESET}    {msg}")
 
 
-def zone_id(name: str) -> str | None:
+def zone(name: str) -> dict | None:
     res = call("GET", f"/zones?name={name}")
     result = res.get("result") or []
     if not result:
         problems.append(f"zone {name} not found — is it in this account, and does "
                         f"the token include it?")
         return None
-    return result[0]["id"]
+    return result[0]
+
+
+def zone_id(name: str) -> str | None:
+    z = zone(name)
+    return z["id"] if z else None
 
 
 # ------------------------------------------------------------------ records --
@@ -225,6 +242,80 @@ def ensure_redirect(zid: str, zone: str, rule: dict, apply: bool) -> None:
     done(f"{zone}: redirect rule {rule['description']!r} deployed")
 
 
+# ----------------------------------------------------------- email routing --
+def ensure_email_routing(zid: str, account_id: str, zone_name: str,
+                         apply: bool) -> None:
+    """Forward MAIL_FROM to MAIL_TO. Forwarding only — no mailbox is created."""
+    status = (call("GET", f"/zones/{zid}/email/routing").get("result") or {})
+    enabled = bool(status.get("enabled"))
+
+    if enabled:
+        ok(f"{zone_name}: Email Routing enabled")
+    elif apply:
+        # Cloudflare adds the MX and SPF records for the zone as part of this.
+        call("POST", f"/zones/{zid}/email/routing/enable", {})
+        done(f"{zone_name}: Email Routing enabled (MX + SPF records added)")
+        enabled = True
+    else:
+        todo(f"{zone_name}: enable Email Routing (adds MX + SPF records)")
+
+    # The destination inbox is an account-level object and has to confirm by
+    # email before any rule pointing at it will deliver.
+    dests = (call("GET", f"/accounts/{account_id}/email/routing/addresses")
+             .get("result") or [])
+    dest = next((d for d in dests if d.get("email") == MAIL_TO), None)
+
+    if dest is None:
+        if apply:
+            call("POST", f"/accounts/{account_id}/email/routing/addresses",
+                 {"email": MAIL_TO})
+            done(f"destination {MAIL_TO} added — "
+                 f"{YEL}check that inbox and click the verification link{RESET}")
+        else:
+            todo(f"add destination {MAIL_TO} (sends it a verification email)")
+    elif dest.get("verified"):
+        ok(f"destination {MAIL_TO} verified")
+    else:
+        problems.append(f"destination {MAIL_TO} is not verified yet — click the "
+                        f"link in the Cloudflare email; forwarding stays off "
+                        f"until you do")
+
+    if not enabled:
+        todo(f"{zone_name}: route {MAIL_FROM} -> {MAIL_TO} "
+             f"(after Email Routing is on)")
+        return
+
+    rules = (call("GET", f"/zones/{zid}/email/routing/rules").get("result") or [])
+    wanted = {
+        "name": MAIL_RULE,
+        "enabled": True,
+        "matchers": [{"type": "literal", "field": "to", "value": MAIL_FROM}],
+        "actions": [{"type": "forward", "value": [MAIL_TO]}],
+    }
+    match = next((r for r in rules if r.get("name") == MAIL_RULE
+                  or (r.get("matchers") or [{}])[0].get("value") == MAIL_FROM), None)
+
+    if match:
+        same = (match.get("enabled")
+                and match.get("matchers") == wanted["matchers"]
+                and match.get("actions") == wanted["actions"])
+        if same:
+            ok(f"{MAIL_FROM} -> {MAIL_TO}")
+            return
+        if apply:
+            call("PUT", f"/zones/{zid}/email/routing/rules/{match['tag']}", wanted)
+            done(f"updated route {MAIL_FROM} -> {MAIL_TO}")
+        else:
+            todo(f"update route {MAIL_FROM} -> {MAIL_TO}")
+        return
+
+    if apply:
+        call("POST", f"/zones/{zid}/email/routing/rules", wanted)
+        done(f"created route {MAIL_FROM} -> {MAIL_TO}")
+    else:
+        todo(f"create route {MAIL_FROM} -> {MAIL_TO}")
+
+
 def strip_rule(r: dict) -> dict:
     """Drop server-managed fields so the rule can be PUT back."""
     return {k: v for k, v in r.items()
@@ -250,7 +341,9 @@ def main() -> int:
     print(f"{mode}\n")
 
     old_id = zone_id(OLD)
-    new_id = zone_id(NEW)
+    new_zone = zone(NEW)
+    new_id = new_zone["id"] if new_zone else None
+    account_id = (new_zone or {}).get("account", {}).get("id")
 
     if old_id:
         print(f"{BOLD}{OLD}{RESET} {DIM}(old domain — must 301 to the new one){RESET}")
@@ -271,6 +364,11 @@ def main() -> int:
             f'concat("https://{NEW}", http.request.uri.path)'), args.apply)
         ensure_https(new_id, NEW, args.apply)
         ensure_txt(new_id, NEW, "_dmarc", DMARC, args.apply)
+        if account_id:
+            ensure_email_routing(new_id, account_id, NEW, args.apply)
+        else:
+            problems.append("no account id on the zone — cannot configure Email "
+                            "Routing; does the token include Account settings?")
         print()
 
     for p in problems:

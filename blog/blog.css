@@ -40,10 +40,16 @@ a:hover{color:var(--tan);border-bottom-color:var(--tan)}
 
 header.top{border-bottom:1px solid var(--line);background:var(--bg-2)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;height:66px;gap:20px}
+/* Brand lockup: trading name over the name of the person behind it. */
 .brand{font-family:var(--disp);font-size:17px;font-weight:600;color:var(--text);
-  letter-spacing:-.03em;border:0;white-space:nowrap}
+  letter-spacing:-.03em;border:0;white-space:nowrap;
+  display:inline-flex;flex-direction:column;gap:1px;line-height:1.14}
+.brand b{font-weight:600}
 .brand span{color:var(--oak)}
+.brand .by{font-family:var(--sans);font-size:11px;font-weight:400;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--faint)}
 .brand:hover{color:var(--oak)}
+.brand:hover .by{color:var(--faint)}
 .top nav{display:flex;gap:20px;font-size:14.5px}
 .top nav a{color:var(--muted);border:0}
 .top nav a:hover{color:var(--oak)}

@@ -71,6 +71,33 @@ changes.
 
 ---
 
+## The Cheltenham Data brand (5 Aug 2026)
+
+Five outreach emails went out signed *Cheltenham Data* while every surface on
+the site still said *Szymon Pecherski* — header, footer, `og:site_name`, page
+title. Anyone clicking through landed on a differently-named brand, and Google
+Business Profile's name rule wants a name you demonstrably trade under.
+
+The site now leads with **Cheltenham Data** and names the person underneath it,
+rather than replacing him. It is a sole trader practice, not a registered
+company, so nothing here claims a legal entity that doesn't exist:
+
+- Header and footer carry a two-line lockup — *Cheltenham Data.* over
+  *Szymon Pecherski* — and the blog chrome matches.
+- `og:site_name` is `Cheltenham Data`; titles read
+  *Cheltenham Data | Data Analyst in Cheltenham — Szymon Pecherski*.
+- Structured data keeps both entities: the `ProfessionalService` is named
+  *Cheltenham Data*, with the `Person` as its `founder` and `provider`, and the
+  old person-led naming preserved in `alternateName` so existing signals for it
+  aren't stranded. No `legalName` — that would assert a registration.
+- Hero copy, the footer notice and a new FAQ entry all state plainly that
+  Cheltenham Data is the practice of Szymon Pecherski.
+- Contact address moved from `szymonpecherski@gmail.com` to
+  `szymon@cheltenhamdata.co.uk` — see step 0 below, it needs one manual click
+  before it delivers.
+
+---
+
 ## What changed
 
 | Area | Before | After |
@@ -85,6 +112,7 @@ changes.
 | Headings | `h1 → h3` and `h2 → h4` jumps | Clean `h1 → h2 → h3` outline |
 | Structured data | 4 nodes | 6 nodes: added `WebPage`, `AdministrativeArea`, `ContactPoint`, logo, `sameAs`, per-service `@id`s, `hasOccupation`, postal address |
 | Meta description | 177 chars (truncated in results) | 150 chars |
+| Key figures | `£0` / `0%` in the markup, real values written only by the scroll counter | Real figures in the HTML (`£42,500`, `30%`, `47.55%`…), animated from there — the strongest sales evidence on the page is now readable with JavaScript off, by crawlers and by any AI system asked about the business |
 | 404 page | None | Branded, `noindex`, links home |
 | Headers | Defaults | `_headers`: HSTS, nosniff, referrer policy, permissions policy, 1-year immutable font cache |
 | Accessibility | No skip link | Skip-to-content link |
@@ -135,6 +163,14 @@ push to `main` waits for the deploy, smoke-tests the live URLs (including that
 
 ## What you need to do — 40 minutes, in this order
 
+0. **Make `szymon@cheltenhamdata.co.uk` real, before you deploy.** The site now
+   publishes that address everywhere the Gmail one used to appear. Run
+   `python tools/cloudflare_setup.py --apply` — it enables Cloudflare Email
+   Routing (free, forwarding only) and points the address at your existing
+   inbox. Cloudflare then emails that inbox a verification link, and **nothing
+   is delivered until you click it**. Check by sending yourself a test message.
+   Until that's done, a published address that bounces is worse than a Gmail one
+   that works.
 1. **Deploy the new files** (see the warning at the top). Nothing below works
    until `sitemap.xml` and `og-image.png` return 200.
 2. **Google Search Console** — <https://search.google.com/search-console>. Add a
@@ -148,7 +184,9 @@ push to `main` waits for the deploy, smoke-tests the live URLs (including that
    in one click. This is what feeds ChatGPT.
 4. **Google Business Profile** — <https://business.google.com>. This is the single
    biggest lever for "data analyst Cheltenham" style searches and you don't have
-   one. Service-area business (hide the address), primary category
+   one. Use **Cheltenham Data** as the name: the name rule requires you actually
+   trade under it, and the site, the email address and your email signature now
+   all say so consistently. Service-area business (hide the address), primary category
    *Business management consultant* or *Software company*, add services, and ask
    your last few clients for reviews. Reviews are roughly a fifth of local pack
    ranking and you currently have zero.
