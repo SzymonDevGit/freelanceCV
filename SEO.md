@@ -92,9 +92,33 @@ company, so nothing here claims a legal entity that doesn't exist:
   aren't stranded. No `legalName` — that would assert a registration.
 - Hero copy, the footer notice and a new FAQ entry all state plainly that
   Cheltenham Data is the practice of Szymon Pecherski.
-- Contact address moved from `szymonpecherski@gmail.com` to
-  `szymon@cheltenhamdata.co.uk` — see step 0 below, it needs one manual click
-  before it delivers.
+### The one piece still outstanding: a domain email address
+
+The site still publishes `szymonpecherski@gmail.com`, deliberately — a
+published address that bounces is worse than a Gmail one that works, and
+`szymon@cheltenhamdata.co.uk` does not exist yet. But you have just pitched five
+media outlets and a county charity body from a Gmail address, which undercuts
+the brand the rest of this section just built.
+
+Fixing it is free and takes about five minutes:
+
+1. `python tools/cloudflare_setup.py --email` to see the plan, then
+   `--email --apply` to make it. It enables Cloudflare Email Routing on the zone
+   and forwards `szymon@cheltenhamdata.co.uk` to your existing inbox. Forwarding
+   only: no mailbox, nothing stored at Cloudflare, replies still come from the
+   inbox you already use. `--email` is opt-in because enabling routing adds MX
+   records to the zone.
+2. Click the verification link Cloudflare emails to the Gmail inbox. **Nothing
+   is delivered until you do.**
+3. Send yourself a test message and confirm it arrives.
+4. Only then switch the site over: the mailto links and visible address in
+   `index.html` and `404.html`, the footer link on both blog pages, and the
+   three `"email"` fields in the JSON-LD graph. One commit.
+
+Sending *from* the new address is a separate thing — routing forwards inbound
+mail but doesn't let Gmail send as it. Add it in Gmail under Settings → Accounts
+→ "Send mail as", which needs an SMTP relay; until then, replying from Gmail is
+fine and still lands in the right conversation.
 
 ---
 
@@ -163,14 +187,6 @@ push to `main` waits for the deploy, smoke-tests the live URLs (including that
 
 ## What you need to do — 40 minutes, in this order
 
-0. **Make `szymon@cheltenhamdata.co.uk` real, before you deploy.** The site now
-   publishes that address everywhere the Gmail one used to appear. Run
-   `python tools/cloudflare_setup.py --apply` — it enables Cloudflare Email
-   Routing (free, forwarding only) and points the address at your existing
-   inbox. Cloudflare then emails that inbox a verification link, and **nothing
-   is delivered until you click it**. Check by sending yourself a test message.
-   Until that's done, a published address that bounces is worse than a Gmail one
-   that works.
 1. **Deploy the new files** (see the warning at the top). Nothing below works
    until `sitemap.xml` and `og-image.png` return 200.
 2. **Google Search Console** — <https://search.google.com/search-console>. Add a
@@ -185,8 +201,8 @@ push to `main` waits for the deploy, smoke-tests the live URLs (including that
 4. **Google Business Profile** — <https://business.google.com>. This is the single
    biggest lever for "data analyst Cheltenham" style searches and you don't have
    one. Use **Cheltenham Data** as the name: the name rule requires you actually
-   trade under it, and the site, the email address and your email signature now
-   all say so consistently. Service-area business (hide the address), primary category
+   trade under it, and the site and your email signature now say so
+   consistently. Service-area business (hide the address), primary category
    *Business management consultant* or *Software company*, add services, and ask
    your last few clients for reviews. Reviews are roughly a fifth of local pack
    ranking and you currently have zero.

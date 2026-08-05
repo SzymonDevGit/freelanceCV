@@ -2,8 +2,9 @@
 """
 Bring both Cloudflare zones to the state the SEO work needs.
 
-  python tools/cloudflare_setup.py            # PLAN: read-only, shows the diff
-  python tools/cloudflare_setup.py --apply    # make the changes
+  python tools/cloudflare_setup.py                    # PLAN: read-only diff
+  python tools/cloudflare_setup.py --apply            # make the changes
+  python tools/cloudflare_setup.py --email --apply    # + set up the mailbox
 
 Reads the API token from the CLOUDFLARE_API_TOKEN environment variable. The
 token is never printed, logged or written anywhere.
@@ -21,16 +22,25 @@ already correct:
     - redirect rule: www -> apex, 301, path and query preserved
     - Always Use HTTPS: on
     - TXT _dmarc (p=none, monitor only — cannot affect mail delivery)
-    - Email Routing: szymon@cheltenhamdata.co.uk -> the personal inbox, so the
-      address on the site is a real one. Forwarding only; nothing is stored at
-      Cloudflare and replies still land in the same inbox.
 
 Redirect rules are merged by description: an existing rule with the same
 description is replaced, everything else in the ruleset is left alone.
 
-Email Routing needs one manual step the API cannot do for you: Cloudflare sends
-the destination inbox a verification link, and forwarding stays inactive until
-that link is clicked. The script says so when it hits that state.
+--email is opt-in and does nothing unless you pass it, because enabling Email
+Routing adds MX records to the zone — not a side effect anyone should get by
+surprise from a run aimed at redirect rules. It sets up:
+
+    szymon@cheltenhamdata.co.uk -> the personal inbox
+
+as forwarding only: no mailbox is created, nothing is stored at Cloudflare, and
+replies still come from the inbox you already use. There is one manual step the
+API cannot do for you — Cloudflare emails the destination a verification link,
+and nothing is delivered until it is clicked. The script says so when it hits
+that state.
+
+The site publishes the Gmail address until that forward is verified and tested.
+Switching it over is a separate edit to index.html, 404.html and the two blog
+pages (mailto links, the visible address, and the three JSON-LD "email" fields).
 """
 from __future__ import annotations
 
@@ -328,6 +338,9 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="Configure Cloudflare for the SEO setup")
     ap.add_argument("--apply", action="store_true",
                     help="actually make the changes (default is a read-only plan)")
+    ap.add_argument("--email", action="store_true",
+                    help="also set up Email Routing for %s (opt-in: enabling it "
+                         "adds MX records to the zone)" % MAIL_FROM)
     args = ap.parse_args()
 
     verify = call("GET", "/user/tokens/verify")
@@ -364,7 +377,10 @@ def main() -> int:
             f'concat("https://{NEW}", http.request.uri.path)'), args.apply)
         ensure_https(new_id, NEW, args.apply)
         ensure_txt(new_id, NEW, "_dmarc", DMARC, args.apply)
-        if account_id:
+        if not args.email:
+            print(f"  {DIM}skip    Email Routing — pass --email to set up "
+                  f"{MAIL_FROM}{RESET}")
+        elif account_id:
             ensure_email_routing(new_id, account_id, NEW, args.apply)
         else:
             problems.append("no account id on the zone — cannot configure Email "
