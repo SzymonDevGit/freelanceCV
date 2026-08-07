@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Design A — Ledger | Cheltenham Data</title>
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+<style>
+@font-face{ font-family:'Space Grotesk'; font-style:normal; font-weight:400; font-display:swap; src:url(/fonts/space-grotesk-400.woff2) format('woff2'); }
+@font-face{ font-family:'Space Grotesk'; font-style:normal; font-weight:500; font-display:swap; src:url(/fonts/space-grotesk-500.woff2) format('woff2'); }
+@font-face{ font-family:'Space Grotesk'; font-style:normal; font-weight:600; font-display:swap; src:url(/fonts/space-grotesk-600.woff2) format('woff2'); }
+@font-face{ font-family:'Inter Tight'; font-style:normal; font-weight:400; font-display:swap; src:url(/fonts/inter-tight-400.woff2) format('woff2'); }
+@font-face{ font-family:'Inter Tight'; font-style:normal; font-weight:500; font-display:swap; src:url(/fonts/inter-tight-500.woff2) format('woff2'); }
+@font-face{ font-family:'Inter Tight'; font-style:normal; font-weight:600; font-display:swap; src:url(/fonts/inter-tight-600.woff2) format('woff2'); }
+@font-face{ font-family:'Space Mono'; font-style:normal; font-weight:400; font-display:swap; src:url(/fonts/space-mono-400.woff2) format('woff2'); }
+
+/* ============================================================
+   DESIGN A — "LEDGER"
+   The page as a printed commercial report. Everything sits on a
+   visible column grid; hairline rules and leader dots do the work
+   that cards and shadows do elsewhere. Nothing is rounded, nothing
+   glows, nothing is centred. Figures are tabular and right-ranged
+   in a money column, the way a set of accounts sets them.
+   ============================================================ */
+:root{
+  --bg:#14100c; --bg-2:#191410; --card:#1f1912; --card-2:#251d15; --deep:#0c0906;
+  --line:#332a20; --line-2:#473a2c;
+  --text:#f0e7da; --body:#c4b6a5; --muted:#9b8b79; --faint:#7d6e5e;
+  --oak:#cd9c60; --tan:#e7c495; --walnut:#8a5a30; --patina:#8aa17f;
+  --disp:'Space Grotesk',ui-sans-serif,system-ui,sans-serif;
+  --sans:'Inter Tight',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:'Space Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --gut:34px;
+}
+*,*::before,*::after{box-sizing:border-box;border-radius:0}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);
+  font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--disp);color:var(--text);margin:0;font-weight:600;letter-spacing:-.03em}
+
+/* the sheet the whole report is printed on: a ruled column grid,
+   faint but genuinely there, so the eye can see what aligns to what */
+.sheet{max-width:1240px;margin:0 auto;padding:0 40px;position:relative}
+.sheet::before{content:"";position:absolute;inset:0 40px;pointer-events:none;z-index:0;
+  background:repeating-linear-gradient(90deg,transparent 0,transparent calc(8.333% - 1px),
+    rgba(205,156,96,.045) calc(8.333% - 1px),rgba(205,156,96,.045) 8.333%)}
+.g{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gut);position:relative;z-index:1}
+
+/* running heads — the small mono labels a report puts in the margin */
+.rh{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+.rule{border-top:1px solid var(--line)}
+.rule-2{border-top:1px solid var(--line-2)}
+.draw{transform:scaleX(0);transform-origin:left;transition:transform 1.1s var(--ease)}
+.draw.in{transform:scaleX(1)}
+
+/* ---------- masthead ---------- */
+header{border-bottom:1px solid var(--line-2);position:sticky;top:0;z-index:40;
+  background:rgba(20,16,12,.94);backdrop-filter:blur(8px)}
+.mast{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;padding:16px 0 13px}
+.brand{font-family:var(--disp);font-size:20px;font-weight:600;letter-spacing:-.035em;color:var(--text);line-height:1}
+.brand i{color:var(--oak);font-style:normal}
+.brand small{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--faint);margin-top:5px;font-weight:400}
+nav{display:flex;gap:24px;align-items:baseline}
+nav a{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);
+  padding-bottom:2px;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+nav a:hover{color:var(--oak);border-color:var(--oak)}
+.folio{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);
+  text-align:right;line-height:1.5}
+.folio b{color:var(--patina);font-weight:400}
+
+/* ---------- hero ---------- */
+.hero{padding:64px 0 0}
+.standing{grid-column:1/3;padding-top:8px}
+.standing div+div{margin-top:16px}
+.head{grid-column:3/13}
+h1{font-size:clamp(46px,6.9vw,92px);line-height:.94;letter-spacing:-.042em;margin:0 0 4px;
+  text-indent:-.04em}
+h1 em{font-style:normal;color:var(--oak)}
+.strap{grid-column:3/9;font-size:17.5px;line-height:1.6;color:var(--body);margin:26px 0 0;max-width:52ch}
+.strap b{color:var(--text);font-weight:600}
+.note{grid-column:10/13;font-size:13.5px;line-height:1.62;color:var(--muted);margin-top:28px;
+  padding-left:16px;border-left:1px solid var(--line-2)}
+.acts{grid-column:3/9;display:flex;gap:0;margin-top:34px;border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2)}
+.acts a{flex:1;padding:16px 4px;font-family:var(--disp);font-size:15px;font-weight:500;color:var(--text);
+  display:flex;align-items:center;gap:10px;transition:color .2s}
+.acts a+a{border-left:1px solid var(--line);padding-left:22px}
+.acts a:hover{color:var(--oak)}
+.acts svg{transition:transform .3s var(--ease)}
+.acts a:hover svg{transform:translateX(5px)}
+
+.clients{grid-column:1/13;margin-top:52px;padding-top:12px;border-top:1px solid var(--line);
+  display:flex;align-items:baseline;gap:34px;flex-wrap:wrap}
+.clients span{font-family:var(--disp);font-size:15px;color:var(--muted);letter-spacing:-.01em}
+.clients .rh{margin-right:6px}
+
+/* ---------- the ledger sheets: 3D as stacked paper, not a glass card ---------- */
+.docwrap{grid-column:1/13;margin-top:46px;perspective:1700px;padding-bottom:70px}
+.doc{position:relative;transform-style:preserve-3d;transform:rotateY(-8deg) rotateX(4.5deg);
+  transition:transform .7s var(--ease);will-change:transform}
+.leaf{position:absolute;inset:0;background:var(--bg-2);border:1px solid var(--line)}
+.leaf.l2{transform:translate3d(16px,15px,-42px);opacity:.5}
+.leaf.l1{transform:translate3d(8px,7px,-21px);opacity:.75}
+.page{position:relative;background:var(--card);border:1px solid var(--line-2);
+  box-shadow:-24px 26px 50px rgba(0,0,0,.5)}
+.page-hd{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;
+  padding:20px 26px 0;border-bottom:1px solid var(--line-2)}
+.page-hd h2{font-size:13px;letter-spacing:.04em;font-weight:500;color:var(--muted);padding-bottom:14px}
+/* index tabs, cut into the top edge like a ring binder */
+.tabs{display:flex;gap:0;margin-bottom:-1px}
+.tab{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  background:transparent;border:1px solid transparent;border-bottom:0;color:var(--faint);
+  padding:9px 15px 10px;cursor:pointer;transition:color .2s,background .2s}
+.tab:hover{color:var(--muted)}
+.tab[aria-selected="true"]{color:var(--tan);background:var(--card-2);border-color:var(--line-2)}
+.page-bd{padding:26px 26px 22px;display:grid;grid-template-columns:1.15fr 1fr;column-gap:44px}
+.view{display:none}
+.view.on{display:contents}
+.vcap h3{font-size:23px;line-height:1.16;margin-bottom:8px}
+.vcap p{font-size:14.5px;color:var(--muted);margin:0;max-width:36ch}
+.vcap .rh{display:block;margin-bottom:12px}
+
+/* the money column: leader dots + tabular figures, ranged right */
+.led{display:flex;align-items:baseline;gap:9px;padding:11px 0;border-bottom:1px solid var(--line)}
+.led:first-child{padding-top:0}
+.led b{font-weight:400;font-size:14.5px;color:var(--body);white-space:nowrap}
+.led i{flex:1;border-bottom:1px dotted var(--line-2);transform:translateY(-3px)}
+.led u{font-family:var(--disp);font-size:19px;font-weight:600;color:var(--text);text-decoration:none;
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.led.tot{border-bottom:0;border-top:1px solid var(--line-2);margin-top:6px;padding-top:14px}
+.led.tot b{color:var(--muted);font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
+.led.tot u{font-size:30px;color:var(--oak)}
+.foot-note{grid-column:1/3;margin-top:20px;padding-top:12px;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--faint);display:flex;gap:8px}
+.foot-note span{color:var(--oak);font-family:var(--mono);font-size:11px}
+
+/* ---------- figures, set as a schedule ---------- */
+.band{border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);background:var(--bg-2);padding:52px 0}
+.sched{grid-column:1/13;display:grid;grid-template-columns:repeat(4,1fr);column-gap:var(--gut)}
+.sched > div{padding-right:20px}
+.sched > div + div{border-left:1px solid var(--line);padding-left:22px}
+.sched .n{font-family:var(--disp);font-size:clamp(30px,3.3vw,44px);font-weight:600;color:var(--oak);
+  letter-spacing:-.035em;line-height:1;font-variant-numeric:tabular-nums;margin-bottom:12px}
+.sched .t{font-size:13.5px;line-height:1.5;color:var(--muted)}
+.band .rh{grid-column:1/13;margin-bottom:26px}
+
+/* ---------- a case, set as a report page ---------- */
+section{padding:78px 0}
+.sec-rh{grid-column:1/3}
+.sec-hd{grid-column:3/11}
+.sec-hd h2{font-size:clamp(28px,3.3vw,42px);line-height:1.08;margin-bottom:14px}
+.sec-hd p{font-size:16.5px;color:var(--muted);margin:0;max-width:56ch}
+.case{grid-column:1/13;margin-top:44px;padding-top:26px;border-top:1px solid var(--line-2);
+  display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gut)}
+.case-no{grid-column:1/3;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--faint);line-height:1.7}
+.case-bd{grid-column:3/9}
+.case-bd h3{font-size:27px;line-height:1.14;margin-bottom:16px;max-width:22ch}
+/* the body copy runs in two print columns, with a dropped initial */
+.case-bd .cols{columns:2;column-gap:34px;font-size:15px;line-height:1.66;color:var(--body)}
+.case-bd .cols p{margin:0 0 12px}
+.case-bd .cols p:first-child::first-letter{font-family:var(--disp);font-size:46px;font-weight:600;
+  float:left;line-height:.86;margin:4px 9px 0 0;color:var(--oak)}
+.tags{margin-top:18px;display:flex;gap:0;flex-wrap:wrap}
+.tags span{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);padding-right:14px;margin-right:14px;border-right:1px solid var(--line-2)}
+.tags span:last-child{border:0}
+.case-res{grid-column:9/13}
+.case-res .rh{padding-bottom:10px;border-bottom:1px solid var(--line-2);margin-bottom:4px}
+
+/* ---------- colophon ---------- */
+footer{border-top:1px solid var(--line-2);background:var(--deep);padding:44px 0 40px}
+.colo{grid-column:1/6}
+.colo .brand{font-size:18px}
+.colo p{font-size:12.5px;color:var(--faint);line-height:1.68;margin:18px 0 0;max-width:44ch}
+.colo-l{grid-column:7/13;display:grid;grid-template-columns:1fr 1fr;gap:0 34px;align-content:start}
+.colo-l a{font-size:13.5px;color:var(--muted);padding:7px 0;border-bottom:1px solid var(--line);
+  transition:color .2s,padding-left .2s}
+.colo-l a:hover{color:var(--oak);padding-left:6px}
+
+.rv{opacity:0;transform:translateY(10px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:1000px){
+  .sheet{padding:0 22px}
+  .sheet::before{display:none}
+  /* eleven 34px gutters are wider than a phone on their own — the grid
+     keeps its twelve columns for alignment, but the gaps collapse */
+  :root{--gut:6px}
+  .standing,.head,.strap,.note,.acts,.clients,.docwrap,.sched,.sec-rh,.sec-hd,.case,.case-no,
+  .case-bd,.case-res,.colo,.colo-l{grid-column:1/13}
+  .note{margin-top:20px}
+  .page-bd{grid-template-columns:1fr;row-gap:26px}
+  .sched{grid-template-columns:1fr 1fr;row-gap:28px}
+  .sched > div:nth-child(3){border-left:0;padding-left:0}
+  .case-bd .cols{columns:1}
+  /* flat on a phone, so the offset sheets underneath have nothing to
+     say and would only push the page sideways */
+  .doc{transform:none}
+  .leaf{display:none}
+  nav{display:none}
+  /* the money column is the one thing that can't hold its width on a
+     phone: let the label wrap and keep the figure on its own line */
+  .led{flex-wrap:wrap;row-gap:2px}
+  .led b{white-space:normal;flex:1 1 100%}
+  .led i{min-width:20px}
+  .led u{margin-left:auto}
+  .page-hd{padding:14px 14px 0;flex-wrap:wrap;gap:10px}
+  .page-bd{padding:20px 16px 18px}
+  .tabs{flex-wrap:wrap;margin-bottom:0}
+  .mast{flex-wrap:wrap;height:auto;gap:12px}
+  .folio{text-align:left}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.001ms!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="sheet">
+    <div class="mast">
+      <a href="#" class="brand">Cheltenham Data<i>.</i><small>Szymon Pecherski</small></a>
+      <nav>
+        <a href="#">Services</a><a href="#">Work</a><a href="#">Experience</a>
+        <a href="#">AI policy</a><a href="#">Areas</a><a href="#">FAQ</a><a href="#">Notes</a>
+      </nav>
+      <div class="folio">Cheltenham · Gloucestershire<br><b>●</b> Taking on projects</div>
+    </div>
+  </div>
+</header>
+
+<div class="sheet hero">
+  <div class="g">
+    <div class="standing">
+      <div class="rh">Report<br>No. 01</div>
+      <div class="rh">Issued<br>Aug 2026</div>
+    </div>
+    <div class="head">
+      <h1>Data analysis<br>and automation<br>that <em>pays for itself.</em></h1>
+    </div>
+    <p class="strap">
+      <b>Cheltenham Data</b> is the practice of Szymon Pecherski, a <b>data analyst and business
+      intelligence specialist in Cheltenham</b>. I help small and growing UK businesses replace manual,
+      error-prone processes with automated systems, clean data and reporting people actually use.
+    </p>
+    <p class="note">The same work I've done inside regulated financial services, national wholesale
+      and aerospace — brought to businesses that can't justify a full-time analyst.</p>
+
+    <div class="acts">
+      <a href="#">Book a free scoping call
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h13M12 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#">See the results</a>
+    </div>
+
+    <div class="clients">
+      <span class="rh">Analyst experience across</span>
+      <span>GE Aerospace</span><span>St. James's Place</span><span>Creed Foodservice</span><span>Oriel Collections</span>
+    </div>
+
+    <div class="docwrap">
+      <div class="doc" id="doc">
+        <div class="leaf l2"></div>
+        <div class="leaf l1"></div>
+        <div class="page">
+          <div class="page-hd">
+            <h2>Schedule of selected results</h2>
+            <div class="tabs" role="tablist">
+              <button class="tab" role="tab" id="t-a" aria-controls="v-a" aria-selected="true">Commercial</button>
+              <button class="tab" role="tab" id="t-b" aria-controls="v-b" aria-selected="false">Automation</button>
+              <button class="tab" role="tab" id="t-c" aria-controls="v-c" aria-selected="false">Support</button>
+              <button class="tab" role="tab" id="t-d" aria-controls="v-d" aria-selected="false">Data</button>
+            </div>
+          </div>
+          <div class="page-bd">
+            <div class="view on" id="v-a" role="tabpanel">
+              <div class="vcap">
+                <span class="rh">Creed Foodservice · Commercial</span>
+                <h3>Supplier terms optimised</h3>
+                <p>Three companies, 1,200+ codes and no single view of what any agreement was worth.</p>
+              </div>
+              <div class="lines">
+                <div class="led"><b>Commercial income unlocked</b><i></i><u data-c="42500" data-p="£">£42,500</u></div>
+                <div class="led"><b>Return on investment</b><i></i><u data-c="30" data-s="%">30%</u></div>
+                <div class="led"><b>Supplier codes in one model</b><i></i><u data-c="1200" data-s="+">1,200+</u></div>
+                <div class="led"><b>Companies unified</b><i></i><u data-c="3">3</u></div>
+                <div class="led tot"><b>Net effect</b><i></i><u data-c="42500" data-p="£">£42,500</u></div>
+              </div>
+            </div>
+
+            <div class="view" id="v-b" role="tabpanel">
+              <div class="vcap">
+                <span class="rh">Oriel Collections · Operations</span>
+                <h3>Manual procedures automated</h3>
+                <p>Days a month lost to repetitive admin across CRMs, portals and internal tools.</p>
+              </div>
+              <div class="lines">
+                <div class="led"><b>Procedures automated</b><i></i><u data-c="20" data-s="+">20+</u></div>
+                <div class="led"><b>Manual hours removed / month</b><i></i><u data-c="30" data-s="h">30h</u></div>
+                <div class="led"><b>Team efficiency</b><i></i><u data-c="15" data-p="+" data-s="%">+15%</u></div>
+                <div class="led"><b>Manager insight accuracy</b><i></i><u data-c="20" data-p="+" data-s="%">+20%</u></div>
+                <div class="led tot"><b>Net effect</b><i></i><u data-c="30" data-s=" hrs">30 hrs</u></div>
+              </div>
+            </div>
+
+            <div class="view" id="v-c" role="tabpanel">
+              <div class="vcap">
+                <span class="rh">St. James's Place · Application support</span>
+                <h3>Support volume, first month</h3>
+                <p>Second and third line across Salesforce, iBusiness, SFTP and AWS, in a team of twenty.</p>
+              </div>
+              <div class="lines">
+                <div class="led"><b>Share of all team requests</b><i></i><u data-c="47.55" data-s="%" data-dp="2">47.55%</u></div>
+                <div class="led"><b>Requests resolved</b><i></i><u data-c="545">545</u></div>
+                <div class="led"><b>Total team requests</b><i></i><u data-c="1146">1,146</u></div>
+                <div class="led"><b>Analysts in the team</b><i></i><u data-c="20">20</u></div>
+                <div class="led tot"><b>Net effect</b><i></i><u data-c="47.55" data-s="%" data-dp="2">47.55%</u></div>
+              </div>
+            </div>
+
+            <div class="view" id="v-d" role="tabpanel">
+              <div class="vcap">
+                <span class="rh">Independent project · Python</span>
+                <h3>Job market scraped and analysed</h3>
+                <p>An anecdotal question about demand, turned into evidence you can audit.</p>
+              </div>
+              <div class="lines">
+                <div class="led"><b>Unique postings extracted</b><i></i><u data-c="247">247</u></div>
+                <div class="led"><b>Pipeline automated</b><i></i><u data-c="100" data-s="%">100%</u></div>
+                <div class="led"><b>Trend dimensions analysed</b><i></i><u data-c="4">4</u></div>
+                <div class="led"><b>Manual data entry required</b><i></i><u data-c="0" data-s="%">0%</u></div>
+                <div class="led tot"><b>Net effect</b><i></i><u data-c="247">247</u></div>
+              </div>
+            </div>
+
+            <p class="foot-note"><span>†</span> <span id="fn">Optimising supplier terms across three companies and 1,200+ codes. Client-confidential detail is generalised; every figure is real.</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="band">
+  <div class="sheet"><div class="g">
+    <div class="rh">Schedule 1 — results at a glance</div>
+    <div class="sched">
+      <div class="rv"><div class="n" data-c="42500" data-p="£">£42,500</div><div class="t">Additional commercial income unlocked by optimising supplier terms, at 30% ROI</div></div>
+      <div class="rv"><div class="n" data-c="100" data-s="+">100+</div><div class="t">Hours of manual work removed per year through process automation</div></div>
+      <div class="rv"><div class="n" data-c="20" data-s="+">20+</div><div class="t">Procedures automated — 30 hours/month saved, 15% lift in team efficiency</div></div>
+      <div class="rv"><div class="n" data-c="1200" data-s="+">1,200+</div><div class="t">Supplier codes reconciled across three companies in one reporting model</div></div>
+    </div>
+  </div></div>
+</div>
+
+<section>
+  <div class="sheet"><div class="g">
+    <div class="sec-rh rh">04<br>Work</div>
+    <div class="sec-hd rv">
+      <h2>Measured outcomes, not vague deliverables.</h2>
+      <p>A sample of projects delivered in-house and independently. Client-confidential detail is
+      generalised, but every figure below is real.</p>
+    </div>
+
+    <article class="case rv">
+      <div class="case-no">Case 01<br>Commercial<br>analysis —<br>wholesale</div>
+      <div class="case-bd">
+        <h3>Turning 1,200 supplier codes into £42,500 of margin</h3>
+        <div class="cols">
+          <p>A national foodservice wholesaler had supplier terms scattered across three companies with
+          no single view of what each agreement was actually worth.</p>
+          <p>I built a group master sheet covering 100+ distinct terms, with formulas calculating true
+          earnings per agreement, then used it to optimise the terms that were underperforming.</p>
+        </div>
+        <div class="tags"><span>Excel modelling</span><span>Reconciliation</span><span>Commercial analysis</span></div>
+      </div>
+      <div class="case-res">
+        <div class="rh">Result</div>
+        <div class="led"><b>Extra commercial income</b><i></i><u data-c="42500" data-p="£">£42,500</u></div>
+        <div class="led"><b>Return on investment</b><i></i><u data-c="30" data-s="%">30%</u></div>
+        <div class="led"><b>Supplier codes in one model</b><i></i><u data-c="1200" data-s="+">1,200+</u></div>
+      </div>
+    </article>
+  </div></div>
+</section>
+
+<footer>
+  <div class="sheet"><div class="g">
+    <div class="colo">
+      <div class="brand">Cheltenham Data<i>.</i><small>Szymon Pecherski</small></div>
+      <p>© 2026 Cheltenham Data — the data analysis and business intelligence practice of Szymon
+      Pecherski, Cheltenham, Gloucestershire. I use AI tools in my workflow and review every
+      deliverable personally. Last updated 5 August 2026.</p>
+    </div>
+    <div class="colo-l">
+      <a href="#">Services</a><a href="#">AI policy</a>
+      <a href="#">Work</a><a href="#">Areas</a>
+      <a href="#">Experience</a><a href="#">FAQ</a>
+      <a href="#">Notes</a><a href="#">Email</a>
+    </div>
+  </div></div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function fmt(v,dp){ return v.toLocaleString('en-GB',{minimumFractionDigits:dp,maximumFractionDigits:dp}); }
+  function count(el){
+    var target = parseFloat(el.getAttribute('data-c'));
+    if(isNaN(target)) return;
+    var pre = el.getAttribute('data-p')||'', suf = el.getAttribute('data-s')||'';
+    var dp = parseInt(el.getAttribute('data-dp')||'0',10);
+    var render = function(v){ el.textContent = pre + fmt(v,dp) + suf; };
+    if(reduce || target === 0){ render(target); return; }
+    var dur=1300,t0=null;
+    (function step(ts){
+      if(!t0) t0=ts;
+      var p=Math.min((ts-t0)/dur,1), v=target*(1-Math.pow(1-p,4));
+      render(dp ? Math.round(v*Math.pow(10,dp))/Math.pow(10,dp) : Math.round(v));
+      if(p<1) requestAnimationFrame(step);
+    })(performance.now());
+  }
+
+  var NOTES = {
+    'v-a':'Optimising supplier terms across three companies and 1,200+ codes. Client-confidential detail is generalised; every figure is real.',
+    'v-b':'Twenty-plus repetitive procedures automated and documented with SOPs so the team maintains it without me.',
+    'v-c':'The highest individual share in a twenty-person support team, in my first month.',
+    'v-d':'A Python pipeline that turned an anecdotal question into evidence you can download and check.'
+  };
+  var tabs = [].slice.call(document.querySelectorAll('.tab')), fn = document.getElementById('fn');
+  function show(t){
+    tabs.forEach(function(x){
+      var on = x===t, v = document.getElementById(x.getAttribute('aria-controls'));
+      x.setAttribute('aria-selected', String(on));
+      v.classList.toggle('on', on);
+      if(on){ v.querySelectorAll('[data-c]').forEach(count); if(NOTES[v.id]) fn.textContent = NOTES[v.id]; }
+    });
+  }
+  tabs.forEach(function(t){ t.addEventListener('click', function(){ show(t); }); });
+
+  /* the paper stack tips towards the pointer — real perspective, not a glow */
+  var doc = document.getElementById('doc');
+  if(doc && !reduce && matchMedia('(hover:hover) and (min-width:1001px)').matches){
+    var ry=-8, rx=4.5, tRy=-8, tRx=4.5, raf=null, host=doc.parentElement;
+    host.addEventListener('pointermove', function(e){
+      var r=host.getBoundingClientRect();
+      tRy = -8 + ((e.clientX-r.left)/r.width - .5)*11;
+      tRx = 4.5 - ((e.clientY-r.top)/r.height - .5)*7;
+      doc.style.transition='none';
+      if(!raf) raf=requestAnimationFrame(tick);
+    },{passive:true});
+    host.addEventListener('pointerleave', function(){
+      doc.style.transition='transform .7s var(--ease)';
+      doc.style.transform='rotateY(-8deg) rotateX(4.5deg)';
+      ry=-8; rx=4.5; if(raf){ cancelAnimationFrame(raf); raf=null; }
+    });
+    function tick(){
+      ry += (tRy-ry)*.12; rx += (tRx-rx)*.12;
+      doc.style.transform='rotateY('+ry.toFixed(2)+'deg) rotateX('+rx.toFixed(2)+'deg)';
+      raf = (Math.abs(tRy-ry)>.02||Math.abs(tRx-rx)>.02) ? requestAnimationFrame(tick) : null;
+    }
+  }
+
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting) return;
+      e.target.classList.add('in');
+      e.target.querySelectorAll && e.target.querySelectorAll('[data-c]').forEach(count);
+      io.unobserve(e.target);
+    });
+  },{threshold:.25});
+  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+  document.querySelectorAll('.case-res [data-c]').forEach(function(el){ io.observe(el); });
+  show(tabs[0]);
+})();
+</script>
+</body>
+</html>

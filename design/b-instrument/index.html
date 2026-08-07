@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Design B — Instrument | Cheltenham Data</title>
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+<style>
+@font-face{ font-family:'Space Grotesk'; font-style:normal; font-weight:400; font-display:swap; src:url(/fonts/space-grotesk-400.woff2) format('woff2'); }
+@font-face{ font-family:'Space Grotesk'; font-style:normal; font-weight:500; font-display:swap; src:url(/fonts/space-grotesk-500.woff2) format('woff2'); }
+@font-face{ font-family:'Space Grotesk'; font-style:normal; font-weight:600; font-display:swap; src:url(/fonts/space-grotesk-600.woff2) format('woff2'); }
+@font-face{ font-family:'Inter Tight'; font-style:normal; font-weight:400; font-display:swap; src:url(/fonts/inter-tight-400.woff2) format('woff2'); }
+@font-face{ font-family:'Inter Tight'; font-style:normal; font-weight:500; font-display:swap; src:url(/fonts/inter-tight-500.woff2) format('woff2'); }
+@font-face{ font-family:'Inter Tight'; font-style:normal; font-weight:600; font-display:swap; src:url(/fonts/inter-tight-600.woff2) format('woff2'); }
+@font-face{ font-family:'Space Mono'; font-style:normal; font-weight:400; font-display:swap; src:url(/fonts/space-mono-400.woff2) format('woff2'); }
+
+/* ============================================================
+   DESIGN B — "INSTRUMENT"
+   The page as the tool, not the brochure. Dense, monospaced,
+   unafraid of small text and real data marks: tick rules, axis
+   labels, sparklines, key/value records. Where the current site
+   floats one glass card, this stacks the actual layers of a chart
+   in z-space and lets you turn them.
+   ============================================================ */
+:root{
+  --bg:#14100c; --bg-2:#191410; --card:#1f1912; --card-2:#251d15; --deep:#0c0906;
+  --line:#332a20; --line-2:#473a2c;
+  --text:#f0e7da; --body:#c4b6a5; --muted:#9b8b79; --faint:#7d6e5e;
+  --oak:#cd9c60; --tan:#e7c495; --walnut:#8a5a30; --patina:#8aa17f;
+  --disp:'Space Grotesk',ui-sans-serif,system-ui,sans-serif;
+  --sans:'Inter Tight',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:'Space Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --rail:198px;
+}
+*,*::before,*::after{box-sizing:border-box;border-radius:0}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--disp);color:var(--text);margin:0;font-weight:600;letter-spacing:-.03em}
+.k{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.num{font-family:var(--disp);font-variant-numeric:tabular-nums;letter-spacing:-.025em}
+
+/* graph-paper ground: the working surface, faint but measurable */
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    repeating-linear-gradient(90deg,rgba(205,156,96,.05) 0 1px,transparent 1px 64px),
+    repeating-linear-gradient(0deg,rgba(205,156,96,.05) 0 1px,transparent 1px 64px)}
+.z{position:relative;z-index:1}
+
+/* ---------- toolbar ---------- */
+.bar{position:sticky;top:0;z-index:60;height:46px;display:flex;align-items:stretch;
+  background:var(--deep);border-bottom:1px solid var(--line-2)}
+.bar .id{display:flex;align-items:center;gap:9px;padding:0 16px;border-right:1px solid var(--line-2)}
+.bar .id b{font-family:var(--disp);font-size:14.5px;letter-spacing:-.03em;color:var(--text);font-weight:600}
+.bar .id b i{color:var(--oak);font-style:normal}
+.bar .id span{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.bar nav{display:flex;align-items:stretch}
+.bar nav a{display:flex;align-items:center;padding:0 15px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--muted);border-right:1px solid var(--line);
+  transition:background .18s,color .18s}
+.bar nav a:hover{background:var(--card);color:var(--tan)}
+.bar .status{margin-left:auto;display:flex;align-items:center;gap:8px;padding:0 16px;
+  border-left:1px solid var(--line-2);font-family:var(--mono);font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted)}
+.dot{width:6px;height:6px;background:var(--patina);box-shadow:0 0 0 3px rgba(138,161,127,.16)}
+
+/* ---------- shell: fixed index rail + working area ---------- */
+.shell{display:grid;grid-template-columns:var(--rail) 1fr}
+.rail{border-right:1px solid var(--line);padding:22px 0 40px;position:sticky;top:46px;align-self:start;
+  height:calc(100vh - 46px)}
+.rail a{display:block;padding:7px 16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--faint);border-left:2px solid transparent;transition:.18s}
+.rail a:hover,.rail a.on{color:var(--tan);border-left-color:var(--oak);background:rgba(205,156,96,.05)}
+.rail .k{padding:0 16px 12px;display:block}
+.rail .meta{margin-top:26px;padding:14px 16px 0;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:10px;line-height:2;color:var(--faint)}
+.rail .meta b{color:var(--muted);font-weight:400}
+.main{min-width:0;padding:0 0 0 0}
+.pad{padding:34px 40px}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);gap:0;
+  border-bottom:1px solid var(--line-2)}
+.hero-l{padding:44px 40px 40px;border-right:1px solid var(--line)}
+.avail{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line-2);
+  padding:5px 10px;margin-bottom:26px}
+h1{font-size:clamp(34px,4.1vw,54px);line-height:1.02;letter-spacing:-.04em;margin:0 0 20px}
+h1 em{font-style:normal;color:var(--oak)}
+.strap{font-size:15.5px;line-height:1.62;max-width:50ch;margin:0 0 12px;color:var(--body)}
+.strap b{color:var(--text);font-weight:600}
+.cta{display:flex;gap:10px;margin-top:26px}
+.btn{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  padding:11px 16px;border:1px solid var(--oak);color:var(--deep);background:var(--oak);
+  display:inline-flex;align-items:center;gap:9px;transition:.2s}
+.btn:hover{background:var(--tan);border-color:var(--tan)}
+.btn.ghost{background:transparent;color:var(--tan);border-color:var(--line-2)}
+.btn.ghost:hover{border-color:var(--oak);color:var(--oak)}
+.exp{margin-top:34px;padding-top:16px;border-top:1px solid var(--line)}
+.exp .row{display:grid;grid-template-columns:1fr auto;gap:14px;padding:6px 0;
+  font-family:var(--mono);font-size:11px;color:var(--muted);border-bottom:1px dotted var(--line)}
+.exp .row span:last-child{color:var(--faint)}
+
+/* ---------- the instrument: chart layers stacked in z ---------- */
+.hero-r{padding:30px 34px 34px;background:var(--bg-2);display:flex;flex-direction:column}
+.rig-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.seg{display:flex;border:1px solid var(--line-2)}
+.seg button{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+  background:transparent;border:0;border-right:1px solid var(--line-2);color:var(--faint);
+  padding:6px 10px;cursor:pointer;transition:.18s}
+.seg button:last-child{border-right:0}
+.seg button[aria-selected="true"]{background:var(--oak);color:var(--deep)}
+.seg button:hover{color:var(--tan)}
+.seg button[aria-selected="true"]:hover{color:var(--deep)}
+
+.rig{flex:1;min-height:290px;perspective:1250px;display:grid;place-items:center;margin:6px 0 4px}
+.layers{position:relative;width:min(100%,430px);height:250px;transform-style:preserve-3d;
+  transform:rotateX(52deg) rotateZ(-31deg);transition:transform .8s var(--ease);will-change:transform}
+.layer{position:absolute;inset:0;border:1px solid var(--line-2);background:rgba(31,25,18,.62)}
+.layer.l0{transform:translateZ(0)}
+.layer.l1{transform:translateZ(42px)}
+.layer.l2{transform:translateZ(84px)}
+.layer .tag{position:absolute;left:8px;top:6px;font-family:var(--mono);font-size:9px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.layer svg{position:absolute;inset:0;width:100%;height:100%}
+.rig-ft{display:grid;grid-template-columns:auto 1fr;gap:0 18px;align-items:end;
+  border-top:1px solid var(--line-2);padding-top:14px}
+.rig-ft .big{font-family:var(--disp);font-size:38px;font-weight:600;color:var(--oak);line-height:1;
+  letter-spacing:-.035em;font-variant-numeric:tabular-nums}
+.rig-ft .lab{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);margin-top:7px}
+.rig-ft .cap{font-size:12.5px;color:var(--faint);line-height:1.55;text-align:right;max-width:34ch;justify-self:end}
+
+/* ---------- readout strip ---------- */
+.strip{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line-2)}
+.cell{padding:20px 22px;border-right:1px solid var(--line);position:relative}
+.cell:last-child{border-right:0}
+.cell .k{display:block;margin-bottom:12px}
+.cell .v{font-family:var(--disp);font-size:clamp(26px,2.7vw,36px);font-weight:600;color:var(--text);
+  line-height:1;letter-spacing:-.035em;font-variant-numeric:tabular-nums}
+.cell .t{font-size:12.5px;color:var(--muted);margin-top:10px;line-height:1.5;max-width:30ch}
+.cell .spark{margin-top:14px;height:26px;width:100%;display:block}
+
+/* ---------- records ---------- */
+.sec{border-bottom:1px solid var(--line-2)}
+.sec-hd{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:baseline;
+  padding:26px 40px;border-bottom:1px solid var(--line);background:var(--bg-2)}
+.sec-hd h2{font-size:20px;letter-spacing:-.025em}
+.sec-hd p{margin:0;font-size:13.5px;color:var(--muted);max-width:62ch;grid-column:2}
+.rec{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);border-bottom:1px solid var(--line)}
+.rec-l{padding:26px 34px 30px 40px;border-right:1px solid var(--line)}
+.rec-l h3{font-size:21px;line-height:1.2;margin:10px 0 12px;max-width:26ch}
+.rec-l p{font-size:14.5px;color:var(--body);margin:0;max-width:62ch}
+.chips{margin-top:16px;display:flex;gap:6px;flex-wrap:wrap}
+.chips span{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);border:1px solid var(--line-2);padding:4px 8px}
+.rec-r{padding:26px 40px 30px 34px;background:rgba(12,9,6,.4)}
+.kv{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:baseline;padding:9px 0;
+  border-bottom:1px dotted var(--line)}
+.kv:last-of-type{border-bottom:0}
+.kv b{font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:.06em;color:var(--muted)}
+.kv u{font-family:var(--disp);font-size:20px;font-weight:600;color:var(--tan);text-decoration:none;
+  font-variant-numeric:tabular-nums;letter-spacing:-.025em}
+.bar-t{height:3px;background:var(--line);margin-top:2px;grid-column:1/3}
+.bar-t i{display:block;height:100%;background:var(--oak);width:0;transition:width 1s var(--ease)}
+
+/* ---------- footer ---------- */
+footer{background:var(--deep);padding:26px 40px;display:flex;justify-content:space-between;
+  gap:30px;flex-wrap:wrap;align-items:flex-start}
+footer p{margin:0;font-size:12px;color:var(--faint);max-width:64ch;line-height:1.65}
+footer .fl{display:flex;gap:16px;flex-wrap:wrap}
+footer .fl a{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+footer .fl a:hover{color:var(--oak)}
+
+.rv{opacity:0;transform:translateY(8px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:1100px){
+  .shell{grid-template-columns:1fr}
+  .rail{display:none}
+  .hero{grid-template-columns:1fr}
+  .hero-l{border-right:0;border-bottom:1px solid var(--line)}
+  .strip{grid-template-columns:1fr 1fr}
+  .cell:nth-child(2){border-right:0}
+  .cell:nth-child(1),.cell:nth-child(2){border-bottom:1px solid var(--line)}
+  .rec{grid-template-columns:1fr}
+  .rec-l{border-right:0;border-bottom:1px solid var(--line);padding:24px 22px}
+  .rec-r{padding:24px 22px}
+  .hero-l,.sec-hd{padding-left:22px;padding-right:22px}
+  .bar nav{display:none}
+  .layers{transform:rotateX(46deg) rotateZ(-28deg) scale(.82)}
+  /* two side-by-side buttons are wider than a phone: let them wrap */
+  .cta{flex-wrap:wrap}
+  .btn{flex:1 1 auto;justify-content:center}
+  .bar .id{white-space:nowrap}
+  .bar .id span{display:none}
+  .bar .status{font-size:9px;letter-spacing:.1em;padding:0 12px}
+  .hero-r{padding:26px 22px 28px}
+  .rig-hd{flex-wrap:wrap;gap:10px}
+  .rig-ft{grid-template-columns:1fr;row-gap:12px}
+  .rig-ft .cap{text-align:left;justify-self:start}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.001ms!important}}
+</style>
+</head>
+<body>
+
+<div class="bar z">
+  <div class="id"><b>Cheltenham Data<i>.</i></b><span>Szymon Pecherski</span></div>
+  <nav>
+    <a href="#">Services</a><a href="#">Work</a><a href="#">Experience</a>
+    <a href="#">AI policy</a><a href="#">Areas</a><a href="#">FAQ</a><a href="#">Notes</a>
+  </nav>
+  <div class="status"><i class="dot"></i>Taking on projects</div>
+</div>
+
+<div class="shell z">
+  <aside class="rail">
+    <span class="k">Index</span>
+    <a href="#" class="on">01 · Overview</a>
+    <a href="#">02 · Services</a>
+    <a href="#">03 · Method</a>
+    <a href="#">04 · Work</a>
+    <a href="#">05 · Experience</a>
+    <a href="#">06 · AI policy</a>
+    <a href="#">07 · Areas</a>
+    <a href="#">08 · FAQ</a>
+    <a href="#">09 · Notes</a>
+    <div class="meta">
+      <div><b>LOC</b> Cheltenham, GL</div>
+      <div><b>RAD</b> On site, South West</div>
+      <div><b>REM</b> UK-wide</div>
+      <div><b>REPLY</b> &lt; 24 h</div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <section class="hero">
+      <div class="hero-l">
+        <span class="avail"><i class="dot"></i>Taking on freelance projects — Cheltenham and remote UK-wide</span>
+        <h1>Data analysis and automation that <em>pays for itself.</em></h1>
+        <p class="strap"><b>Cheltenham Data</b> is the practice of Szymon Pecherski, a <b>data analyst and
+        business intelligence specialist in Cheltenham</b>. I help small and growing UK businesses replace
+        manual, error-prone processes with automated systems, clean data and reporting people actually
+        use — the same work I've done inside regulated financial services, national wholesale and aerospace.</p>
+        <div class="cta">
+          <a class="btn" href="#">Book a free scoping call
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h13M12 6l6 6-6 6"/></svg></a>
+          <a class="btn ghost" href="#">See the results</a>
+        </div>
+        <div class="exp">
+          <span class="k">Analyst experience across</span>
+          <div class="row" style="margin-top:10px"><span>GE Aerospace</span><span>2026 —</span></div>
+          <div class="row"><span>St. James's Place</span><span>2026</span></div>
+          <div class="row"><span>Creed Foodservice</span><span>2025 — 26</span></div>
+          <div class="row" style="border-bottom:0"><span>Oriel Collections</span><span>2024 — 25</span></div>
+        </div>
+      </div>
+
+      <div class="hero-r">
+        <div class="rig-hd">
+          <span class="k">Selected results</span>
+          <div class="seg" role="tablist">
+            <button role="tab" id="s-a" data-v="a" aria-selected="true">Commercial</button>
+            <button role="tab" id="s-b" data-v="b" aria-selected="false">Automation</button>
+            <button role="tab" id="s-c" data-v="c" aria-selected="false">Support</button>
+            <button role="tab" id="s-d" data-v="d" aria-selected="false">Data</button>
+          </div>
+        </div>
+
+        <!-- three layers of one chart, pulled apart in z so you can see
+             the build: grid, series, annotation. Drag to turn it. -->
+        <div class="rig" id="rig">
+          <div class="layers" id="layers">
+            <div class="layer l0">
+              <span class="tag">Grid</span>
+              <svg viewBox="0 0 400 240" preserveAspectRatio="none" aria-hidden="true">
+                <g stroke="#473a2c" stroke-width="1" opacity=".8">
+                  <line x1="0" y1="48" x2="400" y2="48"/><line x1="0" y1="96" x2="400" y2="96"/>
+                  <line x1="0" y1="144" x2="400" y2="144"/><line x1="0" y1="192" x2="400" y2="192"/>
+                </g>
+                <g stroke="#332a20" stroke-width="1">
+                  <line x1="80" y1="0" x2="80" y2="240"/><line x1="160" y1="0" x2="160" y2="240"/>
+                  <line x1="240" y1="0" x2="240" y2="240"/><line x1="320" y1="0" x2="320" y2="240"/>
+                </g>
+              </svg>
+            </div>
+            <div class="layer l1">
+              <span class="tag">Series</span>
+              <svg viewBox="0 0 400 240" preserveAspectRatio="none" aria-hidden="true">
+                <g id="bars" fill="#8a5a30" opacity=".85">
+                  <rect x="26" y="176" width="34" height="64"/><rect x="98" y="150" width="34" height="90"/>
+                  <rect x="170" y="112" width="34" height="128"/><rect x="242" y="74" width="34" height="166"/>
+                  <rect x="314" y="40" width="34" height="200"/>
+                </g>
+              </svg>
+            </div>
+            <div class="layer l2">
+              <span class="tag">Result</span>
+              <svg viewBox="0 0 400 240" preserveAspectRatio="none" aria-hidden="true">
+                <polyline id="trend" points="43,190 115,164 187,120 259,82 331,44" fill="none"
+                  stroke="#cd9c60" stroke-width="2.4" stroke-linecap="square"/>
+                <g fill="#e7c495">
+                  <rect x="39" y="186" width="8" height="8"/><rect x="111" y="160" width="8" height="8"/>
+                  <rect x="183" y="116" width="8" height="8"/><rect x="255" y="78" width="8" height="8"/>
+                  <rect x="327" y="40" width="8" height="8"/>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="rig-ft">
+          <div>
+            <div class="big" id="rBig">£42,500</div>
+            <div class="lab" id="rLab">commercial income unlocked</div>
+          </div>
+          <div class="cap" id="rCap">Optimising supplier terms across three companies and 1,200+ codes.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="strip">
+      <div class="cell rv">
+        <span class="k">01 · Income</span>
+        <div class="v" data-c="42500" data-p="£">£42,500</div>
+        <div class="t">Additional commercial income unlocked by optimising supplier terms, at 30% ROI</div>
+        <svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none" aria-hidden="true"><polyline points="0,24 24,21 48,15 72,11 96,5 120,2" fill="none" stroke="#cd9c60" stroke-width="1.6"/></svg>
+      </div>
+      <div class="cell rv">
+        <span class="k">02 · Hours</span>
+        <div class="v" data-c="100" data-s="+">100+</div>
+        <div class="t">Hours of manual work removed per year through process automation</div>
+        <svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none" aria-hidden="true"><polyline points="0,4 24,7 48,9 72,15 96,18 120,23" fill="none" stroke="#8aa17f" stroke-width="1.6"/></svg>
+      </div>
+      <div class="cell rv">
+        <span class="k">03 · Procedures</span>
+        <div class="v" data-c="20" data-s="+">20+</div>
+        <div class="t">Procedures automated — 30 hours/month saved, 15% lift in team efficiency</div>
+        <svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none" aria-hidden="true"><g fill="#8a5a30"><rect x="2" y="18" width="14" height="8"/><rect x="22" y="14" width="14" height="12"/><rect x="42" y="11" width="14" height="15"/><rect x="62" y="8" width="14" height="18"/><rect x="82" y="5" width="14" height="21"/><rect x="102" y="2" width="14" height="24"/></g></svg>
+      </div>
+      <div class="cell rv">
+        <span class="k">04 · Codes</span>
+        <div class="v" data-c="1200" data-s="+">1,200+</div>
+        <div class="t">Supplier codes reconciled across three companies in one reporting model</div>
+        <svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none" aria-hidden="true"><polyline points="0,20 20,22 40,13 60,16 80,7 100,9 120,3" fill="none" stroke="#cd9c60" stroke-width="1.6"/></svg>
+      </div>
+    </div>
+
+    <section class="sec">
+      <div class="sec-hd">
+        <span class="k">04 · Work</span>
+        <div>
+          <h2>Measured outcomes, not vague deliverables.</h2>
+          <p>A sample of projects delivered in-house and independently. Client-confidential detail is
+          generalised, but every figure below is real.</p>
+        </div>
+      </div>
+
+      <article class="rec">
+        <div class="rec-l">
+          <span class="k">Commercial analysis — wholesale</span>
+          <h3>Turning 1,200 supplier codes into £42,500 of margin</h3>
+          <p>A national foodservice wholesaler had supplier terms scattered across three companies with no
+          single view of what each agreement was actually worth. I built a group master sheet covering 100+
+          distinct terms, with formulas calculating true earnings per agreement, then used it to optimise
+          the terms that were underperforming.</p>
+          <div class="chips"><span>Excel modelling</span><span>Reconciliation</span><span>Commercial analysis</span></div>
+        </div>
+        <div class="rec-r">
+          <span class="k">Result</span>
+          <div class="kv" style="margin-top:10px"><b>extra_commercial_income</b><u data-c="42500" data-p="£">£42,500</u></div>
+          <div class="kv"><b>return_on_investment</b><u data-c="30" data-s="%">30%</u>
+            <div class="bar-t"><i data-w="30%"></i></div></div>
+          <div class="kv"><b>supplier_codes_modelled</b><u data-c="1200" data-s="+">1,200+</u></div>
+          <div class="kv"><b>companies_unified</b><u data-c="3">3</u></div>
+        </div>
+      </article>
+    </section>
+
+    <footer>
+      <p>© 2026 Cheltenham Data — the data analysis and business intelligence practice of Szymon Pecherski,
+      Cheltenham, Gloucestershire. I use AI tools in my workflow and review every deliverable personally.
+      Last updated 5 August 2026.</p>
+      <div class="fl">
+        <a href="#">Services</a><a href="#">Work</a><a href="#">AI policy</a>
+        <a href="#">FAQ</a><a href="#">Notes</a><a href="#">Email</a><a href="#">LinkedIn</a>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function fmt(v,dp){ return v.toLocaleString('en-GB',{minimumFractionDigits:dp,maximumFractionDigits:dp}); }
+  function count(el){
+    var target = parseFloat(el.getAttribute('data-c'));
+    if(isNaN(target)) return;
+    var pre = el.getAttribute('data-p')||'', suf = el.getAttribute('data-s')||'';
+    var dp = parseInt(el.getAttribute('data-dp')||'0',10);
+    var render = function(v){ el.textContent = pre + fmt(v,dp) + suf; };
+    if(reduce || target === 0){ render(target); return; }
+    var dur=1200,t0=null;
+    (function step(ts){
+      if(!t0) t0=ts;
+      var p=Math.min((ts-t0)/dur,1), v=target*(1-Math.pow(1-p,4));
+      render(dp ? Math.round(v*Math.pow(10,dp))/Math.pow(10,dp) : Math.round(v));
+      if(p<1) requestAnimationFrame(step);
+    })(performance.now());
+  }
+
+  /* each view redraws the instrument: same chart, different data */
+  var VIEWS = {
+    a:{ big:'£42,500', c:42500, p:'£', s:'', lab:'commercial income unlocked',
+        cap:'Optimising supplier terms across three companies and 1,200+ codes.',
+        bars:[64,90,128,166,200], line:[190,164,120,82,44] },
+    b:{ big:'30 hrs', c:30, p:'', s:' hrs', lab:'removed every month',
+        cap:'Twenty-plus repetitive procedures automated and documented with SOPs.',
+        bars:[40,74,96,150,186], line:[200,176,140,96,54] },
+    c:{ big:'47.55%', c:47.55, p:'', s:'%', dp:2, lab:'of team requests, month one',
+        cap:'The highest individual share in a twenty-person support team.',
+        bars:[178,120,150,86,206], line:[62,112,88,150,40] },
+    d:{ big:'247', c:247, p:'', s:'', lab:'postings scraped and analysed',
+        cap:'A Python pipeline that turned an anecdotal question into evidence.',
+        bars:[96,150,72,190,132], line:[144,96,168,58,110] }
+  };
+  var bars = document.querySelectorAll('#bars rect');
+  var trend = document.getElementById('trend');
+  var pts = document.querySelectorAll('.l2 g rect');
+  var rBig = document.getElementById('rBig'), rLab = document.getElementById('rLab'), rCap = document.getElementById('rCap');
+
+  function draw(key){
+    var v = VIEWS[key];
+    bars.forEach(function(b,i){ b.setAttribute('y', 240 - v.bars[i]); b.setAttribute('height', v.bars[i]); });
+    trend.setAttribute('points', v.line.map(function(y,i){ return (43 + i*72) + ',' + y; }).join(' '));
+    pts.forEach(function(p,i){ p.setAttribute('y', v.line[i] - 4); });
+    rLab.textContent = v.lab; rCap.textContent = v.cap;
+    rBig.setAttribute('data-c', v.c); rBig.setAttribute('data-p', v.p||'');
+    rBig.setAttribute('data-s', v.s||''); rBig.setAttribute('data-dp', v.dp||0);
+    count(rBig);
+  }
+  var segs = [].slice.call(document.querySelectorAll('.seg button'));
+  segs.forEach(function(b){
+    b.addEventListener('click', function(){
+      segs.forEach(function(x){ x.setAttribute('aria-selected', String(x===b)); });
+      draw(b.getAttribute('data-v'));
+    });
+  });
+
+  /* turn the stack: pointer moves the whole rig in two axes */
+  var rig = document.getElementById('rig'), layers = document.getElementById('layers');
+  if(rig && !reduce && matchMedia('(hover:hover) and (min-width:1101px)').matches){
+    var rx=52, rz=-31, tRx=52, tRz=-31, raf=null;
+    rig.addEventListener('pointermove', function(e){
+      var r = rig.getBoundingClientRect();
+      tRz = -31 + ((e.clientX-r.left)/r.width - .5)*38;
+      tRx = 52 - ((e.clientY-r.top)/r.height - .5)*34;
+      layers.style.transition='none';
+      if(!raf) raf=requestAnimationFrame(tick);
+    },{passive:true});
+    rig.addEventListener('pointerleave', function(){
+      layers.style.transition='transform .8s var(--ease)';
+      layers.style.transform='rotateX(52deg) rotateZ(-31deg)';
+      rx=52; rz=-31; if(raf){ cancelAnimationFrame(raf); raf=null; }
+    });
+    function tick(){
+      rx += (tRx-rx)*.1; rz += (tRz-rz)*.1;
+      layers.style.transform='rotateX('+rx.toFixed(2)+'deg) rotateZ('+rz.toFixed(2)+'deg)';
+      raf = (Math.abs(tRx-rx)>.02||Math.abs(tRz-rz)>.02) ? requestAnimationFrame(tick) : null;
+    }
+  }
+
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting) return;
+      e.target.classList.add('in');
+      e.target.querySelectorAll('[data-c]').forEach(count);
+      e.target.querySelectorAll('.bar-t i').forEach(function(b,i){
+        setTimeout(function(){ b.style.width = b.getAttribute('data-w'); }, reduce ? 0 : 220 + i*110);
+      });
+      io.unobserve(e.target);
+    });
+  },{threshold:.3});
+  document.querySelectorAll('.rv, .rec').forEach(function(el){ io.observe(el); });
+  draw('a');
+})();
+</script>
+</body>
+</html>

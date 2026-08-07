@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Design directions | Cheltenham Data</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+@font-face{ font-family:'Space Grotesk'; font-style:normal; font-weight:600; font-display:swap; src:url(/fonts/space-grotesk-600.woff2) format('woff2'); }
+@font-face{ font-family:'Inter Tight'; font-style:normal; font-weight:400; font-display:swap; src:url(/fonts/inter-tight-400.woff2) format('woff2'); }
+@font-face{ font-family:'Inter Tight'; font-style:normal; font-weight:600; font-display:swap; src:url(/fonts/inter-tight-600.woff2) format('woff2'); }
+@font-face{ font-family:'Space Mono'; font-style:normal; font-weight:400; font-display:swap; src:url(/fonts/space-mono-400.woff2) format('woff2'); }
+:root{--bg:#14100c;--card:#1f1912;--line:#332a20;--line-2:#473a2c;--text:#f0e7da;--body:#c4b6a5;
+  --muted:#9b8b79;--faint:#7d6e5e;--oak:#cd9c60;--tan:#e7c495;
+  --disp:'Space Grotesk',sans-serif;--sans:'Inter Tight',system-ui,sans-serif;--mono:'Space Mono',monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.65;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px;margin:0 auto;padding:64px 32px 90px}
+h1{font-family:var(--disp);font-size:40px;letter-spacing:-.035em;color:var(--text);margin:0 0 12px}
+.lede{max-width:64ch;margin:0 0 44px;color:var(--muted)}
+.k{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+a.card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line-2);
+  padding:26px 28px;margin-bottom:18px;transition:border-color .2s,transform .2s}
+a.card:hover{border-color:var(--oak);transform:translateY(-2px)}
+a.card h2{font-family:var(--disp);font-size:24px;letter-spacing:-.03em;color:var(--text);margin:10px 0 10px}
+a.card p{margin:0;max-width:70ch;font-size:15.5px}
+a.card .tell{margin:14px 0 0;font-size:13.5px;color:var(--faint)}
+a.card .tell b{color:var(--tan);font-weight:400;font-family:var(--mono);font-size:11px;
+  letter-spacing:.1em;text-transform:uppercase;margin-right:8px}
+.note{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);font-size:13.5px;color:var(--faint);
+  max-width:74ch}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="k">Cheltenham Data · Design directions · 5 Aug 2026</span>
+  <h1>Three ways out of the template.</h1>
+  <p class="lede">Same content, same palette, same 3D and animation budget. Each direction breaks a
+  different one of the habits that make a page read as machine-made: centred symmetry, uniform rounded
+  cards, even whitespace, and decoration that isn't carrying information.</p>
+
+  <a class="card" href="/design/a-ledger/">
+    <span class="k">Direction A</span>
+    <h2>Ledger — the printed commercial report</h2>
+    <p>Everything hangs on a visible twelve-column grid. Hairline rules and leader dots replace cards;
+    figures are tabular and ranged right in a money column. The 3D element is a stack of paper that tips
+    towards your cursor, not a floating glass panel.</p>
+    <p class="tell"><b>Reads as</b> a chartered analyst who sends you a document, not a landing page.</p>
+  </a>
+
+  <a class="card" href="/design/b-instrument/">
+    <span class="k">Direction B</span>
+    <h2>Instrument — the tool, not the brochure</h2>
+    <p>Dense, monospaced and unafraid of small text: a toolbar, a fixed index rail, key/value records
+    and sparklines on every figure. The 3D element pulls one chart apart into its three layers — grid,
+    series, result — and lets you turn the stack.</p>
+    <p class="tell"><b>Reads as</b> someone who builds the dashboards, shown in their own idiom.</p>
+  </a>
+
+  <a class="card" href="/design/c-workshop/">
+    <span class="k">Direction C</span>
+    <h2>Workshop — sheets on a desk, marked up by hand</h2>
+    <p>Printed sheets propped and overlapping, each a degree off true, with a brass pin holding one down.
+    The oak in the palette becomes marker pen: a circle round the headline, an arrow to the number that
+    matters, drawn on as you scroll.</p>
+    <p class="tell"><b>Reads as</b> a person at a desk — the warmest of the three, and the least corporate.</p>
+  </a>
+
+  <p class="note">Each mockup carries the real copy and the real figures across a header, hero, results
+  deck, figures band, one case study and the footer — enough to judge the direction. The remaining
+  sections (services, method, experience, AI policy, areas, FAQ, notes, contact) get built out once you
+  pick one. These pages are <code>noindex</code> and not linked from the live site.</p>
+</div>
+</body>
+</html>
