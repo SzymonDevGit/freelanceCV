@@ -1,0 +1,29 @@
+{
+  // Cloudflare Workers build config.
+  //
+  // The site is static — there is no Worker script, only files. An
+  // assets-only Worker is the supported shape for that: no "main", just a
+  // directory. Without this file `wrangler versions upload` has nothing to
+  // upload and fails with "Missing entry-point to Worker script or to assets
+  // directory", which is what the build was doing.
+  //
+  // "name" must match the Worker in the Cloudflare dashboard. If the upload
+  // ever lands somewhere without the custom domain attached, this is the line
+  // that is wrong.
+  "name": "dev",
+  "compatibility_date": "2026-08-07",
+
+  "assets": {
+    // Everything is served from the repo root; .assetsignore keeps the build
+    // tooling, the notes and CI out of the upload.
+    "directory": "./",
+
+    // Serve /404.html for anything that does not match a file, rather than
+    // Cloudflare's generic error page. Without this the branded 404 is dead
+    // weight in the repo.
+    "not_found_handling": "404-page"
+
+    // html_handling is left at its default, "auto-trailing-slash", which is
+    // what makes /blog/ and /design/ resolve to their index.html.
+  }
+}

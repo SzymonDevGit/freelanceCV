@@ -215,6 +215,31 @@ an 8 KB cork tile. All first-party; still zero third-party requests.
 
 ---
 
+## How it deploys
+
+Cloudflare builds this repo as a **Worker with static assets** (it runs
+`npx wrangler versions upload`), not as a Pages project. Two files make that
+work, and the build fails with *"Missing entry-point to Worker script or to
+assets directory"* without them:
+
+* **`wrangler.jsonc`** — there is no Worker script, only files, so this is an
+  assets-only Worker: no `main`, just `assets.directory`. `name` must match the
+  Worker in the Cloudflare dashboard (currently `dev`); if an upload ever lands
+  somewhere without the custom domain attached, that is the line that is wrong.
+  `not_found_handling: "404-page"` is what makes the branded 404 actually get
+  served instead of Cloudflare's generic error page.
+* **`.assetsignore`** — the assets directory is the repo root, so *everything*
+  here is published unless listed. It keeps `.git`, the build tooling and these
+  notes out of the upload. **Anything you add to the root is public by default;
+  check this file.** `_headers` and `_redirects` are ignored automatically —
+  Cloudflare consumes them as configuration rather than serving them.
+
+A push to a non-production branch runs `wrangler versions upload`, which
+stages a preview version rather than making it live. Production comes from
+`main`.
+
+---
+
 ## The tooling
 
 ```bash

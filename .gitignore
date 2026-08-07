@@ -6,3 +6,6 @@
 __pycache__/
 *.pyc
 .venv/
+
+# Wrangler's local build/dev cache.
+.wrangler/

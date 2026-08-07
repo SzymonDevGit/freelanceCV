@@ -47,7 +47,7 @@ jobs:
             sleep 15
           done
           echo "deployed=false" >> "$GITHUB_OUTPUT"
-          echo "::warning::sitemap.xml is not live yet — is Cloudflare Pages connected to this repo?"
+          echo "::warning::sitemap.xml is not live yet — did the Cloudflare Workers build succeed?"
 
       # Checks production server config: http->https redirect, www handling,
       # Content-Type charset, key URLs, real 404s.

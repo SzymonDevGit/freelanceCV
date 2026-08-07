@@ -1,0 +1,19 @@
+# Files in the repo that are not part of the website.
+#
+# The assets directory is the repo root, so without this everything here gets
+# uploaded and served — including the git history and the build scripts.
+# Same syntax as .gitignore. Anything not listed IS published, so check this
+# file before adding anything to the root.
+
+/.git/
+/.github/
+/.cache/
+/.wrangler/
+/tools/
+/SEO.md
+/.gitignore
+/.assetsignore
+/wrangler.jsonc
+
+# Kept deliberately: robots.txt, sitemap.xml, _headers, the domain
+# verification .txt, and /design/ (noindex mockups, but linked for review).
