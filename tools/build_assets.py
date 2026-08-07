@@ -7,6 +7,7 @@ Build every static asset the site needs, reproducibly.
 Produces:
   fonts/*.woff2 + fonts/fonts.css   self-hosted webfonts (no third-party request)
   og-image.png                      1200x630 social/preview card
+  cork.webp                         300x300 seamless cork tile (evidence board)
   logo.png                          512x512 square logo (schema.org "logo")
   apple-touch-icon.png              180x180
   icon-192.png, icon-512.png        PWA / manifest icons
@@ -305,6 +306,68 @@ def build_og() -> None:
     print("  wrote og-image.png (1200x630)")
 
 
+# ------------------------------------------------------------------ cork --
+# The evidence board's surface. Cork is dense, low-contrast and granular:
+# irregular chips of light and dark pressed together, with almost no base
+# showing through. Two approaches that look obvious and are not: a lattice of
+# CSS radial-gradients tiles on a visible grid and reads as polka dots, and
+# feTurbulence — filtered or raw — reads as smooth hardboard while emitting
+# per-channel colour noise that tints the board into confetti.
+#
+# So the chips are drawn explicitly. Anything crossing a tile edge is redrawn
+# on the far side, which is what makes the result wrap seamlessly at any size.
+CORK_BASE = "#c69c62"
+CORK_DARK = ["#b08a4f", "#a17c42", "#bb9660", "#96733a"]
+CORK_LIGHT = ["#dcb47e", "#dfba86", "#cba268", "#e3c391"]
+CORK_TILE = 300
+CORK_SEED = 23
+
+
+def _rgba(hex_colour: str, opacity: float) -> tuple[int, int, int, int]:
+    h = hex_colour.lstrip("#")
+    return (int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16), round(255 * opacity))
+
+
+def build_cork() -> None:
+    import random
+
+    ss = 3                      # supersample, for clean chip edges at 1x
+    size = CORK_TILE * ss
+    img = Image.new("RGB", (size, size), CORK_BASE)
+    # passing "RGBA" makes ImageDraw blend by alpha instead of replacing it
+    d = ImageDraw.Draw(img, "RGBA")
+    rnd = random.Random(CORK_SEED)
+
+    def chip(x: float, y: float, rx: float, ry: float, fill) -> None:
+        # redraw across every edge the chip touches, so the tile wraps
+        for dx in (-CORK_TILE, 0, CORK_TILE):
+            for dy in (-CORK_TILE, 0, CORK_TILE):
+                cx, cy = (x + dx) * ss, (y + dy) * ss
+                if cx < -rx * ss or cx > size + rx * ss:
+                    continue
+                if cy < -ry * ss or cy > size + ry * ss:
+                    continue
+                d.ellipse([cx - rx * ss, cy - ry * ss, cx + rx * ss, cy + ry * ss], fill=fill)
+
+    # three passes: coarse dark chips, lighter grains, then fine speckle
+    for n, palette, r_lo, r_hi, o_lo, o_hi, squash in (
+        (270, CORK_DARK, 2.6, 5.4, 0.22, 0.38, True),
+        (300, CORK_LIGHT, 1.8, 3.8, 0.24, 0.42, False),
+        (360, CORK_LIGHT + CORK_DARK, 1.0, 2.0, 0.20, 0.28, False),
+    ):
+        for _ in range(n):
+            r = rnd.uniform(r_lo, r_hi)
+            fill = _rgba(rnd.choice(palette), rnd.uniform(o_lo, o_hi))
+            chip(
+                rnd.uniform(0, CORK_TILE), rnd.uniform(0, CORK_TILE),
+                r, r * rnd.uniform(0.62, 1.0) if squash else r, fill,
+            )
+
+    out = ROOT / "cork.webp"
+    img.resize((CORK_TILE, CORK_TILE), Image.LANCZOS).save(out, "WEBP", lossless=True, method=6)
+    print(f"  wrote cork.webp ({CORK_TILE}x{CORK_TILE}, {out.stat().st_size / 1024:.0f} KB)")
+
+
 def build_og_post() -> None:
     """Social card for the hallucination post — the finding, not a stock graphic."""
     dest = ROOT / "blog/ai-hallucination-rates-2024-vs-2026/og.png"
@@ -431,6 +494,7 @@ def main() -> int:
     build_og()
     build_og_post()
     build_icons()
+    build_cork()
     check_glyph_coverage()
     print("Done.")
     return 0

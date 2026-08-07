@@ -122,6 +122,67 @@ fine and still lands in the right conversation.
 
 ---
 
+## The Bench design, and the dark theme (7 Aug 2026)
+
+The site was rebuilt on the design mockup you picked — `design/d-paper/`, the
+green pen — and now ships **light and dark**, defaulting to whichever the
+visitor's operating system is set to. There is a switch in the header if they
+disagree, and that choice is remembered.
+
+### How the theming works, and why it looks like this
+
+Every colour on the site is a custom property. There are two palettes and
+nothing else: `:root` is paper, and the dark block overrides the same names.
+Dark is deliberately **not** a variable swap — on light stock the materials
+have to behave the other way round, so:
+
+* the steel rule down the page edge goes from dark ticks bitten into bright
+  metal to light ticks scored into dark metal;
+* masking tape darkens the sheet under it on paper and lightens it in the dark;
+* shadows warm and shorten in the light, lengthen and cool in the dark;
+* the cork board is one image either way, veiled darker at night by a multiply
+  layer (`--cork-veil`, which is plain white on light and so multiplies to
+  nothing).
+
+The dark palette is applied **twice**, on purpose: once by attribute for the
+toggle, once inside `@media (prefers-color-scheme: dark)` for visitors with no
+JavaScript. The two blocks are identical and must stay that way — change one,
+change the other. A tiny script in `<head>` resolves the theme *before* first
+paint, so the page never flashes the wrong one.
+
+The blog, the post and the 404 page were rethemed to match. Leaving them on the
+old dark-wood palette would have meant clicking "Notes" dropped you into what
+looked like a different company's website.
+
+### Two things worth not re-learning
+
+**The cork tile is baked, not inlined.** `tools/build_assets.py` draws ~1,160
+chips into one seamless 300 px tile and writes `cork.webp` (29 KB, cached a
+week). It was 45 KB of inline SVG in the mockup, which would have pushed the
+HTML over the audit's 120 KB budget for something the browser can cache
+separately. Two approaches that look obvious and are not: a lattice of CSS
+radial-gradients tiles on a visible grid and reads as polka dots, and
+`feTurbulence` — filtered or raw — reads as smooth hardboard while emitting
+per-channel colour noise that tints the board into confetti.
+
+**Resting tilts use `rotate:`, not `transform: rotate()`.** Sheets on the page
+sit a fraction off true, and the reveal animation moves elements with
+`transform`. When both used the same property, every tilt had to be restored by
+hand on `.in` — and one of those restore rules silently stopped matching, which
+left the whole FAQ invisible. `rotate` and `translate` are independent
+properties; the reveal and the tilt no longer touch each other.
+
+### What did not change
+
+The copy, every figure, the whole JSON-LD graph, the canonical, the meta
+description and the heading outline are all as they were. The four results
+states still ship in the markup rather than being written by script, so every
+figure is readable with JavaScript off. The charts in the blog post now emit
+`fill="var(--token)"` instead of baked hex, which is what lets one chart render
+correctly in both themes.
+
+---
+
 ## What changed
 
 | Area | Before | After |
@@ -141,9 +202,11 @@ fine and still lands in the right conversation.
 | Headers | Defaults | `_headers`: HSTS, nosniff, referrer policy, permissions policy, 1-year immutable font cache |
 | Accessibility | No skip link | Skip-to-content link |
 | Freshness | None | Visible `<time>` stamp + `dateModified` + sitemap `lastmod`, all kept in sync |
+| Theme | Dark only | Light and dark, following the OS by default, with a switch in the header that is remembered. Resolved before first paint; works with JavaScript off via `prefers-color-scheme` |
 
-Live page weight: 78 KB HTML (~15 KB over the wire after Brotli) + 182 KB of
-fonts, cached for a year. Seven requests total, all first-party.
+Live page weight: 92 KB HTML (two full palettes and the whole page's CSS are
+inline, so it is one request, not two) + 182 KB of fonts cached for a year +
+a 29 KB cork tile. All first-party; still zero third-party requests.
 
 ---
 

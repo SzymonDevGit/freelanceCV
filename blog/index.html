@@ -7,7 +7,8 @@
 <title>Notes on data, automation and AI | Cheltenham Data</title>
 <meta name="description" content="Short, evidence-led write-ups on data analysis, business automation and using AI without getting burned. Written by a data analyst in Cheltenham.">
 <meta name="author" content="Szymon Pecherski">
-<meta name="theme-color" content="#14100c">
+<meta name="theme-color" content="#e7dfd1" id="tc">
+<meta name="color-scheme" content="light dark">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <link rel="canonical" href="https://cheltenhamdata.co.uk/blog/">
 <link rel="alternate" hreflang="en-GB" href="https://cheltenhamdata.co.uk/blog/">
@@ -66,6 +67,16 @@
   ]
 }
 </script>
+<script>
+(function(){
+  var t; try{ t = localStorage.getItem('cd-theme'); }catch(e){}
+  if(t !== 'light' && t !== 'dark'){
+    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<noscript><style>.tgl{display:none}</style></noscript>
 </head>
 <body>
 
@@ -74,11 +85,17 @@
 <header class="top">
   <div class="wrap wide">
     <a class="brand" href="/"><b>Cheltenham Data<span>.</span></b><span class="by">Szymon Pecherski</span></a>
-    <nav aria-label="Primary">
+    <div class="right">
+      <nav aria-label="Primary">
       <a href="/#services">Services</a>
       <a href="/blog/">Notes</a>
-      <a href="/#contact">Contact</a>
-    </nav>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <button class="tgl" id="tgl" type="button" aria-label="Switch to dark theme">
+        <svg class="i-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5"/></svg>
+        <svg class="i-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -123,5 +140,22 @@
   </div>
 </footer>
 
+<script>
+(function(){
+  var root = document.documentElement, tgl = document.getElementById('tgl'), tc = document.getElementById('tc');
+  var BG = { light: '#e7dfd1', dark: '#15110d' };
+  function paint(n){
+    root.setAttribute('data-theme', n);
+    if(tc) tc.setAttribute('content', BG[n]);
+    if(tgl) tgl.setAttribute('aria-label', n === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+  }
+  paint(root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
+  if(tgl) tgl.addEventListener('click', function(){
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    paint(next);
+    try{ localStorage.setItem('cd-theme', next); }catch(e){}
+  });
+})();
+</script>
 </body>
 </html>

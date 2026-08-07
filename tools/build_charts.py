@@ -20,16 +20,22 @@ ROOT = Path(__file__).resolve().parent.parent
 POST = ROOT / "blog/ai-hallucination-rates-2024-vs-2026/index.html"
 DATA = ROOT / "blog/ai-hallucination-rates-2024-vs-2026/data/vectara-hallucination-2024-vs-2026.csv"
 
-OAK, TAN, MUTED, FAINT, LINE, TEXT = "#cd9c60", "#e7c495", "#9b8b79", "#7d6e5e", "#332a20", "#f0e7da"
-WALNUT, PATINA = "#8a5a30", "#8aa17f"
+# The charts are inline SVG in the post, so they inherit the page's custom
+# properties. Emitting var(--token) rather than hex is what lets one chart
+# render correctly in both the light and dark themes — a baked-in hex would
+# be invisible in one of them.
+OAK, TAN, MUTED = "var(--oak)", "var(--tan)", "var(--muted)"
+FAINT, LINE, TEXT = "var(--faint)", "var(--line)", "var(--text)"
+# three-step scale for the banded chart, plus the label colour that sits on it
+BAND_GOOD, BAND_MID, BAND_BAD, ON_BAND = "var(--c1)", "var(--c2)", "var(--c3)", "var(--on-c)"
 DISP = "'Space Grotesk',ui-sans-serif,system-ui,sans-serif"
 MONO = "'Space Mono',ui-monospace,monospace"
 
 BUCKETS = [("<75", lambda l: l < 75), ("75–100", lambda l: 75 <= l < 100),
            ("100–125", lambda l: 100 <= l < 125), ("125+", lambda l: l >= 125)]
-BANDS = [("Under 5%", lambda r: r < 5, PATINA),
-         ("5–10%", lambda r: 5 <= r < 10, OAK),
-         ("10% or more", lambda r: r >= 10, WALNUT)]
+BANDS = [("Under 5%", lambda r: r < 5, BAND_GOOD),
+         ("5–10%", lambda r: 5 <= r < 10, BAND_MID),
+         ("10% or more", lambda r: r >= 10, BAND_BAD)]
 
 
 def load() -> list[dict]:
@@ -139,7 +145,7 @@ def chart_bands(rows: list[dict]) -> str:
             if share > 0.07:
                 out.append(f'<text x="{x+w/2:.1f}" y="{top+bar_h/2+6}" text-anchor="middle" '
                            f'font-family="{DISP}" font-size="15" font-weight="600" '
-                           f'fill="#16110c">{share*100:.0f}%</text>')
+                           f'fill="{ON_BAND}">{share*100:.0f}%</text>')
             x += w
     lx = ml
     for name, _, colour in BANDS:

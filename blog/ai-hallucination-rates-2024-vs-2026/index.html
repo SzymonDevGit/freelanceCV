@@ -7,7 +7,8 @@
 <title>AI hallucination rates went up, not down: 2024 vs 2026</title>
 <meta name="description" content="I compared 157 models on Vectara's hallucination leaderboard. The average rate rose from 6.25% to 10.24%, and summary length now predicts hallucination.">
 <meta name="author" content="Szymon Pecherski">
-<meta name="theme-color" content="#14100c">
+<meta name="theme-color" content="#e7dfd1" id="tc">
+<meta name="color-scheme" content="light dark">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <link rel="canonical" href="https://cheltenhamdata.co.uk/blog/ai-hallucination-rates-2024-vs-2026/">
 <link rel="alternate" hreflang="en-GB" href="https://cheltenhamdata.co.uk/blog/ai-hallucination-rates-2024-vs-2026/">
@@ -91,6 +92,16 @@
   ]
 }
 </script>
+<script>
+(function(){
+  var t; try{ t = localStorage.getItem('cd-theme'); }catch(e){}
+  if(t !== 'light' && t !== 'dark'){
+    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<noscript><style>.tgl{display:none}</style></noscript>
 </head>
 <body>
 
@@ -99,11 +110,17 @@
 <header class="top">
   <div class="wrap wide">
     <a class="brand" href="/"><b>Cheltenham Data<span>.</span></b><span class="by">Szymon Pecherski</span></a>
-    <nav aria-label="Primary">
+    <div class="right">
+      <nav aria-label="Primary">
       <a href="/#services">Services</a>
       <a href="/blog/">Notes</a>
-      <a href="/#contact">Contact</a>
-    </nav>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <button class="tgl" id="tgl" type="button" aria-label="Switch to dark theme">
+        <svg class="i-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5"/></svg>
+        <svg class="i-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -178,28 +195,28 @@
 <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="c2t c2d" style="width:100%;height:auto">
 <title id="c2t">Share of models by hallucination band, 2024 versus 2026</title>
 <desc id="c2d">In 2024, 44% of the 52 models tested hallucinated on under 5% of summaries and only 10% hit 10% or worse. By 2026, across 105 models, just 9% were under 5% while 47% hallucinated on 10% or more.</desc>
-<text x="54" y="72.0" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="#f0e7da">2024</text>
-<text x="54" y="88.0" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=52</text>
-<rect x="66.0" y="44" width="282.2" height="46" fill="#8aa17f"/>
-<text x="207.1" y="73.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="#16110c">44%</text>
-<rect x="348.2" y="44" width="294.5" height="46" fill="#cd9c60"/>
-<text x="495.4" y="73.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="#16110c">46%</text>
-<rect x="642.7" y="44" width="61.3" height="46" fill="#8a5a30"/>
-<text x="673.3" y="73.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="#16110c">10%</text>
-<text x="54" y="148.0" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="#f0e7da">2026</text>
-<text x="54" y="164.0" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=105</text>
-<rect x="66.0" y="120" width="54.7" height="46" fill="#8aa17f"/>
-<text x="93.3" y="149.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="#16110c">9%</text>
-<rect x="120.7" y="120" width="285.6" height="46" fill="#cd9c60"/>
-<text x="263.5" y="149.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="#16110c">45%</text>
-<rect x="406.3" y="120" width="297.7" height="46" fill="#8a5a30"/>
-<text x="555.1" y="149.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="#16110c">47%</text>
-<rect x="66" y="224" width="11" height="11" fill="#8aa17f" rx="2"/>
-<text x="83" y="234" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#9b8b79">Under 5%</text>
-<rect x="151.2" y="224" width="11" height="11" fill="#cd9c60" rx="2"/>
-<text x="168.2" y="234" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#9b8b79">5–10%</text>
-<rect x="214.2" y="224" width="11" height="11" fill="#8a5a30" rx="2"/>
-<text x="231.2" y="234" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="#9b8b79">10% or more</text>
+<text x="54" y="72.0" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="var(--text)">2024</text>
+<text x="54" y="88.0" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=52</text>
+<rect x="66.0" y="44" width="282.2" height="46" fill="var(--c1)"/>
+<text x="207.1" y="73.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="var(--on-c)">44%</text>
+<rect x="348.2" y="44" width="294.5" height="46" fill="var(--c2)"/>
+<text x="495.4" y="73.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="var(--on-c)">46%</text>
+<rect x="642.7" y="44" width="61.3" height="46" fill="var(--c3)"/>
+<text x="673.3" y="73.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="var(--on-c)">10%</text>
+<text x="54" y="148.0" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="var(--text)">2026</text>
+<text x="54" y="164.0" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=105</text>
+<rect x="66.0" y="120" width="54.7" height="46" fill="var(--c1)"/>
+<text x="93.3" y="149.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="var(--on-c)">9%</text>
+<rect x="120.7" y="120" width="285.6" height="46" fill="var(--c2)"/>
+<text x="263.5" y="149.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="var(--on-c)">45%</text>
+<rect x="406.3" y="120" width="297.7" height="46" fill="var(--c3)"/>
+<text x="555.1" y="149.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="var(--on-c)">47%</text>
+<rect x="66" y="224" width="11" height="11" fill="var(--c1)" rx="2"/>
+<text x="83" y="234" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="var(--muted)">Under 5%</text>
+<rect x="151.2" y="224" width="11" height="11" fill="var(--c2)" rx="2"/>
+<text x="168.2" y="234" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="var(--muted)">5–10%</text>
+<rect x="214.2" y="224" width="11" height="11" fill="var(--c3)" rx="2"/>
+<text x="231.2" y="234" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" fill="var(--muted)">10% or more</text>
 </svg>
 <!--CHART:bands:END-->
     <figcaption><b>Share of tested models by hallucination band.</b> The "under 5%" group — the models
@@ -245,55 +262,55 @@
 <svg viewBox="0 0 720 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="c1t c1d" style="width:100%;height:auto">
 <title id="c1t">Mean hallucination rate by summary length, 2024 versus 2026</title>
 <desc id="c1d">In 2024 the hallucination rate was flat across summary lengths (7.1% under 75 words down to 5.0% at 125-plus words, but only one model sat in that longest bucket). In 2026 the rate climbs steadily with length: 8.1% under 75 words, 8.4% at 75 to 100, 9.8% at 100 to 125, and 13.0% at 125-plus words.</desc>
-<line x1="54" y1="316.0" x2="704" y2="316.0" stroke="#332a20" stroke-width="1"/>
-<text x="44" y="320.0" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="#7d6e5e">0%</text>
-<line x1="54" y1="277.4" x2="704" y2="277.4" stroke="#332a20" stroke-width="1"/>
-<text x="44" y="281.4" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="#7d6e5e">2%</text>
-<line x1="54" y1="238.9" x2="704" y2="238.9" stroke="#332a20" stroke-width="1"/>
-<text x="44" y="242.9" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="#7d6e5e">4%</text>
-<line x1="54" y1="200.3" x2="704" y2="200.3" stroke="#332a20" stroke-width="1"/>
-<text x="44" y="204.3" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="#7d6e5e">6%</text>
-<line x1="54" y1="161.7" x2="704" y2="161.7" stroke="#332a20" stroke-width="1"/>
-<text x="44" y="165.7" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="#7d6e5e">8%</text>
-<line x1="54" y1="123.1" x2="704" y2="123.1" stroke="#332a20" stroke-width="1"/>
-<text x="44" y="127.1" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="#7d6e5e">10%</text>
-<line x1="54" y1="84.6" x2="704" y2="84.6" stroke="#332a20" stroke-width="1"/>
-<text x="44" y="88.6" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="#7d6e5e">12%</text>
-<line x1="54" y1="46.0" x2="704" y2="46.0" stroke="#332a20" stroke-width="1"/>
-<text x="44" y="50.0" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="#7d6e5e">14%</text>
-<rect x="86.8" y="178.2" width="45.5" height="137.8" fill="#9b8b79" rx="2"/>
-<text x="109.5" y="171.2" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="#f0e7da">7.1%</text>
-<text x="109.5" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=18</text>
-<rect x="138.2" y="160.6" width="45.5" height="155.4" fill="#cd9c60" rx="2"/>
-<text x="161.0" y="153.6" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="#f0e7da">8.1%</text>
-<text x="161.0" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=14</text>
-<text x="135.2" y="352.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#9b8b79">&lt;75</text>
-<rect x="249.2" y="203.3" width="45.5" height="112.7" fill="#9b8b79" rx="2"/>
-<text x="272.0" y="196.3" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="#f0e7da">5.8%</text>
-<text x="272.0" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=27</text>
-<rect x="300.8" y="153.7" width="45.5" height="162.3" fill="#cd9c60" rx="2"/>
-<text x="323.5" y="146.7" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="#f0e7da">8.4%</text>
-<text x="323.5" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=28</text>
-<text x="297.8" y="352.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#9b8b79">75–100</text>
-<rect x="411.8" y="207.4" width="45.5" height="108.6" fill="#9b8b79" rx="2"/>
-<text x="434.5" y="200.4" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="#f0e7da">5.6%</text>
-<text x="434.5" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=6</text>
-<rect x="463.2" y="127.5" width="45.5" height="188.5" fill="#cd9c60" rx="2"/>
-<text x="486.0" y="120.5" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="#f0e7da">9.8%</text>
-<text x="486.0" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=29</text>
-<text x="460.2" y="352.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#9b8b79">100–125</text>
-<rect x="574.2" y="219.6" width="45.5" height="96.4" fill="#9b8b79" rx="2"/>
-<text x="597.0" y="212.6" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="#f0e7da">5.0%</text>
-<text x="597.0" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=1</text>
-<rect x="625.8" y="64.4" width="45.5" height="251.6" fill="#cd9c60" rx="2"/>
-<text x="648.5" y="57.4" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="#f0e7da">13.0%</text>
-<text x="648.5" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="#7d6e5e">n=34</text>
-<text x="622.8" y="352.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#9b8b79">125+</text>
-<text x="54" y="372" font-family="'Space Mono',ui-monospace,monospace" font-size="10.5" fill="#7d6e5e">AVERAGE SUMMARY LENGTH (WORDS)</text>
-<rect x="54" y="14" width="11" height="11" fill="#9b8b79" rx="2"/>
-<text x="71" y="24" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#9b8b79">2024</text>
-<rect x="136" y="14" width="11" height="11" fill="#cd9c60" rx="2"/>
-<text x="153" y="24" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#9b8b79">2026</text>
+<line x1="54" y1="316.0" x2="704" y2="316.0" stroke="var(--line)" stroke-width="1"/>
+<text x="44" y="320.0" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="var(--faint)">0%</text>
+<line x1="54" y1="277.4" x2="704" y2="277.4" stroke="var(--line)" stroke-width="1"/>
+<text x="44" y="281.4" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="var(--faint)">2%</text>
+<line x1="54" y1="238.9" x2="704" y2="238.9" stroke="var(--line)" stroke-width="1"/>
+<text x="44" y="242.9" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="var(--faint)">4%</text>
+<line x1="54" y1="200.3" x2="704" y2="200.3" stroke="var(--line)" stroke-width="1"/>
+<text x="44" y="204.3" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="var(--faint)">6%</text>
+<line x1="54" y1="161.7" x2="704" y2="161.7" stroke="var(--line)" stroke-width="1"/>
+<text x="44" y="165.7" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="var(--faint)">8%</text>
+<line x1="54" y1="123.1" x2="704" y2="123.1" stroke="var(--line)" stroke-width="1"/>
+<text x="44" y="127.1" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="var(--faint)">10%</text>
+<line x1="54" y1="84.6" x2="704" y2="84.6" stroke="var(--line)" stroke-width="1"/>
+<text x="44" y="88.6" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="var(--faint)">12%</text>
+<line x1="54" y1="46.0" x2="704" y2="46.0" stroke="var(--line)" stroke-width="1"/>
+<text x="44" y="50.0" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="11" fill="var(--faint)">14%</text>
+<rect x="86.8" y="178.2" width="45.5" height="137.8" fill="var(--muted)" rx="2"/>
+<text x="109.5" y="171.2" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">7.1%</text>
+<text x="109.5" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=18</text>
+<rect x="138.2" y="160.6" width="45.5" height="155.4" fill="var(--oak)" rx="2"/>
+<text x="161.0" y="153.6" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">8.1%</text>
+<text x="161.0" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=14</text>
+<text x="135.2" y="352.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--muted)">&lt;75</text>
+<rect x="249.2" y="203.3" width="45.5" height="112.7" fill="var(--muted)" rx="2"/>
+<text x="272.0" y="196.3" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">5.8%</text>
+<text x="272.0" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=27</text>
+<rect x="300.8" y="153.7" width="45.5" height="162.3" fill="var(--oak)" rx="2"/>
+<text x="323.5" y="146.7" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">8.4%</text>
+<text x="323.5" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=28</text>
+<text x="297.8" y="352.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--muted)">75–100</text>
+<rect x="411.8" y="207.4" width="45.5" height="108.6" fill="var(--muted)" rx="2"/>
+<text x="434.5" y="200.4" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">5.6%</text>
+<text x="434.5" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=6</text>
+<rect x="463.2" y="127.5" width="45.5" height="188.5" fill="var(--oak)" rx="2"/>
+<text x="486.0" y="120.5" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">9.8%</text>
+<text x="486.0" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=29</text>
+<text x="460.2" y="352.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--muted)">100–125</text>
+<rect x="574.2" y="219.6" width="45.5" height="96.4" fill="var(--muted)" rx="2"/>
+<text x="597.0" y="212.6" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">5.0%</text>
+<text x="597.0" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=1</text>
+<rect x="625.8" y="64.4" width="45.5" height="251.6" fill="var(--oak)" rx="2"/>
+<text x="648.5" y="57.4" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">13.0%</text>
+<text x="648.5" y="332.0" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=34</text>
+<text x="622.8" y="352.0" text-anchor="middle" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--muted)">125+</text>
+<text x="54" y="372" font-family="'Space Mono',ui-monospace,monospace" font-size="10.5" fill="var(--faint)">AVERAGE SUMMARY LENGTH (WORDS)</text>
+<rect x="54" y="14" width="11" height="11" fill="var(--muted)" rx="2"/>
+<text x="71" y="24" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--muted)">2024</text>
+<rect x="136" y="14" width="11" height="11" fill="var(--oak)" rx="2"/>
+<text x="153" y="24" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--muted)">2026</text>
 </svg>
 <!--CHART:length:END-->
     <figcaption><b>Mean hallucination rate by average summary length.</b> In 2024 the line is
@@ -406,5 +423,22 @@
   </div>
 </footer>
 
+<script>
+(function(){
+  var root = document.documentElement, tgl = document.getElementById('tgl'), tc = document.getElementById('tc');
+  var BG = { light: '#e7dfd1', dark: '#15110d' };
+  function paint(n){
+    root.setAttribute('data-theme', n);
+    if(tc) tc.setAttribute('content', BG[n]);
+    if(tgl) tgl.setAttribute('aria-label', n === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+  }
+  paint(root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
+  if(tgl) tgl.addEventListener('click', function(){
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    paint(next);
+    try{ localStorage.setItem('cd-theme', next); }catch(e){}
+  });
+})();
+</script>
 </body>
 </html>
