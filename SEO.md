@@ -156,11 +156,16 @@ looked like a different company's website.
 
 ### Two things worth not re-learning
 
-**The cork tile is baked, not inlined.** `tools/build_assets.py` draws ~1,160
-chips into one seamless 300 px tile and writes `cork.webp` (29 KB, cached a
-week). It was 45 KB of inline SVG in the mockup, which would have pushed the
-HTML over the audit's 120 KB budget for something the browser can cache
-separately. Two approaches that look obvious and are not: a lattice of CSS
+**The cork tile is a separate file, and it is SVG.** `tools/build_assets.py`
+draws ~1,160 chips into one seamless 300 px tile and writes `cork.svg`, cached
+a week. It was inline in the mockup, which would have pushed the HTML over the
+audit's 120 KB budget for something the browser can cache separately.
+
+SVG for a *noise texture* looks like the wrong call, and the raw numbers agree:
+45 KB against 29 KB for a lossless WebP of the same tile. The number that
+matters is over the wire, and there the order reverses — ~1,160 tiny shapes are
+enormously repetitive, so the SVG gzips to 8 KB, while the WebP is already
+compressed and stays at 29 KB. 3.5x smaller in transit, and diffable in git. Two approaches that look obvious and are not: a lattice of CSS
 radial-gradients tiles on a visible grid and reads as polka dots, and
 `feTurbulence` — filtered or raw — reads as smooth hardboard while emitting
 per-channel colour noise that tints the board into confetti.
@@ -206,7 +211,7 @@ correctly in both themes.
 
 Live page weight: 92 KB HTML (two full palettes and the whole page's CSS are
 inline, so it is one request, not two) + 182 KB of fonts cached for a year +
-a 29 KB cork tile. All first-party; still zero third-party requests.
+an 8 KB cork tile. All first-party; still zero third-party requests.
 
 ---
 

@@ -29,7 +29,7 @@
 /favicon.svg
   Cache-Control: public, max-age=604800
 # The cork tile is generated, seamless and only redrawn if the board changes.
-/cork.webp
+/cork.svg
   Cache-Control: public, max-age=604800
 
 # The page itself must revalidate so edits go live immediately.
