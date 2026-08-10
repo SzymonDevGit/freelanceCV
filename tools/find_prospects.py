@@ -126,10 +126,17 @@ SUBJECTS = {
 }
 SUBJECTS["default"] = SUBJECTS["ecommerce"]
 
-# Filed-accounts types that indicate a business small enough to want this and
-# still large enough to have a real problem. A company filing full accounts has
-# outgrown the offer; one that has never filed is usually too new to have data.
-SMALL_ACCOUNTS = {"micro-entity", "total-exemption-full", "total-exemption-small", "small"}
+# Filed-accounts types, by how big the business behind them is. A company
+# filing full accounts has outgrown the offer entirely.
+#
+# "micro" is the tier that matches a one-person shop self-promoting in forums:
+# micro-entity accounts mean under roughly £632k turnover, and a company that
+# has filed nothing yet is usually a first-year business, which is the target
+# rather than a disqualification. "small" widens to companies with staff.
+ACCOUNT_TIERS = {
+    "micro": {"micro-entity", "total-exemption-small", ""},
+    "small": {"micro-entity", "total-exemption-small", "total-exemption-full", "small", ""},
+}
 
 CORPORATE = re.compile(r"\b(limited|ltd|llp|plc|holdings|group|inc|corp)\b", re.I)
 
@@ -265,15 +272,16 @@ def find_founders(client: Client, company: dict, max_age: int, max_officers: int
     return founders
 
 
-def is_right_size(client: Client, number: str, require_accounts: bool) -> tuple[bool, str]:
+def is_right_size(client: Client, number: str, tier: str) -> tuple[bool, str]:
+    allowed = ACCOUNT_TIERS[tier]
     profile = client.get(f"/company/{number}")
     if not profile:
-        return (not require_accounts), ""
+        return "" in allowed, ""
     accounts = (profile.get("accounts") or {}).get("last_accounts") or {}
     kind = (accounts.get("type") or "").lower()
     if not kind:
-        return (not require_accounts), "none filed"
-    return kind in SMALL_ACCOUNTS, kind
+        return "" in allowed, "none filed"
+    return kind in allowed, kind
 
 
 def compose(prospect: dict) -> tuple[str, str]:
@@ -363,7 +371,7 @@ def run(args: argparse.Namespace) -> int:
             if not founders:
                 continue
 
-            ok, accounts = is_right_size(client, number, args.require_accounts)
+            ok, accounts = is_right_size(client, number, args.size)
             if not ok:
                 continue
 
@@ -444,17 +452,16 @@ def main() -> int:
                    choices=sorted(SIC_PRESETS), help="which SIC presets to search")
     p.add_argument("--from-year", type=int, default=date.today().year - 6,
                    help="earliest incorporation year")
-    p.add_argument("--to-year", type=int, default=date.today().year - 1,
-                   help="latest incorporation year (default: last year, so there "
-                        "is at least one set of filed accounts)")
+    p.add_argument("--to-year", type=int, default=date.today().year,
+                   help="latest incorporation year (default: this year — first-year "
+                        "businesses are the target, not a disqualification)")
     p.add_argument("--max-officers", type=int, default=3,
                    help="skip companies with more directors than this (default 3)")
     p.add_argument("--founding-window", type=int, default=90,
                    help="days between incorporation and appointment to count as "
                         "a founder rather than a hire (default 90)")
-    p.add_argument("--require-accounts", action="store_true", default=True,
-                   help="require filed small/micro accounts (default on)")
-    p.add_argument("--no-require-accounts", dest="require_accounts", action="store_false")
+    p.add_argument("--size", choices=["micro", "small"], default="micro",
+                   help="micro is a one-person shop (default); small allows staff")
     p.add_argument("--out", default="tools/prospects.csv")
     p.add_argument("--emails", nargs="?", const="tools/prospect_emails",
                    help="also write one draft per prospect to this directory")

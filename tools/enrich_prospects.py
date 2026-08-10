@@ -132,7 +132,77 @@ def is_noise(host: str) -> bool:
     return any(host == n or host.endswith("." + n) for n in NOISE)
 
 
+# Forums that publish threads as plain HTML. Reddit blocks most crawlers but
+# serves its own JSON fine to a normal client, so it stays on its own path.
+# UK Business Forums is the better source for this brief: it is UK-only, and
+# the people posting are running businesses the size of a one-person shop.
+FORUMS = {
+    "ukbf": {
+        "name": "UK Business Forums",
+        "base": "https://www.ukbusinessforums.co.uk",
+        "listings": [
+            "/forums/websites-ecommerce.59/",
+            "/forums/general-business-forum.1/",
+            "/forums/marketing-pr.10/",
+            "/tags/ecommerce/",
+        ],
+        "thread_re": re.compile(r'href="(/threads/[a-z0-9][a-z0-9\-\.]*/?)"', re.I),
+        "page_fmt": "page-{n}",
+    },
+}
+
+
 # ---------------------------------------------------------------- discover
+
+def forum_threads(forum: dict, pages: int, delay: float) -> list[str]:
+    """Thread URLs from a forum's plain listing pages."""
+    urls: set[str] = set()
+    for listing in forum["listings"]:
+        for n in range(1, pages + 1):
+            path = listing if n == 1 else listing.rstrip("/") + "/" + forum["page_fmt"].format(n=n)
+            body = get(forum["base"] + path)
+            time.sleep(delay)
+            if not body:
+                break
+            found = forum["thread_re"].findall(body)
+            if not found:
+                break
+            urls.update(forum["base"] + f for f in found)
+    return sorted(urls)
+
+
+def forum_discover(key: str, pages: int, delay: float) -> dict[str, dict]:
+    """Read a forum's threads and pull out the brand domains people post."""
+    forum = FORUMS[key]
+    threads = forum_threads(forum, pages, delay)
+    print(f"  {forum['name']}: {len(threads)} threads", file=sys.stderr)
+
+    seen: dict[str, dict] = {}
+    for url in threads:
+        body = get(url)
+        time.sleep(delay)
+        if not body:
+            continue
+        title = re.search(r"<title[^>]*>(.*?)</title>", body, re.S | re.I)
+        title = html.unescape(re.sub(r"\s+", " ", title.group(1))).strip()[:120] if title else ""
+        # Links inside posts, plus bare domain mentions in the prose.
+        text = html.unescape(body)
+        hosts = set()
+        for m in re.finditer(r'https?://([A-Za-z0-9.\-]+)', text):
+            hosts.add(registrable(m.group(1)))
+        for m in re.finditer(r'\b([a-z0-9][a-z0-9\-]{2,}\.(?:co\.uk|com|shop|store|uk))\b',
+                             text.lower()):
+            hosts.add(registrable(m.group(1)))
+        for host in hosts:
+            if is_noise(host) or host.endswith("ukbusinessforums.co.uk"):
+                continue
+            entry = seen.setdefault(host, {
+                "website": host, "mentions": 0, "source": forum["name"],
+                "example_post": url, "post_title": title,
+            })
+            entry["mentions"] += 1
+    return seen
+
 
 def reddit_search(sub: str, query: str, pages: int = 1) -> list[dict]:
     """Reddit's public search JSON. One request at a time, as published."""
@@ -183,25 +253,40 @@ def domains_in(post: dict) -> set[str]:
 
 def discover(args: argparse.Namespace) -> int:
     seen: dict[str, dict] = {}
-    for sub in args.subs:
-        for query in DISCOVER_QUERIES:
-            posts = reddit_search(sub, query, pages=args.pages)
-            print(f"  r/{sub} '{query}': {len(posts)} posts", file=sys.stderr)
-            for post in posts:
-                for host in domains_in(post):
-                    entry = seen.setdefault(host, {
-                        "website": host, "mentions": 0, "subreddit": sub,
-                        "example_post": f"https://reddit.com{post.get('permalink','')}",
-                        "post_title": (post.get("title") or "")[:120],
-                    })
-                    entry["mentions"] += 1
+
+    if "ukbf" in args.sources:
+        for host, entry in forum_discover("ukbf", args.pages, args.delay).items():
+            existing = seen.setdefault(host, entry)
+            if existing is not entry:
+                existing["mentions"] += entry["mentions"]
+
+    if "reddit" in args.sources:
+        for sub in args.subs:
+            for query in DISCOVER_QUERIES:
+                posts = reddit_search(sub, query, pages=args.pages)
+                print(f"  r/{sub} '{query}': {len(posts)} posts", file=sys.stderr)
+                for post in posts:
+                    for host in domains_in(post):
+                        entry = seen.setdefault(host, {
+                            "website": host, "mentions": 0, "source": f"r/{sub}",
+                            "example_post": f"https://reddit.com{post.get('permalink','')}",
+                            "post_title": (post.get("title") or "")[:120],
+                        })
+                        entry["mentions"] += 1
 
     if not seen:
-        print("Nothing found. Reddit may be rate limiting; try fewer --subs.",
+        print("Nothing found. If you asked for reddit, it may be rate limiting.",
               file=sys.stderr)
         return 1
 
-    rows = sorted(seen.values(), key=lambda r: -r["mentions"])
+    # Niche-first. Mention count is a popularity signal, so ranking by it
+    # descending surfaces the brands everyone already knows — the opposite of
+    # what this list is for. A domain posted once by the person who runs it is
+    # exactly the target; the contacts stage then confirms it is a real shop
+    # rather than a stray link, by looking for a store platform on the page.
+    reverse = args.rank == "popular"
+    rows = sorted(seen.values(), key=lambda r: (r["mentions"], r["website"]),
+                  reverse=reverse)
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     with out.open("w", newline="", encoding="utf-8") as fh:
@@ -325,8 +410,17 @@ def main() -> int:
     sub = p.add_subparsers(dest="cmd", required=True)
 
     d = sub.add_parser("discover", help="find niche brand domains in forums")
-    d.add_argument("--subs", nargs="+", default=DEFAULT_SUBS)
-    d.add_argument("--pages", type=int, default=2, help="pages per query (100 posts each)")
+    d.add_argument("--sources", nargs="+", default=["ukbf"],
+                   choices=["ukbf", "reddit"],
+                   help="ukbf is UK-only and the better fit for micro businesses; "
+                        "reddit is broader but blocks most crawlers, so it only "
+                        "works from your own machine")
+    d.add_argument("--subs", nargs="+", default=DEFAULT_SUBS,
+                   help="subreddits, when reddit is in --sources")
+    d.add_argument("--pages", type=int, default=3, help="listing pages per source")
+    d.add_argument("--delay", type=float, default=1.5, help="seconds between requests")
+    d.add_argument("--rank", choices=["niche", "popular"], default="niche",
+                   help="niche puts the least-mentioned domains first (default)")
     d.add_argument("--out", default="tools/discovered.csv")
     d.set_defaults(fn=discover)
 
