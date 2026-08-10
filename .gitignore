@@ -9,3 +9,7 @@ __pycache__/
 
 # Wrangler's local build/dev cache.
 .wrangler/
+
+# Raw job-scrape input for tools/clean_job_scrape.py. Only the derived
+# aggregates in blog/*/data/ are published.
+data.xlsx

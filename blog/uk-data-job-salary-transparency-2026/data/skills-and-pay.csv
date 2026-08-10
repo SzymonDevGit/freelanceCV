@@ -1,0 +1,22 @@
+skill,pct_of_postings,pct_of_analyst_postings,postings_with_salary,median_advertised_gbp
+Excel,32.1,35.2,456,51198.0
+SQL,24.8,28.3,345,57500.0
+Power BI,18.2,20.0,257,55000.0
+Python,17.3,16.1,213,60500.0
+Azure,8.4,6.2,115,60000.0
+Tableau,7.3,9.2,66,51739.0
+AWS,6.4,5.0,61,60000.0
+Machine learning,5.5,3.4,70,67500.0
+Snowflake,4.2,3.5,32,
+R,4.2,4.4,44,
+Databricks,4.1,2.1,47,
+Looker,3.1,4.5,27,
+Salesforce,3.0,3.6,28,
+dbt,2.5,2.0,26,
+Spark,2.2,1.0,20,
+VBA,1.4,2.3,11,
+Google Analytics,1.0,1.8,19,
+SAS,0.9,1.2,13,
+Alteryx,0.8,0.6,4,
+Qlik,0.6,0.5,8,
+SPSS,0.3,0.1,3,

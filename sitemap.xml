@@ -19,6 +19,16 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://cheltenhamdata.co.uk/blog/uk-data-job-salary-transparency-2026/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://cheltenhamdata.co.uk/blog/uk-data-job-salary-transparency-2026/og.png</image:loc>
+      <image:title>85% of UK data job ads don't tell you the salary</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://cheltenhamdata.co.uk/blog/ai-hallucination-rates-2024-vs-2026/</loc>
     <lastmod>2026-08-07</lastmod>
     <changefreq>yearly</changefreq>

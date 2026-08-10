@@ -35,6 +35,8 @@ SITE = "https://cheltenhamdata.co.uk"
 PAGES: dict[str, str | None] = {
     "index.html": "/",
     "blog/index.html": "/blog/",
+    "blog/uk-data-job-salary-transparency-2026/index.html":
+        "/blog/uk-data-job-salary-transparency-2026/",
     "blog/ai-hallucination-rates-2024-vs-2026/index.html":
         "/blog/ai-hallucination-rates-2024-vs-2026/",
     "404.html": None,

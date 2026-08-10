@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>85% of UK data job ads don't tell you the salary</title>
+<meta name="description" content="I cleaned 9,559 UK data and analyst job postings. Only 14.9% state a salary, London is among the least transparent cities, and the most-wanted tool pays the least.">
+<meta name="author" content="Szymon Pecherski">
+<meta name="theme-color" content="#e7dfd1" id="tc">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://cheltenhamdata.co.uk/blog/uk-data-job-salary-transparency-2026/">
+<link rel="alternate" hreflang="en-GB" href="https://cheltenhamdata.co.uk/blog/uk-data-job-salary-transparency-2026/">
+<link rel="alternate" hreflang="x-default" href="https://cheltenhamdata.co.uk/blog/uk-data-job-salary-transparency-2026/">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Cheltenham Data">
+<meta property="og:title" content="85% of UK data job ads don't tell you the salary">
+<meta property="og:description" content="9,559 UK data and analyst postings, cleaned and analysed. Only 14.9% state a salary — and the biggest market is among the least transparent.">
+<meta property="og:url" content="https://cheltenhamdata.co.uk/blog/uk-data-job-salary-transparency-2026/">
+<meta property="og:locale" content="en_GB">
+<meta property="og:image" content="https://cheltenhamdata.co.uk/blog/uk-data-job-salary-transparency-2026/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="85% of UK data job ads don't tell you the salary — 9,559 postings analysed">
+<meta property="article:published_time" content="2026-08-10">
+<meta property="article:modified_time" content="2026-08-10">
+<meta property="article:author" content="Szymon Pecherski">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="85% of UK data job ads don't tell you the salary">
+<meta name="twitter:description" content="9,559 UK data and analyst postings, cleaned and analysed. Only 14.9% state a salary.">
+<meta name="twitter:image" content="https://cheltenhamdata.co.uk/blog/uk-data-job-salary-transparency-2026/og.png">
+<meta name="twitter:image:alt" content="85% of UK data job ads don't tell you the salary — 9,559 postings analysed">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/fonts/space-grotesk-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-tight-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/blog/blog.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://cheltenhamdata.co.uk/blog/uk-data-job-salary-transparency-2026/#post",
+      "headline": "85% of UK data job ads don't tell you the salary",
+      "description": "An analysis of 9,559 UK data, analyst and adjacent job postings scraped from LinkedIn. Only 14.9% state a salary; London is among the least transparent large markets; and the most frequently requested tool carries the lowest median advertised pay.",
+      "url": "https://cheltenhamdata.co.uk/blog/uk-data-job-salary-transparency-2026/",
+      "datePublished": "2026-08-10",
+      "dateModified": "2026-08-10",
+      "inLanguage": "en-GB",
+      "image": "https://cheltenhamdata.co.uk/blog/uk-data-job-salary-transparency-2026/og.png",
+      "wordCount": 1900,
+      "keywords": ["UK data analyst salary", "salary transparency", "job market analysis", "data analyst jobs UK", "Power BI", "SQL", "Python"],
+      "author": { "@id": "https://cheltenhamdata.co.uk/#person" },
+      "publisher": { "@id": "https://cheltenhamdata.co.uk/#business" },
+      "isPartOf": { "@id": "https://cheltenhamdata.co.uk/blog/#blog" },
+      "mainEntityOfPage": { "@id": "https://cheltenhamdata.co.uk/blog/uk-data-job-salary-transparency-2026/" }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://cheltenhamdata.co.uk/blog/uk-data-job-salary-transparency-2026/#dataset",
+      "name": "UK data and analyst job postings, August 2026 — aggregate tables",
+      "description": "Derived aggregate tables from 9,559 UK job postings: salary transparency by city, tool frequency with median advertised pay, and median advertised salary by seniority. The underlying postings are not republished.",
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creator": { "@id": "https://cheltenhamdata.co.uk/#person" },
+      "isAccessibleForFree": true,
+      "distribution": [
+        { "@type": "DataDownload", "encodingFormat": "text/csv",
+          "contentUrl": "https://cheltenhamdata.co.uk/blog/uk-data-job-salary-transparency-2026/data/salary-transparency-by-city.csv" },
+        { "@type": "DataDownload", "encodingFormat": "text/csv",
+          "contentUrl": "https://cheltenhamdata.co.uk/blog/uk-data-job-salary-transparency-2026/data/skills-and-pay.csv" },
+        { "@type": "DataDownload", "encodingFormat": "text/csv",
+          "contentUrl": "https://cheltenhamdata.co.uk/blog/uk-data-job-salary-transparency-2026/data/salary-by-seniority.csv" }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://cheltenhamdata.co.uk/blog/uk-data-job-salary-transparency-2026/#crumbs",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cheltenhamdata.co.uk/" },
+        { "@type": "ListItem", "position": 2, "name": "Notes", "item": "https://cheltenhamdata.co.uk/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "UK data job salary transparency" }
+      ]
+    }
+  ]
+}
+</script>
+<script>
+(function(){
+  var t; try{ t = localStorage.getItem('cd-theme'); }catch(e){}
+  if(t !== 'light' && t !== 'dark'){
+    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<noscript><style>.tgl{display:none}</style></noscript>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap wide">
+    <a class="brand" href="/"><b>Cheltenham Data<span>.</span></b><span class="by">Szymon Pecherski</span></a>
+    <div class="right">
+      <nav aria-label="Primary">
+        <a href="/#services">Services</a>
+        <a href="/blog/">Notes</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <button class="tgl" id="tgl" type="button" aria-label="Switch to dark theme">
+        <svg class="i-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5"/></svg>
+        <svg class="i-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a><span>/</span><a href="/blog/">Notes</a><span>/</span>Salary transparency
+  </nav>
+</div>
+
+<main id="main">
+<article class="wrap">
+
+  <h1>85% of UK data job ads don&rsquo;t tell you the salary</h1>
+
+  <div class="meta">
+    <span>By Szymon Pecherski</span>
+    <span><time datetime="2026-08-10">10 August 2026</time></span>
+    <span>8 min read</span>
+  </div>
+
+  <p class="standfirst">Everyone who has applied for a job in the last few years suspects this.
+  I scraped 9,559 UK data, analyst and adjacent postings from LinkedIn, cleaned them, and put a
+  number on it. The number is worse than I expected &mdash; and where the salary <em>is</em> hidden
+  turns out to be more interesting than the fact that it is.</p>
+
+  <div class="tldr">
+    <b>The short version</b>
+    <p>Of 9,559 UK postings across 3,891 employers, only <strong>1,429 (14.9%) state a salary</strong>.
+    Remote roles are more than twice as likely to tell you as roles that say nothing about working
+    pattern (24.9% versus 12.0%). London is the largest market by a distance and one of the least
+    transparent, disclosing in 12.7% of adverts against 21.1% in Sheffield. Among the minority that
+    do publish a figure, the median advertised midpoint is <strong>&pound;54,000</strong>, and
+    <strong>7.8% of "ranges" are the same number twice</strong>.</p>
+  </div>
+
+  <div class="tiles">
+    <div class="tile"><div class="n">14.9%</div><div class="t">Of 9,559 postings state a salary. The other 8,130 do not</div></div>
+    <div class="tile"><div class="n">12.7%</div><div class="t">Disclosure in London, the largest market, against a 14.9% national average</div></div>
+    <div class="tile"><div class="n">&pound;54,000</div><div class="t">Median advertised midpoint among the 1,429 that publish one</div></div>
+    <div class="tile"><div class="n">7.8%</div><div class="t">Of published ranges have an identical floor and ceiling</div></div>
+  </div>
+
+  <h2>What is in the data, and what is not</h2>
+
+  <p>This goes first because it bounds everything below. The dataset is a snapshot of 9,559 unique
+  live postings collected from LinkedIn in August 2026, split into two groups by search term: 4,008
+  explicitly analyst-titled roles and 5,551 adjacent ones &mdash; data engineering, finance,
+  product, accounting and similar. Every row has a job id, title, employer, location, salary field
+  and full description. There are 3,891 distinct employers.</p>
+
+  <p>What that design means for the conclusions:</p>
+
+  <ul>
+    <li>It measures <strong>what employers publish on one platform</strong>, not what they pay. A
+    company that withholds the salary in the advert and tells you at first interview is counted as
+    withholding, because for the purpose of deciding whether to apply, it is.</li>
+    <li>The pay figures come only from the 14.9% that disclose. That is <strong>not a random
+    sample</strong> of the market. Public bodies and organisations with banded pay structures
+    publish more readily, so the medians below are best read as "typical of employers willing to
+    publish", not "typical of the market".</li>
+    <li>Roles were captured once. Nothing here tracks how long a vacancy stays open, and 214 rows
+    are the same title at the same employer in the same location &mdash; repostings, or genuinely
+    parallel openings. They are flagged rather than removed, because there is no way to tell which
+    from the data alone.</li>
+  </ul>
+
+  <h2>The headline: five in six adverts stay quiet</h2>
+
+  <p>1,429 postings state a usable sterling salary. 8,130 do not. That is 85.1% of a market advertising
+  professional roles at a median of &pound;54,000 without saying so.</p>
+
+  <p>The interesting part is the variation. If withholding pay were simply how recruitment works, the
+  rate would be flat across cities. It is not.</p>
+
+  <figure>
+    <!--CHART:transparency:BEGIN-->
+<svg viewBox="0 0 720 464" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t1 d1" style="width:100%;height:auto">
+<title id="t1">Share of postings stating a salary, by city</title>
+<desc id="d1">Sheffield leads on 21.1% and Liverpool on 19.8%, while Belfast is lowest at 5.8% and London — the largest market with 2,035 postings — states a salary in only 12.7% of adverts. The national average across all 9,559 postings is 14.9%.</desc>
+<line x1="388.1" y1="22" x2="388.1" y2="424" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="388.1" y="16" text-anchor="middle" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">UK average 14.9%</text>
+<text x="98" y="49" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">Sheffield</text>
+<rect x="108" y="34" width="396.7" height="20" rx="1.5" fill="var(--c1)"/>
+<text x="512.7" y="49" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">21.1%</text>
+<text x="716" y="49" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=109</text>
+<text x="98" y="81" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">Liverpool</text>
+<rect x="108" y="66" width="372.2" height="20" rx="1.5" fill="var(--c1)"/>
+<text x="488.2" y="81" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">19.8%</text>
+<text x="716" y="81" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=106</text>
+<text x="98" y="113" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">Leeds</text>
+<rect x="108" y="98" width="362.8" height="20" rx="1.5" fill="var(--c1)"/>
+<text x="478.8" y="113" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">19.3%</text>
+<text x="716" y="113" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=321</text>
+<text x="98" y="145" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">Manchester</text>
+<rect x="108" y="130" width="312.1" height="20" rx="1.5" fill="var(--c1)"/>
+<text x="428.1" y="145" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">16.6%</text>
+<text x="716" y="145" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=663</text>
+<text x="98" y="177" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">Nottingham</text>
+<rect x="108" y="162" width="285.8" height="20" rx="1.5" fill="var(--c1)"/>
+<text x="401.8" y="177" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">15.2%</text>
+<text x="716" y="177" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=145</text>
+<text x="98" y="209" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">Bristol</text>
+<rect x="108" y="194" width="263.2" height="20" rx="1.5" fill="var(--c2)"/>
+<text x="379.2" y="209" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">14.0%</text>
+<text x="716" y="209" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=222</text>
+<text x="98" y="241" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">Edinburgh</text>
+<rect x="108" y="226" width="242.5" height="20" rx="1.5" fill="var(--c2)"/>
+<text x="358.5" y="241" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">12.9%</text>
+<text x="716" y="241" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=286</text>
+<text x="98" y="273" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">London</text>
+<rect x="108" y="258" width="238.8" height="20" rx="1.5" fill="var(--c2)"/>
+<text x="354.8" y="273" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">12.7%</text>
+<text x="716" y="273" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=2,035</text>
+<text x="98" y="305" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">Birmingham</text>
+<rect x="108" y="290" width="199.3" height="20" rx="1.5" fill="var(--c2)"/>
+<text x="315.3" y="305" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">10.6%</text>
+<text x="716" y="305" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=322</text>
+<text x="98" y="337" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">Cardiff</text>
+<rect x="108" y="322" width="188.0" height="20" rx="1.5" fill="var(--c2)"/>
+<text x="304.0" y="337" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">10.0%</text>
+<text x="716" y="337" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=110</text>
+<text x="98" y="369" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">Glasgow</text>
+<rect x="108" y="354" width="152.3" height="20" rx="1.5" fill="var(--c2)"/>
+<text x="268.3" y="369" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">8.1%</text>
+<text x="716" y="369" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=284</text>
+<text x="98" y="401" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">Belfast</text>
+<rect x="108" y="386" width="109.0" height="20" rx="1.5" fill="var(--c2)"/>
+<text x="225.0" y="401" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">5.8%</text>
+<text x="716" y="401" text-anchor="end" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=241</text>
+<text x="108" y="452" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">% of postings that state a salary &#183; cities with 100+ postings</text>
+</svg>
+<!--CHART:transparency:END-->
+    <figcaption><b>Salary transparency by city, for the twelve cities with 100 or more postings.</b>
+    Sheffield and Liverpool disclose at roughly three times the rate of Belfast. London, with 2,035
+    postings &mdash; more than the next three cities combined &mdash; sits below the national average.</figcaption>
+  </figure>
+
+  <p>Belfast is the outlier at 5.8%, and Glasgow is not far behind at 8.1%. At the other end,
+  Sheffield discloses in 21.1% of postings and Liverpool 19.8%. The gap between the best and worst
+  is nearly four-fold, in the same country, in the same month, for broadly the same kinds of role.</p>
+
+  <p>London deserves its own sentence. It is the biggest data job market in the UK by a wide margin
+  and it discloses less often than the national average. Whatever is driving disclosure, market size
+  and competition for candidates is not it.</p>
+
+  <h2>Remote roles are twice as likely to tell you</h2>
+
+  <p>The strongest single predictor of disclosure in this dataset is not geography or seniority.
+  It is working pattern.</p>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Working pattern (as described)</th><th class="num">Postings</th><th class="num">State a salary</th></tr></thead>
+      <tbody>
+        <tr><td>Explicitly remote</td><td class="num">217</td><td class="num">24.9%</td></tr>
+        <tr><td>Mentions hybrid</td><td class="num">3,902</td><td class="num">18.5%</td></tr>
+        <tr><td>Says nothing either way</td><td class="num">5,440</td><td class="num">12.0%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>A remote advert is more than twice as likely to carry a salary as one that says nothing about
+  location arrangements. The plausible reason is competition: a remote role competes against every
+  other remote role in the country rather than every role within commuting distance, and a candidate
+  comparing twenty adverts will skip the ones that make them ask.</p>
+
+  <p>Worth noting the direction of that inference is not established by this data. Employers who are
+  already open about pay may simply be the same employers who are open about flexibility. Both are
+  symptoms of how an organisation writes adverts.</p>
+
+  <h2>What the transparent 15% actually pay</h2>
+
+  <p>Among the 1,429 postings with a usable sterling figure, the median midpoint is
+  &pound;54,000, with a quartile range of &pound;42,977 to &pound;65,000.</p>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Seniority (from job title)</th><th class="num">Postings with pay</th><th class="num">Median advertised</th></tr></thead>
+      <tbody>
+        <tr><td>Junior / graduate</td><td class="num">26</td><td class="num">&pound;29,742</td></tr>
+        <tr><td>Mid / unspecified</td><td class="num">866</td><td class="num">&pound;50,359</td></tr>
+        <tr><td>Lead / manager</td><td class="num">356</td><td class="num">&pound;56,025</td></tr>
+        <tr><td>Senior</td><td class="num">171</td><td class="num">&pound;62,500</td></tr>
+        <tr><td>Head / director</td><td class="num">10</td><td class="num">&pound;82,104</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The ladder behaves as you would expect, which is mildly reassuring about the title parsing. Two
+  rows carry health warnings: 26 junior postings and 10 director postings are small enough that a
+  handful of unusual adverts move the median, so treat those as indicative only.</p>
+
+  <p>Location adds about a fifth. London postings that publish pay have a median midpoint of
+  &pound;62,500 against &pound;52,500 everywhere else &mdash; a &pound;10,000 premium, or 19%. Whether
+  that survives London housing costs is a different article.</p>
+
+  <h2>One in thirteen "ranges" is a single number</h2>
+
+  <p>Every salary on LinkedIn is stored as a range, which makes an unusual check possible: how many
+  of those ranges are actually a range?</p>
+
+  <p>111 of the 1,429 &mdash; <strong>7.8%</strong> &mdash; have an identical floor and ceiling.
+  &pound;42,000 to &pound;42,000. That is a fixed salary presented in a field designed to imply
+  negotiating room. Of the rest, the median range is &pound;9,216 wide, or 14.3% of the midpoint,
+  which is a genuine band rather than a gesture.</p>
+
+  <p>This is a small finding and I like it a lot, because it is the kind of thing you only see if you
+  look at the shape of the data rather than the summary statistics. A mean salary would have hidden it
+  completely.</p>
+
+  <h2>The most-requested tool pays the least</h2>
+
+  <p>Counting tool mentions across all 9,559 descriptions produces the least surprising ranking in
+  data work, and then one genuinely awkward result.</p>
+
+  <figure>
+    <!--CHART:skills:BEGIN-->
+<svg viewBox="0 0 720 364" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t2 d2" style="width:100%;height:auto">
+<title id="t2">Most-requested tools, and the median salary advertised alongside them</title>
+<desc id="d2">Excel is named in 32.1% of postings but carries the lowest median advertised salary at £51,198. Python appears in 17.3% at £60,500 and machine learning in 5.5% at £67,500. The most-requested tool pays the least of those measured.</desc>
+<text x="528" y="18" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">median advertised</text>
+<text x="114" y="46" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">Excel</text>
+<rect x="124" y="30" width="302.7" height="22" rx="1.5" fill="var(--c1)"/>
+<text x="434.7" y="46" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">32.1%</text>
+<text x="528" y="46" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" font-weight="600" fill="var(--text)">&#163;51,198</text>
+<text x="602" y="46" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=456</text>
+<text x="114" y="82" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">SQL</text>
+<rect x="124" y="66" width="233.8" height="22" rx="1.5" fill="var(--c1)"/>
+<text x="365.8" y="82" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">24.8%</text>
+<text x="528" y="82" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" font-weight="600" fill="var(--text)">&#163;57,500</text>
+<text x="602" y="82" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=345</text>
+<text x="114" y="118" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">Power BI</text>
+<rect x="124" y="102" width="171.6" height="22" rx="1.5" fill="var(--c1)"/>
+<text x="303.6" y="118" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">18.2%</text>
+<text x="528" y="118" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" font-weight="600" fill="var(--text)">&#163;55,000</text>
+<text x="602" y="118" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=257</text>
+<text x="114" y="154" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">Python</text>
+<rect x="124" y="138" width="163.1" height="22" rx="1.5" fill="var(--c1)"/>
+<text x="295.1" y="154" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">17.3%</text>
+<text x="528" y="154" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" font-weight="600" fill="var(--text)">&#163;60,500</text>
+<text x="602" y="154" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=213</text>
+<text x="114" y="190" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">Azure</text>
+<rect x="124" y="174" width="79.2" height="22" rx="1.5" fill="var(--c1)"/>
+<text x="211.2" y="190" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">8.4%</text>
+<text x="528" y="190" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" font-weight="600" fill="var(--text)">&#163;60,000</text>
+<text x="602" y="190" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=115</text>
+<text x="114" y="226" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">Tableau</text>
+<rect x="124" y="210" width="68.8" height="22" rx="1.5" fill="var(--c1)"/>
+<text x="200.8" y="226" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">7.3%</text>
+<text x="528" y="226" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" font-weight="600" fill="var(--text)">&#163;51,739</text>
+<text x="602" y="226" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=66</text>
+<text x="114" y="262" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">AWS</text>
+<rect x="124" y="246" width="60.3" height="22" rx="1.5" fill="var(--c1)"/>
+<text x="192.3" y="262" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">6.4%</text>
+<text x="528" y="262" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" font-weight="600" fill="var(--text)">&#163;60,000</text>
+<text x="602" y="262" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=61</text>
+<text x="114" y="298" text-anchor="end" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="var(--text)">Machine learning</text>
+<rect x="124" y="282" width="51.9" height="22" rx="1.5" fill="var(--c1)"/>
+<text x="183.9" y="298" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="600" fill="var(--text)">5.5%</text>
+<text x="528" y="298" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="13" font-weight="600" fill="var(--text)">&#163;67,500</text>
+<text x="602" y="298" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">n=70</text>
+<text x="124" y="352" font-family="'Space Mono',ui-monospace,monospace" font-size="9.5" fill="var(--faint)">% of all 9,559 postings naming the tool &#183; median of the 1,429 that state pay</text>
+</svg>
+<!--CHART:skills:END-->
+    <figcaption><b>How often each tool is named, and the median salary advertised alongside it.</b>
+    Excel leads on frequency and trails on pay. Machine learning is named in one posting in eighteen
+    and carries the highest median of those measured.</figcaption>
+  </figure>
+
+  <p>Excel is named in 32.1% of all postings &mdash; more than SQL (24.8%), more than Power BI
+  (18.2%), nearly twice Python (17.3%). Anyone who has been told spreadsheets are finished should sit
+  with that number. Among analyst-titled roles specifically it is higher still, at 35.2%.</p>
+
+  <p>And the median advertised salary for postings naming Excel is &pound;51,198 &mdash; the lowest
+  of every tool with enough salaried postings to measure, and about &pound;2,800 below the overall
+  median. Python postings sit at &pound;60,500 and machine learning at &pound;67,500.</p>
+
+  <p><strong>This is a correlation and it is heavily confounded.</strong> Excel appears in finance,
+  operations and administrative roles that sit lower on the pay scale; machine learning appears in
+  specialist roles that sit higher. Nobody gets a &pound;9,000 rise by learning Python, and this data
+  cannot tell you otherwise. What it does tell you is where the volume is against where the money is,
+  and those are two different maps.</p>
+
+  <h2>What I would actually do with this</h2>
+
+  <p><strong>If you are hiring.</strong> Publishing a salary is close to free and it is
+  differentiating precisely because five in six of your competitors do not. You are currently
+  filtering your applicant pool by tolerance for ambiguity, which is not a quality you were trying to
+  select for. If you must publish a range, publish a real one &mdash; a floor and ceiling that are the
+  same number is worse than no range, because candidates notice.</p>
+
+  <p><strong>If you are job hunting.</strong> Assume the 85% is normal rather than a red flag; there
+  is not much signal in it on its own. There is signal in the shape of what is published: a
+  &pound;9,000-wide band is a real band, and an identical floor and ceiling means the number is
+  the number. Use the medians here as a sanity check, remembering they come from employers willing
+  to publish.</p>
+
+  <p><strong>If you are building a skills plan.</strong> Excel is not optional &mdash; a third of the
+  market asks for it by name. But the frequency ranking and the pay ranking are close to inverted, so
+  optimising purely for what appears most often walks you towards the lower-paid end of the market.</p>
+
+  <h2>Method</h2>
+
+  <p>The postings were collected with a Python scraper, then cleaned in pandas. The steps that
+  changed the numbers, in order:</p>
+
+  <ul>
+    <li><strong>Deduplication.</strong> No duplicate job ids or URLs were present. 214 rows share a
+    title, employer and location; flagged, not removed.</li>
+    <li><strong>Salary parsing.</strong> Every value is a range string such as
+    "&pound;40,000.00/yr - &pound;45,000.00/yr". Annual, hourly, daily and monthly units all appear;
+    hourly is annualised at 1,950 hours and daily at 240 days, which is an assumption and affects 33
+    postings. Nine dollar and two euro postings are excluded from money figures but kept in the
+    counts. 13 values annualising below &pound;12,000 or above &pound;400,000 are treated as unit
+    errors and excluded.</li>
+    <li><strong>HTML stripping.</strong> Descriptions arrive as markup. Matching tool names against
+    the raw HTML miscounts &mdash; "R&amp;D tax credit" reads as the R language, which inflated R from
+    a true 4.2% to 5.6% before the fix.</li>
+    <li><strong>Location.</strong> "London Area, United Kingdom" and "London, England, United Kingdom"
+    are the same place; normalising to the leading city name cut 768 raw location strings to 758 and
+    merged the London variants. Country- and region-only values are recorded as unspecified.</li>
+    <li><strong>Seniority and working pattern</strong> are inferred from the title and description
+    text. "Mentions hybrid" is not the same as "is hybrid", and "says nothing" is not the same as
+    "office based".</li>
+  </ul>
+
+  <p>The aggregate tables behind every chart and figure are published above and linked below. The raw
+  postings are not republished: the aggregate statistics are my analysis, but the adverts themselves
+  are not mine to redistribute.</p>
+
+  <div class="note">Figures are as at the August 2026 snapshot. A single platform, a single month,
+  and a search-term split that decides what counts as an "analyst" role. Treat it as a large sample
+  of one market, not a census of UK employment.</div>
+
+  <div class="refs">
+    <h2>Data</h2>
+    <ol>
+      <li><a href="data/salary-transparency-by-city.csv">salary-transparency-by-city.csv</a> &mdash; postings and disclosure rate for cities with 100+ postings.</li>
+      <li><a href="data/skills-and-pay.csv">skills-and-pay.csv</a> &mdash; tool frequency across all postings, and median advertised pay where measurable.</li>
+      <li><a href="data/salary-by-seniority.csv">salary-by-seniority.csv</a> &mdash; median advertised midpoint by inferred seniority.</li>
+    </ol>
+  </div>
+
+  <div class="cta">
+    <h2>Got data sat in a spreadsheet you have never had time to interrogate?</h2>
+    <p>This took an afternoon: scrape, clean, analyse, chart. Most businesses are sitting on something
+    similar and never get to it. I'm a data analyst and BI specialist in Cheltenham and I do
+    <a href="/#services">exactly this kind of work</a> &mdash; cleaning, reporting and automation, with
+    every figure traceable to a source you can audit. Free 30-minute scoping call, no obligation.</p>
+    <p style="margin-top:20px"><a class="btn" href="/#contact">Book a scoping call</a></p>
+  </div>
+
+</article>
+</main>
+
+<footer class="site">
+  <div class="wrap wide">
+    <div class="f-row">
+      <a href="/">Home</a>
+      <a href="/blog/">Notes</a>
+      <a href="/#services">Services</a>
+      <a href="/#ai">AI policy</a>
+      <a href="mailto:szymonpecherski@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/szy05/" target="_blank" rel="me noopener noreferrer">LinkedIn</a>
+    </div>
+    <p style="margin:0">© 2026 Cheltenham Data — the data analysis and business intelligence practice of Szymon Pecherski,
+    Cheltenham, Gloucestershire. Analysis written by me; figures computed from the published aggregate
+    tables and reproducible from them.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root = document.documentElement, tgl = document.getElementById('tgl'), tc = document.getElementById('tc');
+  var BG = { light: '#e7dfd1', dark: '#15110d' };
+  function paint(n){
+    root.setAttribute('data-theme', n);
+    if(tc) tc.setAttribute('content', BG[n]);
+    if(tgl) tgl.setAttribute('aria-label', n === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+  }
+  paint(root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
+  if(tgl) tgl.addEventListener('click', function(){
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    paint(next);
+    try{ localStorage.setItem('cd-theme', next); }catch(e){}
+  });
+})();
+</script>
+</body>
+</html>

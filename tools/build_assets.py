@@ -7,6 +7,7 @@ Build every static asset the site needs, reproducibly.
 Produces:
   fonts/*.woff2 + fonts/fonts.css   self-hosted webfonts (no third-party request)
   og-image.png                      1200x630 social/preview card
+  blog/*/og.png                     per-post social cards
   cork.svg                          300x300 seamless cork tile (evidence board)
   logo.png                          512x512 square logo (schema.org "logo")
   apple-touch-icon.png              180x180
@@ -420,6 +421,51 @@ def build_og_post() -> None:
     print(f"  wrote {dest.relative_to(ROOT)} (1200x630)")
 
 
+# --- paper palette, matching the live site's light theme -------------------
+P_BG, P_CARD, P_TEXT = "#e7dfd1", "#f9f4ec", "#221c15"
+P_ACCENT, P_MUTED, P_FAINT, P_LINE = "#2c6244", "#6b6050", "#8c8070", "#cfc3ad"
+
+
+def build_og_jobs() -> None:
+    """Social card for the UK job market post, in the current paper brand."""
+    dest = ROOT / "blog/uk-data-job-salary-transparency-2026/og.png"
+    if not dest.parent.exists():
+        print("  ! job post folder missing, skipping its OG card")
+        return
+
+    W, H = 1200, 630
+    img = Image.new("RGB", (W, H), P_BG)
+    d = ImageDraw.Draw(img, "RGBA")
+    draw_grid(d, W, H, 56, (120, 92, 54, 16))
+    d.rectangle([0, 0, 6, H], fill=P_ACCENT)
+
+    f_eyebrow = load("Space Mono", 400, 20)
+    f_head = load("Space Grotesk", 600, 62)
+    f_sub = load("Inter Tight", 400, 24)
+    f_big = load("Space Grotesk", 600, 104)
+    f_lab = load("Inter Tight", 400, 20)
+    f_by = load("Space Mono", 400, 18)
+
+    PAD = 74
+    d.text((PAD, 60), "SZYMON PECHERSKI  ·  ANALYSIS", font=f_eyebrow, fill=P_ACCENT)
+    d.text((PAD, 116), "85% of UK data job ads", font=f_head, fill=P_TEXT)
+    d.text((PAD, 188), "don't tell you the salary", font=f_head, fill=P_ACCENT)
+    d.text((PAD, 282), "9,559 postings scraped, cleaned and analysed", font=f_sub, fill=P_MUTED)
+
+    by = 372
+    d.line([(PAD, by - 24), (W - PAD, by - 24)], fill=P_LINE, width=1)
+    d.text((PAD, by), "14.9%", font=f_big, fill=P_ACCENT)
+    d.text((PAD, by + 118), "state a salary", font=f_lab, fill=P_FAINT)
+
+    d.text((PAD + 470, by), "12.7%", font=f_big, fill=P_MUTED)
+    d.text((PAD + 470, by + 118), "in London, the biggest market", font=f_lab, fill=P_FAINT)
+
+    d.text((PAD, H - 66), "cheltenhamdata.co.uk", font=f_by, fill=P_FAINT)
+
+    img.save(dest, "PNG", optimize=True)
+    print(f"  wrote {dest.relative_to(ROOT)} (1200x630)")
+
+
 def mark(size: int, radius_ratio: float = 0.1875, bg: str = BG) -> Image.Image:
     """The three-bar mark used across favicons and the logo."""
     S = size * 4  # supersample
@@ -499,6 +545,7 @@ def main() -> int:
     build_webfonts()
     build_og()
     build_og_post()
+    build_og_jobs()
     build_icons()
     build_cork()
     check_glyph_coverage()
