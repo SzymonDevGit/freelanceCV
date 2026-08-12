@@ -11,6 +11,7 @@
 /.wrangler/
 /tools/
 /SEO.md
+/content/
 /.gitignore
 /.assetsignore
 /wrangler.jsonc
