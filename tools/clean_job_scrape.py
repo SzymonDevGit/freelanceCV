@@ -135,7 +135,11 @@ log("location_normalised", unique_before=int(df.location.nunique()),
 def seniority(t):
     t = " " + (t or "").lower() + " "
     if re.search(r"\b(head of|director|vp|chief|cto|cdo)\b", t):        return "Head / Director"
-    if re.search(r"\b(principal|lead|manager|management)\b", t):        return "Lead / Manager"
+    # "manager", not "management": a Management Accountant is not a manager,
+    # and neither is a Management Consultant. Including the noun-modifier form
+    # swept 311 such titles into this bucket and dragged its median down by
+    # roughly £7,000, which looked like a real finding and was not.
+    if re.search(r"\b(principal|lead|manager)\b", t):                     return "Lead / Manager"
     if re.search(r"\b(senior|snr|sr)\b", t):                            return "Senior"
     if re.search(r"\b(junior|jnr|graduate|trainee|intern|apprentice|entry)\b", t):
         return "Junior / Graduate"

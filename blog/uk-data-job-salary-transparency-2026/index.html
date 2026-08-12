@@ -301,17 +301,24 @@
       <thead><tr><th>Seniority (from job title)</th><th class="num">Postings with pay</th><th class="num">Median advertised</th></tr></thead>
       <tbody>
         <tr><td>Junior / graduate</td><td class="num">26</td><td class="num">&pound;29,742</td></tr>
-        <tr><td>Mid / unspecified</td><td class="num">866</td><td class="num">&pound;50,359</td></tr>
-        <tr><td>Lead / manager</td><td class="num">356</td><td class="num">&pound;56,025</td></tr>
-        <tr><td>Senior</td><td class="num">171</td><td class="num">&pound;62,500</td></tr>
+        <tr><td>Mid / unspecified</td><td class="num">984</td><td class="num">&pound;50,000</td></tr>
+        <tr><td>Senior</td><td class="num">177</td><td class="num">&pound;62,500</td></tr>
+        <tr><td>Lead / manager</td><td class="num">232</td><td class="num">&pound;63,075</td></tr>
         <tr><td>Head / director</td><td class="num">10</td><td class="num">&pound;82,104</td></tr>
       </tbody>
     </table>
   </div>
 
-  <p>The ladder behaves as you would expect, which is mildly reassuring about the title parsing. Two
-  rows carry health warnings: 26 junior postings and 10 director postings are small enough that a
-  handful of unusual adverts move the median, so treat those as indicative only.</p>
+  <p>The ladder behaves as you would expect, and senior individual contributors and managers land
+  within a few hundred pounds of each other. Two rows carry health warnings: 26 junior postings and
+  10 director postings are small enough that a handful of unusual adverts move the median, so treat
+  those as indicative only.</p>
+
+  <div class="note"><b>Corrected 10 August 2026.</b> This table first published with lead/manager at
+  &pound;56,025, below the senior figure &mdash; an apparently interesting result that was entirely
+  an artefact of my own title parser. Matching the word "management" swept 311 Management Accountant
+  and Management Consultant titles into the manager bucket. Matching "manager" instead puts
+  lead/manager at &pound;63,075 and the anomaly disappears.</div>
 
   <p>Location adds about a fifth. London postings that publish pay have a median midpoint of
   &pound;62,500 against &pound;52,500 everywhere else &mdash; a &pound;10,000 premium, or 19%. Whether
@@ -443,7 +450,8 @@
     are the same place; normalising to the leading city name cut 768 raw location strings to 758 and
     merged the London variants. Country- and region-only values are recorded as unspecified.</li>
     <li><strong>Seniority and working pattern</strong> are inferred from the title and description
-    text. "Mentions hybrid" is not the same as "is hybrid", and "says nothing" is not the same as
+    text. Seniority matches "manager" rather than "management", so that Management Accountants are
+    not counted as managers &mdash; see the correction above. "Mentions hybrid" is not the same as "is hybrid", and "says nothing" is not the same as
     "office based".</li>
   </ul>
 
