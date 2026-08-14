@@ -245,26 +245,61 @@ def draw_grid(d: ImageDraw.ImageDraw, w: int, h: int, step: int, colour: tuple) 
         d.line([(0, y), (w, y)], fill=colour, width=1)
 
 
-def build_og() -> None:
-    W, H = 1200, 630
-    img = Image.new("RGB", (W, H), BG)
+# --- the paper look, shared by every card -----------------------------------
+def paper_bg(W: int, H: int) -> Image.Image:
+    """Warm stock, a cutting-mat grid, and a lamp in the top-right corner."""
+    img = Image.new("RGB", (W, H), P_BG)
     d = ImageDraw.Draw(img, "RGBA")
-
-    draw_grid(d, W, H, 56, (205, 156, 96, 16))
-
-    # warm corner glow
+    draw_grid(d, W, H, 56, (120, 92, 54, 16))
     glow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     gd = ImageDraw.Draw(glow)
     for i in range(34, 0, -1):
-        a = int(2.4 * (34 - i))
         gd.ellipse([W - 300 - i * 22, -260 - i * 16, W + i * 22, 300 + i * 16],
-                   fill=(205, 156, 96, max(a // 7, 1)))
+                   fill=(255, 251, 240, max(int(2.4 * (34 - i)) // 7, 1)))
     img = Image.alpha_composite(img.convert("RGBA"), glow).convert("RGB")
+    ImageDraw.Draw(img, "RGBA").rectangle([0, 0, 6, H], fill=P_ACCENT)
+    return img
+
+
+def sticky(size: int, angle: float = -6.0) -> Image.Image:
+    """
+    The house motif: a post-it with a small bar chart on it. Drawn at 3x and
+    rotated with expand, so the edges stay clean once it is scaled back down.
+    """
+    S = size * 3
+    note = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(note, "RGBA")
+    d.rectangle([0, 0, S, S], fill=(242, 220, 130, 255))
+    # the adhesive strip along the top sits a shade darker, as it does on paper
+    d.rectangle([0, 0, S, int(S * 0.20)], fill=(190, 158, 48, 46))
+    # three ascending bars
+    bw, gap = int(S * 0.155), int(S * 0.075)
+    x0 = int((S - (bw * 3 + gap * 2)) / 2)
+    base_y, top = int(S * 0.79), int(S * 0.30)
+    for i, frac in enumerate((0.34, 0.66, 1.0)):
+        h = int((base_y - top) * frac)
+        x = x0 + i * (bw + gap)
+        d.rectangle([x, base_y - h, x + bw, base_y], fill=P_ACCENT)
+    out = note.rotate(angle, expand=True, resample=Image.BICUBIC)
+    return out.resize((int(out.width / 3), int(out.height / 3)), Image.LANCZOS)
+
+
+def paste_sticky(img: Image.Image, size: int, xy: tuple, angle: float = -6.0) -> None:
+    note = sticky(size, angle)
+    shadow = Image.new("RGBA", note.size, (0, 0, 0, 0))
+    shadow.paste((84, 60, 32, 70), (0, 0), note.split()[3])
+    img.paste(Image.alpha_composite(Image.new("RGBA", note.size, (0, 0, 0, 0)), shadow),
+              (xy[0] + 5, xy[1] + 9), shadow)
+    img.paste(note, xy, note)
+
+
+def build_og() -> None:
+    W, H = 1200, 630
+    img = paper_bg(W, H)
+    paste_sticky(img, 168, (W - 250, 58), angle=-7)
     d = ImageDraw.Draw(img, "RGBA")
 
     PAD = 76
-    d.rectangle([0, 0, 6, H], fill=OAK)
-
     f_eyebrow = load("Space Mono", 400, 21)
     f_name = load("Space Grotesk", 600, 68)
     f_role = load("Space Grotesk", 500, 34)
@@ -274,34 +309,30 @@ def build_og() -> None:
     f_by = load("Inter Tight", 400, 22)
 
     y = PAD
-    d.text((PAD, y), "CHELTENHAM  ·  GLOUCESTERSHIRE  ·  UK", font=f_eyebrow, fill=OAK)
+    d.text((PAD, y), "CHELTENHAM  \u00b7  GLOUCESTERSHIRE  \u00b7  UK", font=f_eyebrow, fill=P_ACCENT)
     y += 58
     # The card leads with the trading name people see in emails, with the
     # person behind it named directly underneath.
-    d.text((PAD, y), "Cheltenham Data", font=f_name, fill=TEXT)
+    d.text((PAD, y), "Cheltenham Data", font=f_name, fill=P_TEXT)
     y += 84
-    d.text((PAD, y), "Szymon Pecherski", font=f_by, fill=MUTED)
+    d.text((PAD, y), "Szymon Pecherski", font=f_by, fill=P_MUTED)
     y += 38
-    d.text((PAD, y), "Data Analyst & BI Specialist", font=f_role, fill=OAK)
+    d.text((PAD, y), "Data Analyst & BI Specialist", font=f_role, fill=P_ACCENT)
     y += 62
-    d.text((PAD, y),
-           "Dashboards, reporting and process automation",
-           font=f_body, fill=MUTED)
+    d.text((PAD, y), "Dashboards, reporting and process automation", font=f_body, fill=P_MUTED)
     y += 38
-    d.text((PAD, y), "for small brands outgrowing their spreadsheets.",
-           font=f_body, fill=MUTED)
+    d.text((PAD, y), "for small brands outgrowing their spreadsheets.", font=f_body, fill=P_MUTED)
 
-    # stat strip
     sy = H - 168
-    d.line([(PAD, sy - 34), (W - PAD, sy - 34)], fill=LINE, width=1)
-    stats = [("£42,500", "commercial income unlocked"),
+    d.line([(PAD, sy - 34), (W - PAD, sy - 34)], fill=P_LINE, width=1)
+    stats = [("\u00a342,500", "commercial income unlocked"),
              ("100+", "manual hours removed a year"),
              ("20+", "procedures automated")]
     col = (W - PAD * 2) // 3
     for i, (big, lab) in enumerate(stats):
         x = PAD + i * col
-        d.text((x, sy), big, font=f_stat, fill=OAK)
-        d.text((x, sy + 58), lab, font=f_lab, fill=FAINT)
+        d.text((x, sy), big, font=f_stat, fill=P_ACCENT)
+        d.text((x, sy + 58), lab, font=f_lab, fill=P_FAINT)
 
     img.save(ROOT / "og-image.png", "PNG", optimize=True)
     print("  wrote og-image.png (1200x630)")
@@ -383,10 +414,9 @@ def build_og_post() -> None:
         return
 
     W, H = 1200, 630
-    img = Image.new("RGB", (W, H), BG)
+    img = paper_bg(W, H)
+    paste_sticky(img, 150, (W - 226, 54), angle=6)
     d = ImageDraw.Draw(img, "RGBA")
-    draw_grid(d, W, H, 56, (205, 156, 96, 14))
-    d.rectangle([0, 0, 6, H], fill=OAK)
 
     f_eyebrow = load("Space Mono", 400, 20)
     f_head = load("Space Grotesk", 600, 60)
@@ -396,26 +426,26 @@ def build_og_post() -> None:
     f_by = load("Space Mono", 400, 18)
 
     PAD = 74
-    d.text((PAD, 62), "SZYMON PECHERSKI  ·  ANALYSIS", font=f_eyebrow, fill=OAK)
-    d.text((PAD, 118), "AI hallucination rates", font=f_head, fill=TEXT)
-    d.text((PAD, 188), "went up, not down", font=f_head, fill=OAK)
+    d.text((PAD, 62), "SZYMON PECHERSKI  \u00b7  ANALYSIS", font=f_eyebrow, fill=P_ACCENT)
+    d.text((PAD, 118), "AI hallucination rates", font=f_head, fill=P_TEXT)
+    d.text((PAD, 188), "went up, not down", font=f_head, fill=P_ACCENT)
     d.text((PAD, 278), "157 models across two snapshots of Vectara's leaderboard",
-           font=f_sub, fill=MUTED)
+           font=f_sub, fill=P_MUTED)
 
     # the finding, as a before/after. The arrow is drawn, not typed: none of the
     # brand fonts ship U+2192 and Pillow has no glyph fallback, so it would tofu.
     by = 372
-    d.line([(PAD, by - 26), (W - PAD, by - 26)], fill=LINE, width=1)
-    d.text((PAD, by), "6.25%", font=f_big, fill=MUTED)
+    d.line([(PAD, by - 26), (W - PAD, by - 26)], fill=P_LINE, width=1)
+    d.text((PAD, by), "6.25%", font=f_big, fill=P_MUTED)
 
     ax, ay = PAD + 246, by + 44
-    d.line([(ax, ay), (ax + 62, ay)], fill=WALNUT, width=7)
-    d.polygon([(ax + 58, ay - 15), (ax + 88, ay), (ax + 58, ay + 15)], fill=WALNUT)
+    d.line([(ax, ay), (ax + 62, ay)], fill=P_SIGNAL, width=7)
+    d.polygon([(ax + 58, ay - 15), (ax + 88, ay), (ax + 58, ay + 15)], fill=P_SIGNAL)
 
-    d.text((ax + 112, by), "10.24%", font=f_big, fill=OAK)
-    d.text((PAD, by + 96), "mean hallucination rate, 2024 to 2026", font=f_lab, fill=FAINT)
+    d.text((ax + 112, by), "10.24%", font=f_big, fill=P_ACCENT)
+    d.text((PAD, by + 96), "mean hallucination rate, 2024 to 2026", font=f_lab, fill=P_FAINT)
 
-    d.text((PAD, H - 68), "cheltenhamdata.co.uk", font=f_by, fill=FAINT)
+    d.text((PAD, H - 68), "cheltenhamdata.co.uk", font=f_by, fill=P_FAINT)
 
     img.save(dest, "PNG", optimize=True)
     print(f"  wrote {dest.relative_to(ROOT)} (1200x630)")
@@ -424,6 +454,7 @@ def build_og_post() -> None:
 # --- paper palette, matching the live site's light theme -------------------
 P_BG, P_CARD, P_TEXT = "#e7dfd1", "#f9f4ec", "#221c15"
 P_ACCENT, P_MUTED, P_FAINT, P_LINE = "#2c6244", "#6b6050", "#8c8070", "#cfc3ad"
+P_SIGNAL = "#a8620f"
 
 
 def build_og_jobs() -> None:
@@ -434,10 +465,9 @@ def build_og_jobs() -> None:
         return
 
     W, H = 1200, 630
-    img = Image.new("RGB", (W, H), P_BG)
+    img = paper_bg(W, H)
+    paste_sticky(img, 150, (W - 226, 54), angle=6)
     d = ImageDraw.Draw(img, "RGBA")
-    draw_grid(d, W, H, 56, (120, 92, 54, 16))
-    d.rectangle([0, 0, 6, H], fill=P_ACCENT)
 
     f_eyebrow = load("Space Mono", 400, 20)
     f_head = load("Space Grotesk", 600, 62)
@@ -466,21 +496,38 @@ def build_og_jobs() -> None:
     print(f"  wrote {dest.relative_to(ROOT)} (1200x630)")
 
 
-def mark(size: int, radius_ratio: float = 0.1875, bg: str = BG) -> Image.Image:
-    """The three-bar mark used across favicons and the logo."""
+def mark(size: int, radius_ratio: float = 0.1875, bg: str | None = None) -> Image.Image:
+    """
+    The brand mark: a sticky note with three ascending bars.
+
+    Same motif as the cards, and it survives being shrunk to a 16px favicon —
+    a yellow square with three green bars is still readable at that size, which
+    is the only test a favicon has to pass.
+    """
     S = size * 4  # supersample
     img = Image.new("RGBA", (S, S), (0, 0, 0, 0))
-    d = ImageDraw.Draw(img)
-    d.rounded_rectangle([0, 0, S - 1, S - 1], radius=int(S * radius_ratio), fill=bg)
+    d = ImageDraw.Draw(img, "RGBA")
+    r = int(S * radius_ratio)
 
-    bar_h = int(S * 0.05)
-    x0, x1 = int(S * 0.22), int(S * 0.78)
-    short = int(S * 0.60)
-    ys = [0.32, 0.50, 0.68]
-    for i, yr in enumerate(ys):
-        y = int(S * yr) - bar_h // 2
-        end = short if i == 2 else x1
-        d.rounded_rectangle([x0, y, end, y + bar_h], radius=bar_h // 2, fill=OAK)
+    if bg is not None:                       # opaque tile, for apple-touch-icon
+        d.rounded_rectangle([0, 0, S - 1, S - 1], radius=r, fill=bg)
+
+    pad = int(S * 0.10)
+    d.rounded_rectangle([pad, pad, S - pad, S - pad], radius=int(S * 0.055),
+                        fill=(242, 220, 130, 255))
+    # adhesive strip
+    d.rounded_rectangle([pad, pad, S - pad, pad + int(S * 0.17)],
+                        radius=int(S * 0.055), fill=(190, 158, 48, 52))
+
+    bw = int(S * 0.135)
+    gap = int(S * 0.070)
+    x0 = int((S - (bw * 3 + gap * 2)) / 2)
+    base_y, top = int(S * 0.735), int(S * 0.305)
+    for i, frac in enumerate((0.34, 0.66, 1.0)):
+        h = int((base_y - top) * frac)
+        x = x0 + i * (bw + gap)
+        d.rounded_rectangle([x, base_y - h, x + bw, base_y],
+                            radius=int(S * 0.012), fill=P_ACCENT)
 
     return img.resize((size, size), Image.LANCZOS)
 
@@ -488,22 +535,30 @@ def mark(size: int, radius_ratio: float = 0.1875, bg: str = BG) -> Image.Image:
 def build_icons() -> None:
     mark(512).save(ROOT / "icon-512.png", "PNG", optimize=True)
     mark(192).save(ROOT / "icon-192.png", "PNG", optimize=True)
-    # Apple flattens transparency and applies its own mask
-    apple = Image.new("RGB", (180, 180), BG)
-    apple.paste(mark(180, radius_ratio=0.0), (0, 0), mark(180, radius_ratio=0.0))
+    # Apple flattens transparency and applies its own mask, so it needs a tile
+    apple = Image.new("RGB", (180, 180), P_ACCENT)
+    tile = mark(180, radius_ratio=0.0, bg=P_ACCENT)
+    apple.paste(tile, (0, 0), tile)
     apple.save(ROOT / "apple-touch-icon.png", "PNG", optimize=True)
 
-    logo = mark(512)
+    logo = Image.new("RGB", (512, 512), P_ACCENT)
+    lm = mark(512, bg=P_ACCENT)
+    logo.paste(lm, (0, 0), lm)
     logo.save(ROOT / "logo.png", "PNG", optimize=True)
 
-    ico = mark(64)
+    ico = mark(64, bg=P_ACCENT)
     ico.save(ROOT / "favicon.ico", sizes=[(16, 16), (32, 32), (48, 48)])
 
     svg = (
         "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>"
-        f"<rect width='32' height='32' rx='6' fill='{BG}'/>"
-        f"<g stroke='{OAK}' stroke-width='1.6' stroke-linecap='round'>"
-        "<path d='M7 11h18M7 16h18M7 21h11'/></g></svg>"
+        f"<rect width='32' height='32' rx='6' fill='{P_ACCENT}'/>"
+        "<rect x='3.2' y='3.2' width='25.6' height='25.6' rx='1.8' fill='#f2dc82'/>"
+        "<rect x='3.2' y='3.2' width='25.6' height='4.4' rx='1.8' fill='#be9e30' opacity='.2'/>"
+        f"<g fill='{P_ACCENT}'>"
+        "<rect x='7.6' y='18.5' width='4.4' height='5.0' rx='.4'/>"
+        "<rect x='13.8' y='14.6' width='4.4' height='8.9' rx='.4'/>"
+        "<rect x='20.0' y='10.2' width='4.4' height='13.3' rx='.4'/>"
+        "</g></svg>"
     )
     (ROOT / "favicon.svg").write_text(svg, encoding="utf-8")
     print("  wrote icon-512/192, apple-touch-icon, logo, favicon.ico, favicon.svg")
