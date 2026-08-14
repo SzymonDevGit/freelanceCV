@@ -67,7 +67,7 @@
       "@type": "Dataset",
       "@id": "https://cheltenhamdata.co.uk/blog/uk-data-job-salary-transparency-2026/#dataset",
       "name": "UK data and analyst job postings, August 2026 — aggregate tables",
-      "description": "Derived aggregate tables from 9,559 UK job postings: salary transparency by city, tool frequency with median advertised pay, and median advertised salary by seniority. The underlying postings are not republished.",
+      "description": "Derived aggregate tables from 9,559 UK job postings: salary transparency by city, tool frequency with median advertised pay, and postings and median advertised salary by seniority. The underlying postings are not republished.",
       "license": "https://creativecommons.org/licenses/by/4.0/",
       "creator": { "@id": "https://cheltenhamdata.co.uk/#person" },
       "isAccessibleForFree": true,
@@ -298,16 +298,25 @@
 
   <div class="tbl">
     <table>
-      <thead><tr><th>Seniority (from job title)</th><th class="num">Postings with pay</th><th class="num">Median advertised</th></tr></thead>
+      <thead><tr><th>Seniority (from job title)</th><th class="num">All postings</th><th class="num">Share</th><th class="num">With pay</th><th class="num">Median advertised</th></tr></thead>
       <tbody>
-        <tr><td>Junior / graduate</td><td class="num">26</td><td class="num">&pound;29,742</td></tr>
-        <tr><td>Mid / unspecified</td><td class="num">984</td><td class="num">&pound;50,000</td></tr>
-        <tr><td>Senior</td><td class="num">177</td><td class="num">&pound;62,500</td></tr>
-        <tr><td>Lead / manager</td><td class="num">232</td><td class="num">&pound;63,075</td></tr>
-        <tr><td>Head / director</td><td class="num">10</td><td class="num">&pound;82,104</td></tr>
+        <tr><td>Junior / graduate</td><td class="num">191</td><td class="num">2.0%</td><td class="num">26</td><td class="num">&pound;29,742</td></tr>
+        <tr><td>Mid / unspecified</td><td class="num">6,513</td><td class="num">68.1%</td><td class="num">984</td><td class="num">&pound;50,000</td></tr>
+        <tr><td>Senior</td><td class="num">1,182</td><td class="num">12.4%</td><td class="num">177</td><td class="num">&pound;62,500</td></tr>
+        <tr><td>Lead / manager</td><td class="num">1,608</td><td class="num">16.8%</td><td class="num">232</td><td class="num">&pound;63,075</td></tr>
+        <tr><td>Head / director</td><td class="num">65</td><td class="num">0.7%</td><td class="num">10</td><td class="num">&pound;82,104</td></tr>
       </tbody>
     </table>
   </div>
+
+  <p>The counts on the left are worth as much as the money on the right. <strong>191 postings
+  &mdash; 2.0% of the market &mdash; are explicitly junior, graduate or trainee.</strong> There are
+  6.2 openly senior roles for every one of them, and 14.9 once you count every level above mid.
+  Whatever "get your foot in the door" means, it is not being advertised as such.</p>
+
+  <p>The honest caveat is the 68.1% that state no level at all. Plenty of those would take someone
+  early in their career; they simply do not say so, which leaves a candidate guessing at the level
+  as well as the salary.</p>
 
   <p>The ladder behaves as you would expect, and senior individual contributors and managers land
   within a few hundred pounds of each other. Two rows carry health warnings: 26 junior postings and
@@ -468,7 +477,7 @@
     <ol>
       <li><a href="data/salary-transparency-by-city.csv">salary-transparency-by-city.csv</a> &mdash; postings and disclosure rate for cities with 100+ postings.</li>
       <li><a href="data/skills-and-pay.csv">skills-and-pay.csv</a> &mdash; tool frequency across all postings, and median advertised pay where measurable.</li>
-      <li><a href="data/salary-by-seniority.csv">salary-by-seniority.csv</a> &mdash; median advertised midpoint by inferred seniority.</li>
+      <li><a href="data/salary-by-seniority.csv">salary-by-seniority.csv</a> &mdash; postings and share of market by inferred seniority, with median advertised midpoint.</li>
     </ol>
   </div>
 
