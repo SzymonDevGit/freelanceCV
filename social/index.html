@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Social cards | Cheltenham Data</title>
+<meta name="description" content="Download page for the Cheltenham Data social cards. Not part of the public site.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#e7dfd1" id="tc">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/blog/blog.css">
+<script>
+(function(){
+  var t; try{ t = localStorage.getItem('cd-theme'); }catch(e){}
+  if(t !== 'light' && t !== 'dark'){
+    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<style>
+  .cards{list-style:none;padding:0;margin:32px 0 0}
+  .cards li{margin:0 0 34px}
+  .cards a{display:block;border:0}
+  .cards img{width:100%;height:auto;border:1px solid var(--line);border-radius:6px;
+    box-shadow:0 3px 0 var(--lift)}
+  .cards .cap{display:flex;justify-content:space-between;gap:16px;align-items:baseline;
+    margin-top:10px;font-size:14.5px;color:var(--muted)}
+  .cards .cap b{color:var(--text);font-weight:600}
+  .cards .cap span{font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--faint);white-space:nowrap}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap wide">
+    <a class="brand" href="/"><b>Cheltenham Data<span>.</span></b><span class="by">Szymon Pecherski</span></a>
+  </div>
+</header>
+
+<main id="main">
+<article class="wrap">
+  <h1>Social cards</h1>
+  <p class="standfirst">Tap a card to open the image on its own, then press and hold to save it to
+  your phone. 1200&#215;1200, ready to upload.</p>
+  <div class="note">This page is <code>noindex</code> and not linked from anywhere on the site.
+  It exists so the cards are downloadable on any device.</div>
+
+  <ul class="cards">
+    <li><a href="09-191-doors.jpg"><img src="09-191-doors.jpg" alt="I counted the doors. There are 191." loading="lazy" width="1200" height="1200"></a>
+      <div class="cap"><span>09</span><b>I counted the doors. There are 191.</b><span>Entry level</span></div></li>
+
+    <li><a href="08-long-ads-postit.jpg"><img src="08-long-ads-postit.jpg" alt="The longer the job ad, the less it tells you — with the chart on a post-it" loading="lazy" width="1200" height="1200"></a>
+      <div class="cap"><span>08</span><b>The longer the job ad, the less it tells you</b><span>Post-it version</span></div></li>
+
+    <li><a href="07-long-ads-chart.jpg"><img src="07-long-ads-chart.jpg" alt="The longer the job ad, the less it tells you — full chart version" loading="lazy" width="1200" height="1200"></a>
+      <div class="cap"><span>07</span><b>The longer the job ad, the less it tells you</b><span>Full chart</span></div></li>
+
+    <li><a href="06-my-own-bug.jpg"><img src="06-my-own-bug.jpg" alt="My best finding was a bug in my own code" loading="lazy" width="1200" height="1200"></a>
+      <div class="cap"><span>06</span><b>My best finding was a bug in my own code</b><span>Correction</span></div></li>
+
+    <li><a href="05-excel-isnt-dead.jpg"><img src="05-excel-isnt-dead.jpg" alt="Excel isn't dead. It's in a third of the ads." loading="lazy" width="1200" height="1200"></a>
+      <div class="cap"><span>05</span><b>Excel isn&rsquo;t dead. It&rsquo;s in a third of the ads.</b><span>Tools</span></div></li>
+
+    <li><a href="04-salary-transparency.jpg"><img src="04-salary-transparency.jpg" alt="85% of UK data job ads hide the salary" loading="lazy" width="1200" height="1200"></a>
+      <div class="cap"><span>04</span><b>85% of UK data job ads hide the salary</b><span>Salary</span></div></li>
+
+    <li><a href="03-newest-not-safest.jpg"><img src="03-newest-not-safest.jpg" alt="The newest model is not the safest one" loading="lazy" width="1200" height="1200"></a>
+      <div class="cap"><span>03</span><b>The newest model is not the safest one</b><span>AI</span></div></li>
+
+    <li><a href="02-longer-answers-hallucinate.jpg"><img src="02-longer-answers-hallucinate.jpg" alt="The longer the answer, the more it makes up" loading="lazy" width="1200" height="1200"></a>
+      <div class="cap"><span>02</span><b>The longer the answer, the more it makes up</b><span>AI</span></div></li>
+
+    <li><a href="01-code-that-runs.jpg"><img src="01-code-that-runs.jpg" alt="Code that runs isn't the same as code that's right" loading="lazy" width="1200" height="1200"></a>
+      <div class="cap"><span>01</span><b>Code that runs isn&rsquo;t the same as code that&rsquo;s right</b><span>AI</span></div></li>
+  </ul>
+</article>
+</main>
+
+<footer class="site">
+  <div class="wrap wide">
+    <p style="margin:0">© 2026 Cheltenham Data — Szymon Pecherski, Cheltenham.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root = document.documentElement, tc = document.getElementById('tc');
+  if(tc) tc.setAttribute('content', root.getAttribute('data-theme') === 'dark' ? '#15110d' : '#e7dfd1');
+})();
+</script>
+</body>
+</html>

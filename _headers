@@ -32,6 +32,12 @@
 /cork.svg
   Cache-Control: public, max-age=604800
 
+# Social cards: a download page for my own use. Cached, and kept out of search
+# so they never compete with the site's own pages in image results.
+/social/*
+  Cache-Control: public, max-age=604800
+  X-Robots-Tag: noindex
+
 # The page itself must revalidate so edits go live immediately.
 # Content-Type carries an explicit charset: without it the encoding is only
 # declared in the <meta> tag, which some crawlers and proxies never read.

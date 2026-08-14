@@ -40,6 +40,7 @@ PAGES: dict[str, str | None] = {
     "blog/ai-hallucination-rates-2024-vs-2026/index.html":
         "/blog/ai-hallucination-rates-2024-vs-2026/",
     "404.html": None,
+    "social/index.html": None,
 }
 
 TITLE_MIN, TITLE_MAX = 15, 65
