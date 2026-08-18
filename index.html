@@ -370,6 +370,13 @@
 
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+/* Clip on main, not on html. Decorative overhangs — the cork frame's 28px, the
+   testimonial's tape — poke past the gutter at a handful of in-between widths
+   and let the whole page slide sideways. clip rather than hidden so no scroll
+   container is created, and on main rather than html because clipping the root
+   stops the sticky header sticking; the header and mobile nav are siblings of
+   main, so neither is affected. */
+main{overflow-x:clip}
 body{margin:0;padding-left:var(--spine);background:var(--bg);color:var(--body);font-family:var(--sans);
   font-size:16.5px;line-height:1.66;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;display:block}
@@ -710,6 +717,14 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .said .sig i{font-style:normal;font-size:14px;color:var(--muted)}
 .said .sig .meta{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--faint);text-align:right;line-height:1.8}
+/* The tape hangs 26px past the sheet. Once the viewport is narrow enough that
+   the sheet fills the wrap — around 910px, well before phone widths — that
+   overhang lands outside the page and the whole site scrolls sideways. Tuck it
+   onto the sheet from there down. */
+@media (max-width:900px){
+  .said .tape.l{left:6px;top:-11px}
+  .said .tape.r{right:6px;top:-11px}
+}
 @media (max-width:700px){
   .said .sheet{rotate:-.7deg}
   .said .lv{font-size:20px}
@@ -818,7 +833,10 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
   .spine{display:none}
   .skip:focus{left:0}
   .hero{grid-template-columns:1fr;gap:56px;padding-top:40px}
-  .board{max-width:none;height:540px}
+  /* The board goes full-width here, and at that size the rotateY projection
+     throws its near edge past the gutter and scrolls the page sideways. The
+     tilt only ever read as depth on a board floating beside the copy. */
+  .board{max-width:none;height:540px;transform:none}
   /* the frame has to fit inside the wrap's 20px gutter */
   .cork{inset:-24px -12px -16px -12px}
   .cork::before,.cork::after{inset:10px}
@@ -844,9 +862,24 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
   .case-l,.case-r{padding:26px 20px 28px}
 }
 @media (max-width:640px){
-  .board{height:620px;transform:none}
-  .slip.main{width:80%} .slip.s1{left:auto;right:0;width:52%} .slip.s2{left:44%;width:56%}
-  .slip.s3{width:62%}
+  /* The board is a collage: four slips pinned at fixed percentages of a fixed
+     height, with threads running between them. There is no phone width where
+     that survives — the slips simply land on top of each other and eat each
+     other's labels. Below 640 it stops being a collage and becomes a stack of
+     slips, still pinned, still on the cork, but laid out in flow. */
+  .board{height:auto;transform:none;padding:20px 14px 24px}
+  .view{position:static;display:grid;gap:18px}
+  .threads,.board > .ph{display:none}
+  .slip.main,.slip.s1,.slip.s2,.slip.s3{position:relative;left:auto;right:auto;top:auto;
+    width:auto;transform:none}
+  /* one pin per slip now that the board-level pins have nothing to point at */
+  .slip::before{content:"";position:absolute;top:-6px;left:20px;width:13px;height:13px;
+    border-radius:50%;z-index:2;
+    background:radial-gradient(circle at 33% 28%,#fff,var(--accent-2) 34%,var(--accent) 62%,var(--accent-d));
+    box-shadow:0 3px 6px -1px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.12)}
+  /* tilts on the independent property: transform is spoken for above */
+  .slip.main{rotate:-.7deg} .slip.s1{rotate:.6deg}
+  .slip.s2{rotate:-.5deg} .slip.s3{rotate:.7deg}
   .cards,.who-grid,.steps,.notes-row{grid-template-columns:1fr}
   /* one column: the stagger that reads as a stack on desktop just looks
      like misalignment down a phone */
