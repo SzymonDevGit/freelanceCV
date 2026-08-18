@@ -82,6 +82,7 @@
         "https://www.linkedin.com/in/szy05/",
         "https://github.com/SzymonDevGit"
       ],
+      "review": { "@id": "https://cheltenhamdata.co.uk/#review-besnard" },
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "sales",
@@ -175,6 +176,20 @@
       "worksFor": { "@type": "Organization", "name": "GE Aerospace" }
     },
     {
+      "@type": "Review",
+      "@id": "https://cheltenhamdata.co.uk/#review-besnard",
+      "itemReviewed": { "@id": "https://cheltenhamdata.co.uk/#business" },
+      "datePublished": "2026-08-18",
+      "inLanguage": "en-GB",
+      "author": {
+        "@type": "Person",
+        "name": "Alexander Besnard",
+        "jobTitle": "Founder",
+        "worksFor": { "@type": "Organization", "name": "LAVOIR" }
+      },
+      "reviewBody": "I'd highly recommend Szymon. Numbers and spreadsheets definitely don't come naturally to me, but he has a real talent for taking something that feels complicated and turning it into something clear, simple and genuinely useful. He recently created a financial spreadsheet for me and completely cracked what I needed. It's well thought out, easy to understand and has made a huge difference to how I can actually see and manage the numbers behind the business. Szymon is also incredibly friendly, approachable and clearly very good at what he does. It's great to see a young local entrepreneur building something for himself and just getting on with it. A pleasure to work with, and someone I'd happily recommend."
+    },
+    {
       "@type": "WebSite",
       "@id": "https://cheltenhamdata.co.uk/#website",
       "url": "https://cheltenhamdata.co.uk/",
@@ -199,7 +214,7 @@
       "about": { "@id": "https://cheltenhamdata.co.uk/#business" },
       "mainEntity": { "@id": "https://cheltenhamdata.co.uk/#business" },
       "primaryImageOfPage": "https://cheltenhamdata.co.uk/og-image.png",
-      "dateModified": "2026-08-07"
+      "dateModified": "2026-08-18"
     },
     {
       "@type": "FAQPage",
@@ -661,7 +676,49 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .stack span{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--muted);
   border:1px solid var(--line);border-radius:2px;padding:6px 10px;background:var(--card-2)}
 
-/* 05 experience — a printed schedule, dates in the margin */
+/* 05 said — a client's letterhead taped to the board.
+   The masthead is a text wordmark sitting on a background image, so if the
+   banner file is missing or slow the strip still reads as LAVOIR's letterhead
+   rather than collapsing to a broken image. Swap --lv-banner to ship it. */
+.said .sheet{max-width:820px;margin:0 auto;rotate:-1.1deg;box-shadow:var(--shadow-l)}
+.said .head{position:relative;aspect-ratio:1128/191;overflow:hidden;
+  border-bottom:1px solid var(--line);border-radius:2px 2px 0 0;
+  background:var(--lv-banner,none) center/cover no-repeat,
+    linear-gradient(120deg,#efe9df,#e3dbcd 55%,#d8cfbe)}
+.said .head-in{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:11px;text-align:center;padding:0 14px}
+.said .lv{font-family:Georgia,'Times New Roman',serif;font-size:30px;line-height:1;
+  letter-spacing:.42em;text-indent:.42em;color:#4a4034}
+.said .lvs{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;
+  text-transform:uppercase;color:#7b6f5e}
+/* two tape tabs, same recipe as the figure cards above */
+.said .tape{position:absolute;width:104px;height:27px;background:var(--tape);
+  border-left:1px solid var(--tape-edge);border-right:1px solid var(--tape-edge);
+  box-shadow:0 2px 5px rgba(0,0,0,.14);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.said .tape.l{top:-13px;left:-26px;transform:rotate(-26deg)}
+.said .tape.r{top:-13px;right:-26px;transform:rotate(26deg)}
+.said .body{padding:34px 44px 30px}
+.said blockquote{margin:0}
+.said .body p{font-size:16px;line-height:1.72;color:var(--body);margin:0 0 14px}
+.said .body p:first-of-type{font-family:var(--disp);font-weight:500;font-size:20.5px;
+  line-height:1.42;letter-spacing:-.014em;color:var(--text);margin-bottom:18px}
+.said .sig{margin-top:26px;padding-top:20px;border-top:1px dashed var(--line-2);
+  display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap}
+.said .sig b{display:block;font-family:var(--disp);font-size:18px;font-weight:600;color:var(--text)}
+.said .sig i{font-style:normal;font-size:14px;color:var(--muted)}
+.said .sig .meta{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--faint);text-align:right;line-height:1.8}
+@media (max-width:700px){
+  .said .sheet{rotate:-.7deg}
+  .said .lv{font-size:20px}
+  .said .lvs{font-size:7.5px;letter-spacing:.13em}
+  .said .body{padding:26px 24px 24px}
+  .said .tape{width:74px}
+}
+
+/* 06 experience — a printed schedule, dates in the margin */
 .tl{border-top:1px dashed var(--line-2)}
 .tl-item{display:grid;grid-template-columns:158px 1fr;gap:26px;padding:24px 0;
   border-bottom:1px dashed var(--line-2)}
@@ -1159,11 +1216,55 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
   </div>
 </section>
 
+<!-- ===================== TESTIMONIAL ===================== -->
+<section id="said" class="said">
+  <div class="wrap">
+    <div class="sec-hd rv">
+      <div class="sec-no">05<br>SAID</div>
+      <div>
+        <h2>What it&rsquo;s like to work with me.</h2>
+        <p class="lede">Unedited, straight from the client &mdash; a Cheltenham founder who needed the
+          numbers behind their business to make sense.</p>
+      </div>
+    </div>
+
+    <article class="sheet rv">
+      <span class="tape l" aria-hidden="true"></span>
+      <span class="tape r" aria-hidden="true"></span>
+      <div class="head">
+        <div class="head-in">
+          <div class="lv">LAVOIR</div>
+          <div class="lvs">Inspired by French heritage &middot; Made in Cheltenham</div>
+        </div>
+      </div>
+      <div class="body">
+        <span class="mark">Client recommendation</span>
+        <blockquote>
+          <p>&ldquo;I&rsquo;d highly recommend Szymon. Numbers and spreadsheets definitely don&rsquo;t
+            come naturally to me, but he has a real talent for taking something that feels complicated
+            and turning it into something clear, simple and genuinely useful.&rdquo;</p>
+          <p>&ldquo;He recently created a financial spreadsheet for me and completely cracked what I
+            needed. It&rsquo;s well thought out, easy to understand and has made a huge difference to
+            how I can actually see and manage the numbers behind the business.&rdquo;</p>
+          <p>&ldquo;Szymon is also incredibly friendly, approachable and clearly very good at what he
+            does. It&rsquo;s great to see a young local entrepreneur building something for himself and
+            just getting on with it. A pleasure to work with, and someone I&rsquo;d happily
+            recommend.&rdquo;</p>
+        </blockquote>
+        <div class="sig">
+          <div><b>Alexander Besnard</b><i>Founder, LAVOIR</i></div>
+          <div class="meta">Client &middot; Cheltenham<br><time datetime="2026-08-18">18 August 2026</time></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
 <!-- ===================== EXPERIENCE ===================== -->
 <section id="experience">
   <div class="wrap">
     <div class="sec-hd rv">
-      <div class="sec-no">05<br>RECORD</div>
+      <div class="sec-no">06<br>RECORD</div>
       <div>
         <h2>Why you can trust the work.</h2>
         <p class="lede">I'm not a freelancer who read about business process. I've been the analyst inside regulated financial services, national wholesale and enterprise operations teams, and I now work as a Data Analyst at GE Aerospace. Cheltenham Data is the freelance practice I run alongside it, deliberately scoped so I only take on what I can finish.</p>
@@ -1238,7 +1339,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
 <section class="band" id="ai">
   <div class="wrap">
     <div class="sec-hd rv">
-      <div class="sec-no">06<br>AI POLICY</div>
+      <div class="sec-no">07<br>AI POLICY</div>
       <div>
         <h2>Yes, I use AI. Here's exactly how.</h2>
         <p class="lede">You deserve to know this up front rather than discover it later. AI is a tool I use to work faster — never a substitute for the analysis, the judgement or the accountability you're paying for. Every deliverable is reviewed, tested and understood by me before it reaches you, and I can explain any line of it.</p>
@@ -1275,7 +1376,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
 <section id="areas">
   <div class="wrap">
     <div class="sec-hd rv">
-      <div class="sec-no">07<br>AREAS</div>
+      <div class="sec-no">08<br>AREAS</div>
       <div>
         <h2>Data analyst serving Cheltenham, Gloucestershire and the UK</h2>
         <p class="lede">I'm based in Cheltenham and happy to work on site across Gloucestershire, the Cotswolds and the wider South West. Most projects run remotely, so distance is rarely the deciding factor — I take on clients anywhere in the UK.</p>
@@ -1304,7 +1405,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
 <section class="band" id="faq">
   <div class="wrap">
     <div class="sec-hd rv">
-      <div class="sec-no">08<br>FAQ</div>
+      <div class="sec-no">09<br>FAQ</div>
       <div><h2>Before you get in touch.</h2></div>
     </div>
     <div class="faq">
@@ -1352,7 +1453,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
 <section id="notes">
   <div class="wrap">
     <div class="sec-hd rv">
-      <div class="sec-no">09<br>NOTES</div>
+      <div class="sec-no">10<br>NOTES</div>
       <div>
         <h2>Notes on data, automation and AI</h2>
         <p class="lede">Occasional write-ups where I do the analysis myself rather than repeat someone else's statistic. Every figure comes from data you can download and check.</p>
@@ -1435,7 +1536,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
       and AI workflow consulting for small and growing businesses across Gloucestershire, the Cotswolds,
       Bristol, Bath and the UK. I use AI tools in my workflow and review every deliverable personally; the
       full policy is <a href="#ai" class="ul">here</a>.
-      Last updated <time datetime="2026-08-07">7 August 2026</time>.
+      Last updated <time datetime="2026-08-18">18 August 2026</time>.
     </p>
   </div>
 </footer>
