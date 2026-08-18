@@ -246,7 +246,7 @@ def draw_grid(d: ImageDraw.ImageDraw, w: int, h: int, step: int, colour: tuple) 
 
 
 # --- the paper look, shared by every card -----------------------------------
-def paper_bg(W: int, H: int) -> Image.Image:
+def paper_bg(W: int, H: int, edge: bool = True) -> Image.Image:
     """Warm stock, a cutting-mat grid, and a lamp in the top-right corner."""
     img = Image.new("RGB", (W, H), P_BG)
     d = ImageDraw.Draw(img, "RGBA")
@@ -257,7 +257,8 @@ def paper_bg(W: int, H: int) -> Image.Image:
         gd.ellipse([W - 300 - i * 22, -260 - i * 16, W + i * 22, 300 + i * 16],
                    fill=(255, 251, 240, max(int(2.4 * (34 - i)) // 7, 1)))
     img = Image.alpha_composite(img.convert("RGBA"), glow).convert("RGB")
-    ImageDraw.Draw(img, "RGBA").rectangle([0, 0, 6, H], fill=P_ACCENT)
+    if edge:
+        ImageDraw.Draw(img, "RGBA").rectangle([0, 0, 6, H], fill=P_ACCENT)
     return img
 
 
@@ -284,8 +285,12 @@ def sticky(size: int, angle: float = -6.0) -> Image.Image:
     return out.resize((int(out.width / 3), int(out.height / 3)), Image.LANCZOS)
 
 
-def paste_sticky(img: Image.Image, size: int, xy: tuple, angle: float = -6.0) -> None:
+def paste_sticky(img: Image.Image, size: int, xy: tuple, angle: float = -6.0,
+                 centre: bool = False) -> None:
+    """xy is the top-left, or the centre point when centre=True."""
     note = sticky(size, angle)
+    if centre:
+        xy = (int(xy[0] - note.width / 2), int(xy[1] - note.height / 2))
     shadow = Image.new("RGBA", note.size, (0, 0, 0, 0))
     shadow.paste((84, 60, 32, 70), (0, 0), note.split()[3])
     img.paste(Image.alpha_composite(Image.new("RGBA", note.size, (0, 0, 0, 0)), shadow),
@@ -496,6 +501,68 @@ def build_og_jobs() -> None:
     print(f"  wrote {dest.relative_to(ROOT)} (1200x630)")
 
 
+# ------------------------------------------------------------------ brand --
+def wordmark(d: ImageDraw.ImageDraw, cx: int, y: int, size: int) -> None:
+    """"Cheltenham Data." centred on cx, with the full stop in the accent."""
+    f = load("Space Grotesk", 600, size)
+    name, dot = "Cheltenham Data", "."
+    w_name = d.textlength(name, font=f)
+    w_dot = d.textlength(dot, font=f)
+    x = cx - (w_name + w_dot) / 2
+    d.text((x, y), name, font=f, fill=P_TEXT)
+    d.text((x + w_name, y), dot, font=f, fill=P_ACCENT)
+
+
+def build_brand() -> None:
+    """
+    LinkedIn-ready brand assets, drawn from the same pieces as the site.
+
+    Three files, because the platforms crop differently: a square logo with
+    the wordmark for a company page, a mark-only square that survives being
+    cropped to a circle for an avatar, and a banner.
+    """
+    out = ROOT / "brand"
+    out.mkdir(exist_ok=True)
+
+    # 1. square logo — mark over wordmark
+    S = 800
+    img = paper_bg(S, S, edge=False)
+    paste_sticky(img, 300, (S // 2, 290), angle=-6, centre=True)
+    d = ImageDraw.Draw(img, "RGBA")
+    wordmark(d, S // 2, 505, 82)
+    f_by = load("Space Mono", 400, 24)
+    by = "SZYMON PECHERSKI"
+    d.text(((S - d.textlength(by, font=f_by)) / 2, 620), by, font=f_by, fill=P_FAINT)
+    img.save(out / "logo-square.png", "PNG", optimize=True)
+
+    # 2. mark only — everything inside the middle 80%, so a circular crop is safe
+    img = paper_bg(S, S, edge=False)
+    # a square inside an 800px circle is 566 on the side; 400 plus rotation
+    # leaves a comfortable margin all round
+    paste_sticky(img, 400, (S // 2, S // 2), angle=-6, centre=True)
+    img.save(out / "logo-mark.png", "PNG", optimize=True)
+
+    # 3. banner, 1128x191 (LinkedIn personal and company cover)
+    W, H = 1128, 191
+    img = paper_bg(W, H, edge=False)
+    paste_sticky(img, 100, (112, H // 2), angle=-6, centre=True)
+    d = ImageDraw.Draw(img, "RGBA")
+    f_name = load("Space Grotesk", 600, 42)
+    f_tag = load("Inter Tight", 400, 21)
+    f_url = load("Space Mono", 400, 18)
+    name, dot = "Cheltenham Data", "."
+    x = 200
+    d.text((x, 52), name, font=f_name, fill=P_TEXT)
+    d.text((x + d.textlength(name, font=f_name), 52), dot, font=f_name, fill=P_ACCENT)
+    d.text((x, 108), "Dashboards, reporting and process automation.", font=f_tag, fill=P_MUTED)
+    url = "cheltenhamdata.co.uk"
+    d.text((W - 58 - d.textlength(url, font=f_url), 88), url, font=f_url, fill=P_ACCENT)
+    img.save(out / "banner.png", "PNG", optimize=True)
+
+    for f in ("logo-square.png", "logo-mark.png", "banner.png"):
+        print(f"  wrote brand/{f} ({(out / f).stat().st_size // 1024} KB)")
+
+
 def mark(size: int, radius_ratio: float = 0.1875, bg: str | None = None) -> Image.Image:
     """
     The brand mark: a sticky note with three ascending bars.
@@ -602,6 +669,7 @@ def main() -> int:
     build_og_post()
     build_og_jobs()
     build_icons()
+    build_brand()
     build_cork()
     check_glyph_coverage()
     print("Done.")

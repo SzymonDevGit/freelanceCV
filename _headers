@@ -38,6 +38,11 @@
   Cache-Control: public, max-age=604800
   X-Robots-Tag: noindex
 
+# Brand assets for my own use on other platforms.
+/brand/*
+  Cache-Control: public, max-age=604800
+  X-Robots-Tag: noindex
+
 # The page itself must revalidate so edits go live immediately.
 # Content-Type carries an explicit charset: without it the encoding is only
 # declared in the <meta> tag, which some crawlers and proxies never read.
