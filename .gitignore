@@ -13,3 +13,7 @@ __pycache__/
 # Raw job-scrape input for tools/clean_job_scrape.py. Only the derived
 # aggregates in blog/*/data/ are published.
 data.xlsx
+
+# Prospect lists built by tools/prospects.py. Company records and contact
+# addresses for real people — the script is committed, its output never is.
+prospects/
