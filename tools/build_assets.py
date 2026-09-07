@@ -324,9 +324,9 @@ def build_og() -> None:
     y += 38
     d.text((PAD, y), "Data Analyst & BI Specialist", font=f_role, fill=P_ACCENT)
     y += 62
-    d.text((PAD, y), "Dashboards, reporting and process automation", font=f_body, fill=P_MUTED)
+    d.text((PAD, y), "Dashboards, reporting and automation that give", font=f_body, fill=P_MUTED)
     y += 38
-    d.text((PAD, y), "for small brands outgrowing their spreadsheets.", font=f_body, fill=P_MUTED)
+    d.text((PAD, y), "small brands their evenings back.", font=f_body, fill=P_MUTED)
 
     sy = H - 168
     d.line([(PAD, sy - 34), (W - PAD, sy - 34)], fill=P_LINE, width=1)
