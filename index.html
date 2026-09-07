@@ -235,7 +235,7 @@
         { "@type": "Question", "name": "How do you handle sensitive or regulated data?",
           "acceptedAnswer": { "@type": "Answer", "text": "I have handled regulated financial customer data daily, including DSAR requests, anonymisation and erasure, and contributed to FCA and Cyber Essentials audits. I work inside your existing controls, sign an NDA or DPA, and keep data in your environment." } },
         { "@type": "Question", "name": "Do you use AI on client work?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Yes, and I disclose exactly how. AI helps me write and refactor code, draft documentation and explore approaches faster. Client data does not go into public AI tools, nothing generated is handed over unreviewed, and every figure in a report traces back to a source you can audit." } },
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes, and I will tell you exactly how. It helps me write and refactor code, draft documentation and explore approaches faster. Client data does not go into public AI tools, nothing generated is handed over unreviewed, and every figure in a report traces back to a source you can audit. If you have a policy of your own, send it over and I will work inside it." } },
         { "@type": "Question", "name": "What happens on the first call?",
           "acceptedAnswer": { "@type": "Answer", "text": "You walk me through the process that is costing you time or money. I ask questions, and by the end you will have an honest view of whether it is worth fixing, roughly what it would take, and whether I am the right person for it. Free, no obligation, about thirty minutes." } }
       ]
@@ -693,20 +693,6 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .notes-row h3{font-size:15.5px;margin-bottom:9px}
 .notes-row p{font-size:14px;color:var(--muted)}
 
-/* 06 AI policy */
-.ai-box{padding:34px 34px 30px}
-.ai-cols{display:grid;grid-template-columns:1fr 1fr;gap:38px}
-.ai-h{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:18px}
-.ai-l{list-style:none;margin:0;padding:0}
-.ai-l li{display:grid;grid-template-columns:auto 1fr;gap:13px;margin-bottom:15px;font-size:14.5px;
-  color:var(--muted);line-height:1.6}
-.ai-l b{color:var(--text);font-weight:600}
-.mk{font-family:var(--mono);font-size:10px;color:var(--accent);padding-top:4px}
-.mk.no{color:var(--signal)}
-.ai-foot{margin-top:26px;padding-top:22px;border-top:1px dashed var(--line-2);font-size:14px;
-  color:var(--muted);max-width:80ch}
-
 /* 07 areas */
 .areas{display:grid;grid-template-columns:1fr 1fr;gap:38px}
 .areas h3{font-size:15.5px;margin-bottom:14px}
@@ -794,8 +780,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
   .cork{inset:-24px -12px -16px -12px}
   .cork::before,.cork::after{inset:10px}
   .cards{grid-template-columns:1fr 1fr}
-  .svc,.areas,.ai-cols{grid-template-columns:1fr}
-  .ai-cols{gap:30px}
+  .svc,.areas{grid-template-columns:1fr}
   .who-grid,.steps,.notes-row{grid-template-columns:1fr 1fr}
   .case{grid-template-columns:1fr}
   .case-r{border-left:0;border-top:1px dashed var(--line-2)}
@@ -864,7 +849,6 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
       <a href="#services">Services</a>
       <a href="#work">Work</a>
       <a href="#experience">Experience</a>
-      <a href="#ai">AI policy</a>
       <a href="#areas">Areas</a>
       <a href="#faq">FAQ</a>
       <a href="#notes">Notes</a>
@@ -885,7 +869,6 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
   <a href="#services">Services</a>
   <a href="#work">Work</a>
   <a href="#experience">Experience</a>
-  <a href="#ai">AI policy</a>
   <a href="#areas">Areas</a>
   <a href="#faq">FAQ</a>
   <a href="#notes">Notes</a>
@@ -1324,53 +1307,11 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
   </div>
 </section>
 
-<!-- ===================== AI POLICY ===================== -->
-<section class="band" id="ai">
-  <div class="wrap">
-    <div class="sec-hd rv">
-      <div class="sec-no">07<br>AI POLICY</div>
-      <div>
-        <h2>Yes, I use AI. Here's exactly how.</h2>
-        <p class="lede">You deserve to know this up front rather than discover it later. AI is a tool I use to work faster — never a substitute for the analysis, the judgement or the accountability you're paying for. Every deliverable is reviewed, tested and understood by me before it reaches you, and I can explain any line of it.</p>
-      </div>
-    </div>
-
-    <details class="fold rv">
-      <summary>Read the full policy — where AI helps, and where it doesn't</summary>
-      <div class="fold-body">
-        <div class="sheet ai-box">
-      <div class="ai-cols">
-        <div>
-          <div class="ai-h">Where AI helps</div>
-          <ul class="ai-l">
-            <li><span class="mk">01</span><span><b>Writing and refactoring code.</b> Scripts I then read, test and validate against real data before anything ships.</span></li>
-            <li><span class="mk">02</span><span><b>Drafting documentation and SOPs.</b> First drafts I rewrite for your context, terminology and audience.</span></li>
-            <li><span class="mk">03</span><span><b>Exploring approaches faster.</b> Pressure-testing options so you get a better solution in less time.</span></li>
-            <li><span class="mk">04</span><span><b>Building AI into your workflows.</b> When that is the actual deliverable you've asked for.</span></li>
-          </ul>
-        </div>
-        <div>
-          <div class="ai-h">Where it doesn't</div>
-          <ul class="ai-l">
-            <li><span class="mk no">—</span><span><b>Your data doesn't go into public AI tools.</b> Client data stays in your environment unless you explicitly agree otherwise in writing.</span></li>
-            <li><span class="mk no">—</span><span><b>No unreviewed output.</b> Nothing generated is handed over without me verifying it against source data.</span></li>
-            <li><span class="mk no">—</span><span><b>No AI-invented numbers.</b> Every figure in a report traces back to a source you can audit.</span></li>
-            <li><span class="mk no">—</span><span><b>The accountability is mine.</b> If something is wrong, that's on me to find and fix — not on a model.</span></li>
-          </ul>
-        </div>
-      </div>
-      <p class="ai-foot">Working in regulated financial services taught me to treat data handling seriously — DSARs, anonymisation, erasure, FCA and Cyber Essentials audits. The same standard applies to how I use AI on your work. If you have an AI policy of your own, send it over and I'll work inside it.</p>
-        </div>
-      </div>
-    </details>
-  </div>
-</section>
-
 <!-- ===================== AREAS ===================== -->
 <section id="areas">
   <div class="wrap">
     <div class="sec-hd rv">
-      <div class="sec-no">08<br>AREAS</div>
+      <div class="sec-no">07<br>AREAS</div>
       <div>
         <h2>Data analyst serving Cheltenham, Gloucestershire and the UK</h2>
         <p class="lede">I'm based in Cheltenham and happy to work on site across Gloucestershire, the Cotswolds and the wider South West. Most projects run remotely, so distance is rarely the deciding factor — I take on clients anywhere in the UK.</p>
@@ -1399,7 +1340,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
 <section class="band" id="faq">
   <div class="wrap">
     <div class="sec-hd rv">
-      <div class="sec-no">09<br>FAQ</div>
+      <div class="sec-no">08<br>FAQ</div>
       <div><h2>Before you get in touch.</h2></div>
     </div>
     <div class="faq">
@@ -1429,11 +1370,11 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
       </details>
       <details class="sheet rv">
         <summary>How do you handle sensitive or regulated data?</summary>
-        <div class="ans">I've handled regulated financial customer data daily, including DSAR requests, anonymisation and erasure, and contributed to FCA and Cyber Essentials audits. I'll work inside your existing controls, sign an NDA or DPA, and keep data in your environment. See the AI policy above for specifics on AI tooling.</div>
+        <div class="ans">I've handled regulated financial customer data daily, including DSAR requests, anonymisation and erasure, and contributed to FCA and Cyber Essentials audits. I'll work inside your existing controls, sign an NDA or DPA, and keep data in your environment.</div>
       </details>
       <details class="sheet rv">
         <summary>Do you use AI on client work?</summary>
-        <div class="ans">Yes, and I disclose exactly how — the full policy is in the section above. In short: AI helps me write and refactor code, draft documentation and explore approaches faster. Your data doesn't go into public AI tools, nothing generated is handed over unreviewed, and every figure in a report traces back to a source you can audit.</div>
+        <div class="ans">Yes, and I'll tell you exactly how. It helps me write and refactor code, draft documentation and explore approaches faster. Your data doesn't go into public AI tools, nothing generated is handed over unreviewed, and every figure in a report traces back to a source you can audit. If you have a policy of your own, send it over and I'll work inside it.</div>
       </details>
       <details class="sheet rv">
         <summary>What happens on the first call?</summary>
@@ -1447,7 +1388,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
 <section id="notes">
   <div class="wrap">
     <div class="sec-hd rv">
-      <div class="sec-no">10<br>NOTES</div>
+      <div class="sec-no">09<br>NOTES</div>
       <div>
         <h2>Notes on data, automation and AI</h2>
         <p class="lede">Occasional write-ups where I do the analysis myself rather than repeat someone else's statistic. Every figure comes from data you can download and check.</p>
@@ -1519,7 +1460,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
       <div class="brand" style="padding-bottom:0">Cheltenham Data<i>.</i><small>Szymon Pecherski</small></div>
       <div class="f-links">
         <a href="#services">Services</a><a href="#work">Work</a><a href="#experience">Experience</a>
-        <a href="#ai">AI policy</a><a href="#areas">Areas</a><a href="#faq">FAQ</a><a href="/blog/">Notes</a>
+        <a href="#areas">Areas</a><a href="#faq">FAQ</a><a href="/blog/">Notes</a>
         <a href="mailto:szymonpecherski@gmail.com">Email</a>
         <a href="https://www.linkedin.com/in/szy05/" target="_blank" rel="me noopener noreferrer">LinkedIn</a>
       </div>
@@ -1527,9 +1468,8 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
     <p class="f-note">
       © <span id="yr">2026</span> Cheltenham Data — the data analysis and business intelligence practice of
       Szymon Pecherski, Cheltenham, Gloucestershire. Business intelligence, reporting, process automation
-      and AI workflow consulting for small and growing businesses across Gloucestershire, the Cotswolds,
-      Bristol, Bath and the UK. I use AI tools in my workflow and review every deliverable personally; the
-      full policy is <a href="#ai" class="ul">here</a>.
+      and automation consulting for small and growing businesses across Gloucestershire, the Cotswolds,
+      Bristol, Bath and the UK.
       Last updated <time datetime="2026-08-18">18 August 2026</time>.
     </p>
   </div>
