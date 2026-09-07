@@ -48,15 +48,14 @@
 <link rel="preload" href="/fonts/inter-tight-400.woff2" as="font" type="font/woff2" crossorigin>
 
 <!-- Theme, resolved before first paint so the page never flashes the wrong one.
-     No stored choice means follow the operating system. Visitors without
-     JavaScript get the same result from the prefers-color-scheme block in the
-     stylesheet. -->
+     Light is the default: the site is paper, and a first-time visitor should
+     see it that way whatever their operating system is set to. Dark is one
+     click away and remembered. Visitors without JavaScript get light too,
+     because the stylesheet's base palette is the light one. -->
 <script>
 (function(){
   var t; try{ t = localStorage.getItem('cd-theme'); }catch(e){}
-  if(t !== 'light' && t !== 'dark'){
-    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
+  if(t !== 'light' && t !== 'dark') t = 'light';
   document.documentElement.setAttribute('data-theme', t);
 })();
 </script>
@@ -332,32 +331,6 @@
   --shadow-m:0 16px 30px -16px rgba(0,0,0,.66);
   --shadow-l:0 26px 46px -20px rgba(0,0,0,.72);
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#15110d; --bg-2:#1a1611; --card:#221c15; --card-2:#2a2219; --deep:#100d09;
-    --sunk:rgba(0,0,0,.22);
-    --line:#332a20; --line-2:#4a3c2d;
-    --text:#f1e8db; --body:#c3b5a3; --muted:#9a8b78; --faint:#7c6d5d;
-
-    --tooth:.05; --grid:rgba(205,156,96,.045); --lamp:rgba(255,226,170,.06);
-    --hdr:rgba(21,17,13,.9);
-
-    --cork-1:#c69c62; --cork-veil:#6a5330;
-    --frame-1:#6d5533; --frame-2:#4b3a22; --frame-3:#5d4930; --frame-edge:#2f2415;
-
-
-    --tape:rgba(255,240,214,.07); --tape-edge:rgba(255,240,214,.07);
-    --manila:#5c4a2b; --manila-2:#4a3b21; --manila-edge:#7a643c; --tag-ink:#e0d2b4;
-
-    --accent:#5fb182; --accent-2:#8ed4ab; --accent-d:#3d8b60; --on-accent:#0e1a13;
-    --accent-soft:rgba(95,177,130,.13); --accent-glow:rgba(95,177,130,.4);
-    --signal:#dda04a; --sig-halo:rgba(221,160,74,.22);
-
-    --shadow-s:0 8px 16px -10px rgba(0,0,0,.6);
-    --shadow-m:0 16px 30px -16px rgba(0,0,0,.66);
-    --shadow-l:0 26px 46px -20px rgba(0,0,0,.72);
-  }
-}
 
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -423,9 +396,7 @@ nav.links a:hover{color:var(--accent)}
 .tgl:hover{color:var(--accent);border-color:var(--accent)}
 .tgl svg{display:none}
 :root[data-theme="dark"] .tgl .i-sun{display:block}
-:root[data-theme="light"] .tgl .i-moon{display:block}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tgl .i-sun{display:block}}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .tgl .i-moon{display:block}}
+:root:not([data-theme="dark"]) .tgl .i-moon{display:block}
 
 .burger{display:none;width:38px;height:38px;flex:none;padding:0;cursor:pointer;
   background:var(--card-2);border:1px solid var(--line-2);border-radius:2px;place-items:center}
@@ -755,6 +726,23 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .faq details[open] summary::after{content:"–"}
 .faq .ans{padding:0 22px 20px;font-size:15px;color:var(--body);max-width:82ch}
 
+/* disclosure: detail a first-time visitor doesn't need yet.
+   Same +/- affordance as the FAQ so the page only teaches it once.
+   Anything inside a closed <details> never intersects, so nothing in a
+   fold carries .rv — it would open at opacity 0. */
+.fold{border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2);margin-top:30px}
+/* straight after the timeline it continues the same ruled list, so it must
+   not draw a second line on top of the one the last row already drew */
+.tl + .fold{border-top:0;margin-top:0}
+.fold summary{cursor:pointer;padding:16px 2px;font-family:var(--disp);font-weight:500;font-size:15.5px;
+  color:var(--text);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:18px}
+.fold summary::-webkit-details-marker{display:none}
+.fold summary::after{content:"+";font-family:var(--mono);font-size:17px;color:var(--accent);flex:none}
+.fold[open] summary::after{content:"\2013"}
+.fold summary:hover{color:var(--accent)}
+.fold-body{padding-bottom:30px}
+.fold-body .tl{border-top:0}
+
 /* 09 notes */
 .note-card{display:grid;grid-template-columns:150px 1fr;gap:28px;padding:30px 30px 32px;
   rotate:-.35deg;transition:translate .3s var(--ease),box-shadow .3s}
@@ -925,10 +913,9 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
     </h1>
 
     <p class="strap"><b>Cheltenham Data</b> is the practice of Szymon Pecherski, a <b>data analyst and
-    business intelligence specialist in Cheltenham</b>. I take the manual, error-prone work that eats your
-    evenings — the Friday report, the monthly reconciliation, the endless copy-paste — and replace it with
-    automated systems, clean data and reporting people actually use. The same work I've done inside
-    regulated financial services, national wholesale and aerospace, pointed at getting your week back.</p>
+    business intelligence specialist in Cheltenham</b>. I take the manual work that eats your evenings —
+    the Friday report, the monthly reconciliation, the copy-paste — and build the system that does it
+    instead.</p>
 
     <div class="cta">
       <a class="btn solid" href="#contact">Book a free scoping call
@@ -1061,28 +1048,28 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
       <article class="sheet svc-item rv">
         <span class="num">Service i</span>
         <h3>Business intelligence &amp; reporting</h3>
-        <p>Reporting that answers a decision rather than filling a page. I pull data out of spreadsheets, CRMs and databases, clean it, and build dashboards around the KPIs your managers actually act on. At Oriel I built SQL and Crystal Reports reporting that gave managers 20% more accurate insight into their teams.</p>
+        <p>Reporting that answers a decision rather than filling a page. I pull data out of spreadsheets, CRMs and databases, clean it, and build dashboards around the KPIs your managers actually act on.</p>
         <div class="chips"><span>Excel</span><span>SQL</span><span>Power BI</span><span>pandas</span><span>Crystal Reports</span></div>
       </article>
 
       <article class="sheet svc-item rv">
         <span class="num">Service ii</span>
         <h3>Process automation</h3>
-        <p>The copy-paste jobs, the monthly reconciliation, the report someone rebuilds by hand every Friday afternoon. I map the process, remove the manual steps with Python or Excel automation, and document it so it survives after I've gone. Typical result: whole days a month handed back to the people who were losing them.</p>
+        <p>The copy-paste jobs, the monthly reconciliation, the report someone rebuilds by hand every Friday afternoon. I remove the manual steps with Python or Excel automation and document it so it survives after I've gone. Typical result: whole days a month handed back.</p>
         <div class="chips"><span>Python</span><span>Excel / VBA</span><span>Process mapping</span><span>SOP writing</span></div>
       </article>
 
       <article class="sheet svc-item rv">
         <span class="num">Service iii</span>
         <h3>AI workflow implementation</h3>
-        <p>Practical AI, not hype. I identify where a language model genuinely saves time — drafting, triage, classification, summarising documents — build it into your existing workflow, and set the guardrails and human review steps around it. If AI is the wrong tool for a job, I'll tell you so.</p>
+        <p>Practical AI, not hype. I find where a language model genuinely saves time — drafting, triage, classification, summarising — then build it into your workflow with guardrails and human review. If AI is the wrong tool, I'll tell you so.</p>
         <div class="chips"><span>Workflow design</span><span>Prompt systems</span><span>Human-in-the-loop</span><span>Data governance</span></div>
       </article>
 
       <article class="sheet svc-item rv">
         <span class="num">Service iv</span>
         <h3>Web scraping &amp; data collection</h3>
-        <p>When the data you need lives on the web rather than in your systems, I build collectors to gather it — competitor pricing, market listings, supplier catalogues — then clean and structure it into something analysable. Built and delivered ethically, respecting site terms and rate limits.</p>
+        <p>When the data you need lives on the web rather than in your systems, I build collectors to gather it — competitor pricing, market listings, supplier catalogues — then clean and structure it. Ethically built, respecting site terms and rate limits.</p>
         <div class="chips"><span>Python</span><span>BeautifulSoup</span><span>Data cleaning</span><span>Scheduled jobs</span></div>
       </article>
     </div>
@@ -1274,8 +1261,14 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
           <ul><li>In the data function at one of the world's largest aerospace manufacturers.</li></ul>
         </div>
       </div>
+    </div>
 
-      <div class="tl-item rv">
+    <details class="fold rv">
+      <summary>Full career history and training</summary>
+      <div class="fold-body">
+        <div class="tl">
+
+      <div class="tl-item">
         <div class="tl-when">Mar 2026 — Aug 2026</div>
         <div>
           <div class="tl-role">Application Support Analyst</div>
@@ -1289,7 +1282,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
         </div>
       </div>
 
-      <div class="tl-item rv">
+      <div class="tl-item">
         <div class="tl-when">Aug 2025 — Feb 2026</div>
         <div>
           <div class="tl-role">Commercial Analyst</div>
@@ -1303,7 +1296,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
         </div>
       </div>
 
-      <div class="tl-item rv">
+      <div class="tl-item">
         <div class="tl-when">Feb 2024 — Aug 2025</div>
         <div>
           <div class="tl-role">Business Analyst</div>
@@ -1319,13 +1312,15 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
       </div>
     </div>
 
-    <p class="tl-foot rv"><b>Before that:</b> joined Oriel Collections in Aug 2023 as a Negotiator and was promoted into the Business Analyst role within six months.</p>
+    <p class="tl-foot"><b>Before that:</b> joined Oriel Collections in Aug 2023 as a Negotiator and was promoted into the Business Analyst role within six months.</p>
 
     <div class="notes-row">
-      <div class="sheet rv"><h3>Continuous training</h3><p>DataCamp — Python for Data Analysis track (Introduction, Intermediate, Data Manipulation &amp; Joining with pandas), Communicating Data Insights.</p></div>
-      <div class="sheet rv"><h3>Cloud &amp; infrastructure</h3><p>AWS Concepts; AWS Cloud Technology &amp; Services Concepts (2026). Hands-on AWS support experience at St. James's Place.</p></div>
-      <div class="sheet rv"><h3>Working with people</h3><p>LinkedIn Learning — Delivering Support Across Languages, De-Escalating Conversations. Comfortable with technical and non-technical stakeholders.</p></div>
+      <div class="sheet"><h3>Continuous training</h3><p>DataCamp — Python for Data Analysis track (Introduction, Intermediate, Data Manipulation &amp; Joining with pandas), Communicating Data Insights.</p></div>
+      <div class="sheet"><h3>Cloud &amp; infrastructure</h3><p>AWS Concepts; AWS Cloud Technology &amp; Services Concepts (2026). Hands-on AWS support experience at St. James's Place.</p></div>
+      <div class="sheet"><h3>Working with people</h3><p>LinkedIn Learning — Delivering Support Across Languages, De-Escalating Conversations. Comfortable with technical and non-technical stakeholders.</p></div>
     </div>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -1340,7 +1335,10 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
       </div>
     </div>
 
-    <div class="sheet ai-box rv">
+    <details class="fold rv">
+      <summary>Read the full policy — where AI helps, and where it doesn't</summary>
+      <div class="fold-body">
+        <div class="sheet ai-box">
       <div class="ai-cols">
         <div>
           <div class="ai-h">Where AI helps</div>
@@ -1362,7 +1360,9 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
         </div>
       </div>
       <p class="ai-foot">Working in regulated financial services taught me to treat data handling seriously — DSARs, anonymisation, erasure, FCA and Cyber Essentials audits. The same standard applies to how I use AI on your work. If you have an AI policy of your own, send it over and I'll work inside it.</p>
-    </div>
+        </div>
+      </div>
+    </details>
   </div>
 </section>
 

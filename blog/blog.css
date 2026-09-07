@@ -38,17 +38,6 @@
   --link-line:rgba(95,177,130,.35); --lift:#100d09;
   --c1:#5fb182; --c2:#dda04a; --c3:#e0714b; --on-c:#15110d;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#15110d; --bg-2:#1a1611; --card:#221c15; --card-2:#2a2219;
-    --line:#332a20; --line-2:#4a3c2d;
-    --text:#f1e8db; --body:#c3b5a3; --muted:#9a8b78; --faint:#7c6d5d;
-    --oak:#5fb182; --tan:#8ed4ab; --walnut:#4a3c2d; --patina:#dda04a;
-    --on-accent:#0e1a13; --accent-d:#3d8b60;
-    --link-line:rgba(95,177,130,.35); --lift:#100d09;
-    --c1:#5fb182; --c2:#dda04a; --c3:#e0714b; --on-c:#15110d;
-  }
-}
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);
@@ -91,9 +80,7 @@ header.top{border-bottom:1px solid var(--line);background:var(--bg-2)}
 .tgl:hover{color:var(--oak);border-color:var(--oak)}
 .tgl svg{display:none}
 :root[data-theme="dark"] .tgl .i-sun{display:block}
-:root[data-theme="light"] .tgl .i-moon{display:block}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tgl .i-sun{display:block}}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .tgl .i-moon{display:block}}
+:root:not([data-theme="dark"]) .tgl .i-moon{display:block}
 
 .crumbs{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;
   color:var(--faint);padding:26px 0 0}

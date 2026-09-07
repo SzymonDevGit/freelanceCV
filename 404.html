@@ -27,13 +27,6 @@
   --text:#f1e8db; --body:#c3b5a3; --muted:#9a8b78; --faint:#7c6d5d;
   --accent:#5fb182; --accent-2:#8ed4ab; --accent-d:#3d8b60; --on-accent:#0e1a13;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#15110d; --card:#221c15; --line:#332a20; --line-2:#4a3c2d;
-    --text:#f1e8db; --body:#c3b5a3; --muted:#9a8b78; --faint:#7c6d5d;
-    --accent:#5fb182; --accent-2:#8ed4ab; --accent-d:#3d8b60; --on-accent:#0e1a13;
-  }
-}
 *{box-sizing:border-box}
 body{margin:0;min-height:100vh;display:grid;place-items:center;padding:32px;
   background:var(--bg);color:var(--body);
@@ -61,9 +54,7 @@ hr{border:0;border-top:1px solid var(--line);margin:38px 0 20px}
 <script>
 (function(){
   var t; try{ t = localStorage.getItem('cd-theme'); }catch(e){}
-  if(t !== 'light' && t !== 'dark'){
-    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
+  if(t !== 'light' && t !== 'dark') t = 'light';
   document.documentElement.setAttribute('data-theme', t);
   document.addEventListener('DOMContentLoaded', function(){
     var m = document.getElementById('tc');
