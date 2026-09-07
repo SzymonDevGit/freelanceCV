@@ -275,7 +275,7 @@
   --bg:#e7dfd1; --bg-2:#eee7db; --card:#f9f4ec; --card-2:#fffdf7; --deep:#dbd1be;
   --sunk:rgba(206,194,172,.26);
   --line:#cfc3ad; --line-2:#b6a68a;
-  --text:#221c15; --body:#443a2d; --muted:#6b6050; --faint:#8c8070;
+  --text:#221c15; --body:#443a2d; --muted:#5c5344; --faint:#6e6252;
 
   --tooth:.075; --grid:rgba(120,92,54,.05); --lamp:rgba(255,251,240,.75);
   --hdr:rgba(231,223,209,.9);
@@ -309,7 +309,7 @@
   --bg:#15110d; --bg-2:#1a1611; --card:#221c15; --card-2:#2a2219; --deep:#100d09;
   --sunk:rgba(0,0,0,.22);
   --line:#332a20; --line-2:#4a3c2d;
-  --text:#f1e8db; --body:#c3b5a3; --muted:#9a8b78; --faint:#7c6d5d;
+  --text:#f1e8db; --body:#c3b5a3; --muted:#9a8b78; --faint:#8b7c6a;
 
   --tooth:.05; --grid:rgba(205,156,96,.045); --lamp:rgba(255,226,170,.06);
   --hdr:rgba(21,17,13,.9);
@@ -550,7 +550,7 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .sec-no{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--faint);padding-top:9px;
   line-height:1.7}
 .sec-hd h2{font-size:clamp(27px,3.4vw,42px);line-height:1.08;margin-bottom:14px;max-width:21ch}
-.sec-hd .lede{margin:0;color:var(--muted);max-width:60ch;font-size:16px}
+.sec-hd .lede{margin:0;color:var(--body);max-width:58ch;font-size:16.5px;line-height:1.62}
 .chips{margin-top:18px;display:flex;gap:8px;flex-wrap:wrap}
 .chips span{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--muted);border:1px dashed var(--line-2);border-radius:2px;padding:5px 9px}
@@ -570,7 +570,7 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .svc-item p{font-size:15px;color:var(--body)}
 
 /* 02 who it's for */
-.who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.who-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
 .who-card{padding:26px 24px 28px}
 .who-card:nth-child(1){rotate:-.7deg}
 .who-card:nth-child(2){rotate:.4deg;translate:0 9px}
@@ -578,10 +578,10 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .who-card .sig{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--signal);display:block;margin-bottom:13px}
 .who-card h3{font-size:18.5px;line-height:1.24;margin-bottom:11px}
-.who-card p{font-size:14.5px;color:var(--muted)}
+.who-card p{font-size:15px;color:var(--body)}
 
 /* 03 process */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:20px;position:relative}
 .step{padding:24px 22px 26px}
 .step:nth-child(odd){rotate:-.5deg}
 .step:nth-child(even){rotate:.6deg;translate:0 8px}
@@ -816,7 +816,9 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
   /* tilts on the independent property: transform is spoken for above */
   .slip.main{rotate:-.7deg} .slip.s1{rotate:.6deg}
   .slip.s2{rotate:-.5deg} .slip.s3{rotate:.7deg}
-  .cards,.who-grid,.steps,.notes-row{grid-template-columns:1fr}
+  .who-grid,.steps,.notes-row{grid-template-columns:1fr}
+  /* the figure tiles repeat the board above, so they get two columns here */
+  .cards{grid-template-columns:1fr 1fr;gap:12px}
   /* one column: the stagger that reads as a stack on desktop just looks
      like misalignment down a phone */
   .tcard:nth-child(n),.who-card:nth-child(n),.step:nth-child(n){translate:none}
@@ -824,6 +826,36 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
   .sec-hd{grid-template-columns:1fr;gap:10px}
   .sec-no{padding-top:0}
 }
+/* Phone density. The layout above already reflows; this is purely about the
+   vertical budget. At 390px the page ran to eighteen screens, and most of it
+   was air: section padding alone was ~1,400px of it. */
+@media (max-width:640px){
+  section{padding:42px 0}
+  .hero{gap:34px;padding-top:26px}
+  .sec-hd{margin-bottom:26px}
+  /* .sheet carries no padding of its own — each component supplies it, so
+     tighten them individually rather than blanket-padding the wrapper (that
+     double-pads the FAQ, whose summary owns its spacing). */
+  .svc-item{padding:22px 20px 24px}
+  .who-card{padding:20px 18px 22px}
+  .step{padding:19px 18px 21px}
+  .case-l,.case-r{padding:20px 18px 22px}
+  .note-card{padding:22px 20px 24px}
+  .note-figs{display:none}          /* the headline and standfirst carry it */
+  .notes-row .sheet{padding:18px 18px 20px}
+  .said .body{padding:24px 22px 22px}
+  .said .body p:first-of-type{font-size:18px}
+  .said .sig{margin-top:20px;padding-top:16px}
+  .contact .sheet{padding:28px 22px}
+  .faq summary{padding:14px 18px;font-size:15.5px}
+  .faq .ans{padding:0 18px 17px}
+  .tl-item{padding:18px 0}
+  .strap{font-size:16.5px;margin-top:22px}
+  .fold summary{padding:14px 2px;font-size:15px}
+  .fold-body{padding-bottom:22px}
+  .stack{gap:7px}
+}
+
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *{animation:none!important;transition-duration:.001ms!important}
@@ -1040,20 +1072,28 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
         <div class="chips"><span>Python</span><span>Excel / VBA</span><span>Process mapping</span><span>SOP writing</span></div>
       </article>
 
-      <article class="sheet svc-item rv">
+    </div>
+
+    <details class="fold">
+      <summary>Also: AI workflow implementation, and web scraping &amp; data collection</summary>
+      <div class="fold-body">
+        <div class="svc">
+      <article class="sheet svc-item">
         <span class="num">Service iii</span>
         <h3>AI workflow implementation</h3>
         <p>Practical AI, not hype. I find where a language model genuinely saves time — drafting, triage, classification, summarising — then build it into your workflow with guardrails and human review. If AI is the wrong tool, I'll tell you so.</p>
         <div class="chips"><span>Workflow design</span><span>Prompt systems</span><span>Human-in-the-loop</span><span>Data governance</span></div>
       </article>
 
-      <article class="sheet svc-item rv">
+      <article class="sheet svc-item">
         <span class="num">Service iv</span>
         <h3>Web scraping &amp; data collection</h3>
         <p>When the data you need lives on the web rather than in your systems, I build collectors to gather it — competitor pricing, market listings, supplier catalogues — then clean and structure it. Ethically built, respecting site terms and rate limits.</p>
         <div class="chips"><span>Python</span><span>BeautifulSoup</span><span>Data cleaning</span><span>Scheduled jobs</span></div>
       </article>
-    </div>
+        </div>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -1073,17 +1113,25 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
         <h3>You're growing faster than your systems</h3>
         <p>New products, new channels, more suppliers — and the reporting that worked last year now takes a full day to assemble. I rebuild it so growth stops costing you evenings and weekends.</p>
       </div>
-      <div class="sheet who-card rv">
+    </div>
+
+    <details class="fold">
+      <summary>Two more reasons people call — margin without headcount, and nobody owning the numbers</summary>
+      <div class="fold-body">
+        <div class="who-grid">
+      <div class="sheet who-card">
         <span class="sig">Cost pressure</span>
         <h3>You need margin without adding headcount</h3>
         <p>Optimising supplier terms unlocked £42,500 at one wholesaler. Automation removed 100+ hours a year at another — hours that went back to the team rather than into overtime. Both were cheaper than hiring.</p>
       </div>
-      <div class="sheet who-card rv">
+      <div class="sheet who-card">
         <span class="sig">No data team</span>
         <h3>Nobody owns the numbers</h3>
         <p>Everyone reports differently, nobody trusts the totals, and decisions get made on gut feel. I build one source of truth your team can maintain themselves.</p>
       </div>
-    </div>
+        </div>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -1096,10 +1144,18 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
     </div>
     <div class="steps">
       <div class="sheet step rv"><b>Step one</b><h3>Free scoping call</h3><p>Thirty minutes. You show me the process that's eating your week; I put an honest number on the hours it costs, tell you whether it's worth automating, and roughly what it takes.</p></div>
-      <div class="sheet step rv"><b>Step two</b><h3>Fixed proposal</h3><p>A written scope with a fixed price, a deadline and a defined outcome. No hourly drift, no surprise invoices.</p></div>
-      <div class="sheet step rv"><b>Step three</b><h3>Build &amp; review</h3><p>I build in short cycles and show you working output early, so course-corrections happen in week one rather than at handover.</p></div>
-      <div class="sheet step rv"><b>Step four</b><h3>Handover that lasts</h3><p>Documentation and SOPs written in plain English, plus a walkthrough for your team. You own everything I build.</p></div>
     </div>
+
+    <details class="fold">
+      <summary>Then: fixed proposal, build &amp; review, handover that lasts</summary>
+      <div class="fold-body">
+        <div class="steps">
+      <div class="sheet step"><b>Step two</b><h3>Fixed proposal</h3><p>A written scope with a fixed price, a deadline and a defined outcome. No hourly drift, no surprise invoices.</p></div>
+      <div class="sheet step"><b>Step three</b><h3>Build &amp; review</h3><p>I build in short cycles and show you working output early, so course-corrections happen in week one rather than at handover.</p></div>
+      <div class="sheet step"><b>Step four</b><h3>Handover that lasts</h3><p>Documentation and SOPs written in plain English, plus a walkthrough for your team. You own everything I build.</p></div>
+        </div>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -1137,7 +1193,11 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
       <div class="stamp"><span>Figures<br>verified</span></div>
     </article>
 
-    <article class="sheet case rv">
+    <details class="fold">
+      <summary>Two more results — 20 procedures automated, and a job market scraped</summary>
+      <div class="fold-body">
+
+    <article class="sheet case">
       <div class="case-l">
         <span class="mark">Automation — operations</span>
         <h3>Twenty manual procedures automated out of existence</h3>
@@ -1152,7 +1212,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
       </div>
     </article>
 
-    <article class="sheet case rv">
+    <article class="sheet case">
       <div class="case-l">
         <span class="mark">Data collection — market research</span>
         <h3>Scraping a job market to find where demand really sits</h3>
@@ -1168,10 +1228,14 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
     </article>
 
     <div class="rv">
+      </div>
+    </details>
+
       <h2 class="sr">Tools and technologies</h2>
       <div class="stack">
         <span>Python</span><span>SQL</span><span>Microsoft Excel</span><span>Power BI</span><span>pandas</span>
-        <span>AWS</span><span>Salesforce</span><span>ServiceNow</span><span>Crystal Reports</span>
+        <span>Dataiku</span><span>Streamlit</span><span>Spotfire</span><span>AWS</span><span>Salesforce</span>
+        <span>ServiceNow</span><span>Crystal Reports</span><span>Git</span>
         <span>Web scraping</span><span>Process automation</span><span>Data cleaning</span><span>KPI reporting</span>
       </div>
     </div>
@@ -1208,10 +1272,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
           <p>&ldquo;He recently created a financial spreadsheet for me and completely cracked what I
             needed. It&rsquo;s well thought out, easy to understand and has made a huge difference to
             how I can actually see and manage the numbers behind the business.&rdquo;</p>
-          <p>&ldquo;Szymon is also incredibly friendly, approachable and clearly very good at what he
-            does. It&rsquo;s great to see a young local entrepreneur building something for himself and
-            just getting on with it. A pleasure to work with, and someone I&rsquo;d happily
-            recommend.&rdquo;</p>
+          <p>&ldquo;A pleasure to work with, and someone I&rsquo;d happily recommend.&rdquo;</p>
         </blockquote>
         <div class="sig">
           <div><b>Alexander Besnard</b><i>Founder, LAVOIR</i></div>
@@ -1238,8 +1299,12 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
         <div class="tl-when">Aug 2026 — present</div>
         <div>
           <div class="tl-role">Data Analyst<span class="tag-now">Current</span></div>
-          <div class="tl-co">GE Aerospace</div>
-          <ul><li>In the data function at one of the world's largest aerospace manufacturers.</li></ul>
+          <div class="tl-co">GE Aerospace &middot; Contract, hybrid &middot; Cheltenham</div>
+          <ul>
+            <li>Streamlined and automated 5+ data pipelines with Dataiku and Python.</li>
+            <li>Built dashboards in Streamlit and Spotfire.</li>
+            <li>Used LLMs to build web apps, data functions and scripts that remove manual work — over 12 hours a month.</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -1315,7 +1380,10 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
         <p class="lede">I'm based in Cheltenham and happy to work on site across Gloucestershire, the Cotswolds and the wider South West. Most projects run remotely, so distance is rarely the deciding factor — I take on clients anywhere in the UK.</p>
       </div>
     </div>
-    <div class="areas rv">
+    <details class="fold">
+      <summary>Towns I cover, on site and remote</summary>
+      <div class="fold-body">
+        <div class="areas">
       <div>
         <h3>On site</h3>
         <div class="area-list">
@@ -1330,7 +1398,9 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
         </div>
         <p class="area-note">Local clients tend to get one or two on-site days for discovery and handover, with the build done remotely. It keeps costs down without losing the face-to-face bit that makes scoping accurate.</p>
       </div>
-    </div>
+        </div>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -1404,7 +1474,10 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
       </div>
     </a>
 
-    <a class="sheet note-card rv" href="/blog/ai-hallucination-rates-2024-vs-2026/">
+    <details class="fold">
+      <summary>Also: AI hallucination rates went up, not down</summary>
+      <div class="fold-body">
+    <a class="sheet note-card" href="/blog/ai-hallucination-rates-2024-vs-2026/">
       <div class="note-when">2 August 2026<br>Analysis</div>
       <div>
         <h3>AI hallucination rates went up, not down</h3>
@@ -1419,6 +1492,9 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
         </div>
       </div>
     </a>
+
+      </div>
+    </details>
 
     <p class="note-more rv"><a href="/blog/" class="ul">All notes</a></p>
   </div>
