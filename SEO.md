@@ -92,33 +92,26 @@ company, so nothing here claims a legal entity that doesn't exist:
   aren't stranded. No `legalName` — that would assert a registration.
 - Hero copy, the footer notice and a new FAQ entry all state plainly that
   Cheltenham Data is the practice of Szymon Pecherski.
-### The one piece still outstanding: a domain email address
+### Done: the site publishes a domain address
 
-The site still publishes `szymonpecherski@gmail.com`, deliberately — a
-published address that bounces is worse than a Gmail one that works, and
-`szymon@cheltenhamdata.co.uk` does not exist yet. But you have just pitched five
-media outlets and a county charity body from a Gmail address, which undercuts
-the brand the rest of this section just built.
+The site now publishes `info@cheltenhamdata.co.uk` everywhere it used to show
+a Gmail address — the mailto links and visible address in `index.html` and
+`404.html`, the footer link on all three blog pages, and the `"email"` fields
+in the JSON-LD graph. `tools/cloudflare_setup.py` publishes `info@` as
+`MAIL_FROM`; `MAIL_TO` stays the personal inbox, because that is the mailbox
+routing forwards *to* and pointing it at `info@` would loop.
 
-Fixing it is free and takes about five minutes:
+Two things this does not do, both still worth checking:
 
-1. `python tools/cloudflare_setup.py --email` to see the plan, then
-   `--email --apply` to make it. It enables Cloudflare Email Routing on the zone
-   and forwards `szymon@cheltenhamdata.co.uk` to your existing inbox. Forwarding
-   only: no mailbox, nothing stored at Cloudflare, replies still come from the
-   inbox you already use. `--email` is opt-in because enabling routing adds MX
-   records to the zone.
-2. Click the verification link Cloudflare emails to the Gmail inbox. **Nothing
-   is delivered until you do.**
-3. Send yourself a test message and confirm it arrives.
-4. Only then switch the site over: the mailto links and visible address in
-   `index.html` and `404.html`, the footer link on both blog pages, and the
-   three `"email"` fields in the JSON-LD graph. One commit.
-
-Sending *from* the new address is a separate thing — routing forwards inbound
-mail but doesn't let Gmail send as it. Add it in Gmail under Settings → Accounts
-→ "Send mail as", which needs an SMTP relay; until then, replying from Gmail is
-fine and still lands in the right conversation.
+- **Routing has to exist for the address to work.** `python
+  tools/cloudflare_setup.py --email` shows the plan, `--email --apply` makes
+  it, and nothing is delivered until the verification link Cloudflare emails
+  you is clicked. Send yourself a test message before trusting it.
+- **Sending *from* the address is separate.** Routing forwards inbound mail
+  but doesn't let Gmail send as it. Add it under Settings → Accounts → "Send
+  mail as", which needs an SMTP relay. Until then, replying from Gmail still
+  lands in the right conversation — but the reply comes from the Gmail
+  address, which is the thing this change was meant to stop showing people.
 
 ---
 

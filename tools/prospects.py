@@ -43,7 +43,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "prospects"
 
 UA = ("CheltenhamDataBot/1.0 (+https://cheltenhamdata.co.uk; "
-      "szymonpecherski@gmail.com)")
+      "info@cheltenhamdata.co.uk)")
 
 # ---------------------------------------------------------------- filters --
 
