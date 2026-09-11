@@ -101,12 +101,12 @@ in the JSON-LD graph. `tools/cloudflare_setup.py` publishes `info@` as
 `MAIL_FROM`; `MAIL_TO` stays the personal inbox, because that is the mailbox
 routing forwards *to* and pointing it at `info@` would loop.
 
-Two things this does not do, both still worth checking:
+Inbound routing is live and tested — mail sent to `info@` arrives. So the
+published address works, which is the part that matters for anyone using the
+site.
 
-- **Routing has to exist for the address to work.** `python
-  tools/cloudflare_setup.py --email` shows the plan, `--email --apply` makes
-  it, and nothing is delivered until the verification link Cloudflare emails
-  you is clicked. Send yourself a test message before trusting it.
+One thing this still does not do:
+
 - **Sending *from* the address is separate.** Routing forwards inbound mail
   but doesn't let Gmail send as it. Add it under Settings → Accounts → "Send
   mail as", which needs an SMTP relay. Until then, replying from Gmail still
