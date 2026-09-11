@@ -671,26 +671,40 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
   .said .tape{width:74px}
 }
 
-/* 06 experience — a printed schedule, dates in the margin */
-.tl{border-top:1px dashed var(--line-2)}
-.tl-item{display:grid;grid-template-columns:158px 1fr;gap:26px;padding:24px 0;
-  border-bottom:1px dashed var(--line-2)}
-.tl-when{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--faint);padding-top:6px}
-.tl-role{font-family:var(--disp);font-weight:600;font-size:19px;color:var(--text);letter-spacing:-.03em;
-  display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+/* 06 record — a rail, not a schedule.
+
+   Stacked, four roles were four screens of scrolling on a phone and the
+   older ones sat behind a disclosure nobody opened. Side by side they are
+   one screen and one gesture: swipe on touch, drag or arrow-key on desktop.
+   The container is focusable and labelled, because a scroll region that only
+   responds to a swipe is unreachable by keyboard. */
+/* a fixed track, not minmax(0,..): with min 0 the cards just shrink to fit
+   the row and nothing ever scrolls */
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:322px;gap:16px;
+  overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;
+  padding:4px 4px 14px;scrollbar-color:var(--line-2) transparent}
+.rail::-webkit-scrollbar{height:8px}
+.rail::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:4px}
+.rail::-webkit-scrollbar-track{background:transparent}
+.rail:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:3px}
+.rcard{scroll-snap-align:start;display:flex;flex-direction:column;
+  background:linear-gradient(176deg,var(--card-2),var(--card));
+  border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow-m);
+  padding:22px 22px 24px}
+.rcard.now{border-color:var(--accent)}
+.rwhen{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint)}
+.rcard h3{font-size:18.5px;line-height:1.2;margin:11px 0 3px;display:flex;align-items:center;
+  gap:9px;flex-wrap:wrap}
 .tag-now{font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--on-accent);background:var(--accent);padding:3px 7px;border-radius:2px;font-weight:400}
-.tl-co{color:var(--accent);font-size:14.5px;margin-top:2px}
-.tl ul{margin:12px 0 0;padding-left:17px}
-.tl li{margin-bottom:6px;font-size:15px;color:var(--body)}
-.tl li::marker{color:var(--line-2)}
-.tl-foot{margin-top:22px;font-size:14.5px;color:var(--muted)}
-.tl-foot b{color:var(--text);font-weight:600}
-.notes-row{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:36px}
-.notes-row .sheet{padding:22px 22px 24px}
-.notes-row h3{font-size:15.5px;margin-bottom:9px}
-.notes-row p{font-size:14px;color:var(--muted)}
+.rco{color:var(--accent);font-size:14px;line-height:1.45}
+.rcard ul{margin:14px 0 0;padding-left:16px}
+.rcard li{margin-bottom:7px;font-size:14.5px;line-height:1.55;color:var(--body)}
+.rcard li::marker{color:var(--line-2)}
+.rnote{margin-top:auto;padding-top:14px;font-size:13.5px;color:var(--muted)}
+.rail-hint{margin-top:6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted)}
 
 /* 07 areas */
 .areas{display:grid;grid-template-columns:1fr 1fr;gap:38px}
@@ -718,7 +732,6 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .fold{border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2);margin-top:30px}
 /* straight after the timeline it continues the same ruled list, so it must
    not draw a second line on top of the one the last row already drew */
-.tl + .fold{border-top:0;margin-top:0}
 .fold summary{cursor:pointer;padding:16px 2px;font-family:var(--disp);font-weight:500;font-size:15.5px;
   color:var(--text);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:18px}
 .fold summary::-webkit-details-marker{display:none}
@@ -726,7 +739,6 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .fold[open] summary::after{content:"\2013"}
 .fold summary:hover{color:var(--accent)}
 .fold-body{padding-bottom:30px}
-.fold-body .tl{border-top:0}
 
 /* 09 notes */
 .note-card{display:grid;grid-template-columns:150px 1fr;gap:28px;padding:30px 30px 32px;
@@ -781,7 +793,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
   .cork::before,.cork::after{inset:10px}
   .cards{grid-template-columns:1fr 1fr}
   .svc,.areas{grid-template-columns:1fr}
-  .who-grid,.steps,.notes-row{grid-template-columns:1fr 1fr}
+  .who-grid,.steps{grid-template-columns:1fr 1fr}
   .case{grid-template-columns:1fr}
   .case-r{border-left:0;border-top:1px dashed var(--line-2)}
   .margin-note{position:static;width:auto;text-align:left;margin:0 32px 18px;padding-top:20px}
@@ -793,7 +805,6 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
   .wrap,.mnav{padding-left:20px;padding-right:20px}
   .hd{height:64px}
   .mnav{top:64px}
-  .tl-item{grid-template-columns:1fr;gap:8px}
   .row{flex-wrap:wrap;row-gap:2px}
   .row b{flex:1 1 100%}
   .row u{margin-left:auto}
@@ -818,7 +829,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
   /* tilts on the independent property: transform is spoken for above */
   .slip.main{rotate:-.7deg} .slip.s1{rotate:.6deg}
   .slip.s2{rotate:-.5deg} .slip.s3{rotate:.7deg}
-  .who-grid,.steps,.notes-row{grid-template-columns:1fr}
+  .who-grid,.steps{grid-template-columns:1fr}
   /* the figure tiles repeat the board above, so they get two columns here */
   .cards{grid-template-columns:1fr 1fr;gap:12px}
   /* one column: the stagger that reads as a stack on desktop just looks
@@ -844,14 +855,19 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
   .case-l,.case-r{padding:20px 18px 22px}
   .note-card{padding:22px 20px 24px}
   .note-figs{display:none}          /* the headline and standfirst carry it */
-  .notes-row .sheet{padding:18px 18px 20px}
   .said .body{padding:24px 22px 22px}
   .said .body p:first-of-type{font-size:18px}
   .said .sig{margin-top:20px;padding-top:16px}
   .contact .sheet{padding:28px 22px}
   .faq summary{padding:14px 18px;font-size:15.5px}
   .faq .ans{padding:0 18px 17px}
-  .tl-item{padding:18px 0}
+  /* bleed the rail through the wrap's gutter so the next card always peeks
+     in at the right edge — that peek is the only affordance telling someone
+     there is more to swipe to */
+  .rail{grid-auto-columns:82vw;gap:12px;
+    margin-left:-20px;margin-right:-20px;padding-left:20px;padding-right:20px;
+    scroll-padding-left:20px}
+  .rcard{padding:20px 18px 22px}
   .strap{font-size:16.5px;margin-top:22px}
   .fold summary{padding:14px 2px;font-size:15px}
   /* the primary action gets the full width of the phone rather than sharing
@@ -1299,79 +1315,69 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
       </div>
     </div>
 
-    <div class="tl">
-      <div class="tl-item rv">
-        <div class="tl-when">Aug 2026 — present</div>
-        <div>
-          <div class="tl-role">Data Analyst<span class="tag-now">Current</span></div>
-          <div class="tl-co">GE Aerospace &middot; Contract, hybrid &middot; Cheltenham</div>
-          <ul>
-            <li>Streamlined and automated 5+ data pipelines with Dataiku and Python.</li>
-            <li>Built dashboards in Streamlit and Spotfire.</li>
-            <li>Used LLMs to build web apps, data functions and scripts that remove manual work — over 12 hours a month.</li>
-          </ul>
-        </div>
-      </div>
+    <div class="rail rv" tabindex="0" role="region" aria-label="Career history, scroll sideways for earlier roles">
+
+      <article class="rcard now">
+        <div class="rwhen">Aug 2026 — present</div>
+        <h3>Data Analyst<span class="tag-now">Current</span></h3>
+        <div class="rco">GE Aerospace &middot; Contract, hybrid &middot; Cheltenham</div>
+        <ul>
+          <li>Streamlined and automated 5+ data pipelines with Dataiku and Python.</li>
+          <li>Built dashboards in Streamlit and Spotfire.</li>
+          <li>Used LLMs to build web apps, data functions and scripts that remove manual work — over 12 hours a month.</li>
+        </ul>
+      </article>
+
+      <article class="rcard">
+        <div class="rwhen">Mar 2026 — Aug 2026</div>
+        <h3>Application Support Analyst</h3>
+        <div class="rco">St. James's Place</div>
+        <ul>
+          <li>2nd &amp; 3rd line support across Salesforce, iBusiness, SFTP and AWS via ServiceNow.</li>
+          <li>Resolved 47.55% of all requests (545 of 1,146) in my first month, in a team of 20.</li>
+          <li>Handled regulated financial customer data daily — DSAR requests, anonymisation and erasure.</li>
+          <li>Investigated automation job failures through log analysis and SFTP troubleshooting.</li>
+        </ul>
+      </article>
+
+      <article class="rcard">
+        <div class="rwhen">Aug 2025 — Feb 2026</div>
+        <h3>Commercial Analyst</h3>
+        <div class="rco">Creed Foodservice</div>
+        <ul>
+          <li>Optimised supplier terms, increasing commercial income by £42,500 at 30% ROI.</li>
+          <li>Built reconciliation and reporting tools across 3 companies and 1,200+ supplier codes.</li>
+          <li>Automated manual processes saving over 100 hours annually.</li>
+          <li>Led cross-functional projects delivered consistently on time.</li>
+        </ul>
+      </article>
+
+      <article class="rcard">
+        <div class="rwhen">Feb 2024 — Aug 2025</div>
+        <h3>Business Analyst</h3>
+        <div class="rco">Oriel Collections</div>
+        <ul>
+          <li>Automated 20+ procedures, cutting 30 hours/month and lifting team efficiency 15%.</li>
+          <li>Built SQL and Crystal Reports reporting giving managers 20% more accurate insight.</li>
+          <li>Managed 50+ projects; assessed requirements, risk and rollback for 10+ major changes.</li>
+          <li>Concluded around 25% of all audits for FCA and Cyber Essentials compliance.</li>
+        </ul>
+        <p class="rnote">Joined Aug 2023 as a Negotiator, promoted into the analyst role within six months.</p>
+      </article>
+
+      <article class="rcard">
+        <div class="rwhen">Alongside</div>
+        <h3>Training &amp; certification</h3>
+        <div class="rco">Kept current, not collected</div>
+        <ul>
+          <li><b>DataCamp</b> — Python for Data Analysis track, Communicating Data Insights.</li>
+          <li><b>AWS</b> — Concepts; Cloud Technology &amp; Services Concepts (2026), with hands-on support experience.</li>
+          <li><b>LinkedIn Learning</b> — Delivering Support Across Languages, De-Escalating Conversations.</li>
+        </ul>
+      </article>
+
     </div>
-
-    <details class="fold rv">
-      <summary>Full career history and training</summary>
-      <div class="fold-body">
-        <div class="tl">
-
-      <div class="tl-item">
-        <div class="tl-when">Mar 2026 — Aug 2026</div>
-        <div>
-          <div class="tl-role">Application Support Analyst</div>
-          <div class="tl-co">St. James's Place</div>
-          <ul>
-            <li>2nd &amp; 3rd line support across Salesforce, iBusiness, SFTP and AWS via ServiceNow.</li>
-            <li>Resolved 47.55% of all requests (545 of 1,146) in my first month, in a team of 20.</li>
-            <li>Handled regulated financial customer data daily — DSAR requests, anonymisation and data erasure.</li>
-            <li>Investigated automation job failures through log analysis and SFTP/data-transfer troubleshooting.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-when">Aug 2025 — Feb 2026</div>
-        <div>
-          <div class="tl-role">Commercial Analyst</div>
-          <div class="tl-co">Creed Foodservice</div>
-          <ul>
-            <li>Optimised supplier terms, increasing commercial income by £42,500 at 30% ROI.</li>
-            <li>Built reconciliation and reporting tools across 3 companies and 1,200+ supplier codes.</li>
-            <li>Automated manual processes saving over 100 hours annually.</li>
-            <li>Led cross-functional projects delivered consistently on time.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-when">Feb 2024 — Aug 2025</div>
-        <div>
-          <div class="tl-role">Business Analyst</div>
-          <div class="tl-co">Oriel Collections</div>
-          <ul>
-            <li>Automated 20+ procedures, cutting 30 hours/month of manual work and lifting team efficiency 15%.</li>
-            <li>Built SQL and Crystal Reports reporting giving managers 20% more accurate team insight.</li>
-            <li>Managed and contributed to 50+ projects; assessed requirements, risk and rollback for 10+ major changes.</li>
-            <li>Concluded around 25% of all audits for FCA and Cyber Essentials compliance.</li>
-            <li>Awarded Employee of the Month for operational support and performance.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <p class="tl-foot"><b>Before that:</b> joined Oriel Collections in Aug 2023 as a Negotiator and was promoted into the Business Analyst role within six months.</p>
-
-    <div class="notes-row">
-      <div class="sheet"><h3>Continuous training</h3><p>DataCamp — Python for Data Analysis track (Introduction, Intermediate, Data Manipulation &amp; Joining with pandas), Communicating Data Insights.</p></div>
-      <div class="sheet"><h3>Cloud &amp; infrastructure</h3><p>AWS Concepts; AWS Cloud Technology &amp; Services Concepts (2026). Hands-on AWS support experience at St. James's Place.</p></div>
-      <div class="sheet"><h3>Working with people</h3><p>LinkedIn Learning — Delivering Support Across Languages, De-Escalating Conversations. Comfortable with technical and non-technical stakeholders.</p></div>
-    </div>
-      </div>
-    </details>
+    <p class="rail-hint">Scroll sideways for earlier roles &rarr;</p>
   </div>
 </section>
 
