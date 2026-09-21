@@ -214,7 +214,7 @@
       "about": { "@id": "https://cheltenhamdata.co.uk/#business" },
       "mainEntity": { "@id": "https://cheltenhamdata.co.uk/#business" },
       "primaryImageOfPage": "https://cheltenhamdata.co.uk/og-image.png",
-      "dateModified": "2026-08-18"
+      "dateModified": "2026-09-21"
     },
     {
       "@type": "FAQPage",
@@ -340,7 +340,7 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
    main, so neither is affected. */
 main{overflow-x:clip}
 body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);
-  font-size:16.5px;line-height:1.66;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  font-size:16.5px;line-height:1.56;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 p{margin:0}
@@ -427,12 +427,12 @@ nav.links a:hover{color:var(--accent)}
 .tag svg{position:absolute;left:-46px;top:-16px;width:60px;height:44px;overflow:visible}
 
 /* ---------- hero ---------- */
-.hero{padding:60px 0 88px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+.hero{padding:40px 0 54px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   gap:52px;align-items:start}
 h1{font-size:clamp(38px,5.3vw,68px);line-height:1.0;letter-spacing:-.043em;margin:0}
 h1 em{font-style:normal;color:var(--accent);position:relative;display:inline-block}
 h1 em svg{position:absolute;left:-14px;bottom:-14px;width:calc(100% + 28px);height:20px;overflow:visible}
-.strap{font-size:17px;line-height:1.68;margin:30px 0 0;max-width:50ch;color:var(--body)}
+.strap{font-size:17px;line-height:1.55;margin:30px 0 0;max-width:50ch;color:var(--body)}
 .strap b{color:var(--text);font-weight:600}
 .cta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
 .btn{font-family:var(--disp);font-weight:500;font-size:16px;padding:14px 22px;border-radius:2px;
@@ -444,7 +444,7 @@ h1 em svg{position:absolute;left:-14px;bottom:-14px;width:calc(100% + 28px);heig
 .btn.big{font-size:19px;padding:19px 30px;gap:12px;letter-spacing:-.01em}
 .btn.line{border:1px solid var(--line-2);color:var(--text);transform:rotate(.4deg);background:var(--card-2)}
 .btn.line:hover{border-color:var(--accent);color:var(--accent);transform:rotate(.4deg) translateY(-2px)}
-.clients{margin-top:46px;padding-top:18px;border-top:1px dashed var(--line-2)}
+.clients{margin-top:30px;padding-top:18px;border-top:1px dashed var(--line-2)}
 .clients .mark{display:block;margin-bottom:12px}
 .clients div{display:flex;gap:22px;flex-wrap:wrap}
 .clients span{font-family:var(--disp);font-size:15px;color:var(--muted)}
@@ -520,7 +520,7 @@ h1 em svg{position:absolute;left:-14px;bottom:-14px;width:calc(100% + 28px);heig
 .ph.p0{left:30%;top:13%} .ph.p1{left:80.5%;top:0} .ph.p2{left:77.5%;top:53%} .ph.p3{left:25%;top:72%}
 
 /* ---------- taped cards ---------- */
-.figband{padding:16px 0 90px}
+.figband{padding:6px 0 54px}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
 .tcard{position:relative;background:linear-gradient(176deg,var(--card-2),var(--card));
   border:1px solid var(--line);border-radius:3px;padding:26px 22px;box-shadow:var(--shadow-m)}
@@ -545,22 +545,22 @@ h1 em svg{position:absolute;left:-14px;bottom:-14px;width:calc(100% + 28px);heig
 .tcard .t{font-size:13.5px;color:var(--muted);margin-top:13px;line-height:1.55}
 
 /* ---------- sections ---------- */
-section{padding:clamp(64px,8vw,104px) 0;position:relative}
+section{padding:clamp(44px,5.2vw,68px) 0;position:relative}
 .band{background:var(--bg-2);border-block:1px solid var(--line)}
-.sec-hd{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:start;margin-bottom:clamp(34px,4.4vw,54px)}
+.sec-hd{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:start;margin-bottom:clamp(22px,2.6vw,32px)}
 .sec-no{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--faint);padding-top:9px;
   line-height:1.7}
-.sec-hd h2{font-size:clamp(27px,3.4vw,42px);line-height:1.08;margin-bottom:14px;max-width:21ch}
+.sec-hd h2{font-size:clamp(27px,3.4vw,42px);line-height:1.08;margin-bottom:10px;max-width:21ch}
 .sec-hd .lede{margin:0;color:var(--body);max-width:58ch;font-size:16.5px;line-height:1.62}
-.chips{margin-top:18px;display:flex;gap:8px;flex-wrap:wrap}
+.chips{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
 .chips span{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--muted);border:1px dashed var(--line-2);border-radius:2px;padding:5px 9px}
 .sheet{position:relative;background:linear-gradient(176deg,var(--card-2),var(--card));
   border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow-m)}
 
 /* 01 services */
-.svc{display:grid;grid-template-columns:1fr 1fr;gap:26px}
-.svc-item{padding:28px 26px 30px}
+.svc{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.svc-item{padding:24px 24px 26px}
 .svc-item:nth-child(1){rotate:-.45deg}
 .svc-item:nth-child(2){rotate:.35deg}
 .svc-item:nth-child(3){rotate:.5deg}
@@ -568,39 +568,39 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .svc-item .num{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--accent);display:block;margin-bottom:14px}
 .svc-item h3{font-size:20px;line-height:1.2;margin-bottom:12px}
-.svc-item p{font-size:15px;color:var(--body)}
+.svc-item p{font-size:15px;line-height:1.5;color:var(--body)}
 
 /* 02 who it's for */
-.who-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
-.who-card{padding:26px 24px 28px}
+.who-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.who-card{padding:24px 24px 26px}
 .who-card:nth-child(1){rotate:-.7deg}
 .who-card:nth-child(2){rotate:.4deg;translate:0 9px}
 .who-card:nth-child(3){rotate:-.35deg}
 .who-card .sig{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--signal);display:block;margin-bottom:13px}
 .who-card h3{font-size:18.5px;line-height:1.24;margin-bottom:11px}
-.who-card p{font-size:15px;color:var(--body)}
+.who-card p{font-size:15px;line-height:1.5;color:var(--body)}
 
 /* 03 process */
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:20px;position:relative}
-.step{padding:24px 22px 26px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:18px;position:relative}
+.step{padding:22px 22px 24px}
 .step:nth-child(odd){rotate:-.5deg}
 .step:nth-child(even){rotate:.6deg;translate:0 8px}
 .step b{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--faint);font-weight:400;display:block;margin-bottom:12px}
 .step h3{font-size:17.5px;margin-bottom:10px}
-.step p{font-size:14px;color:var(--muted)}
+.step p{font-size:14px;line-height:1.5;color:var(--muted)}
 
 /* 04 work — case sheets, one of them stamped */
 .case{position:relative;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);
-  border-radius:3px;margin-bottom:30px}
+  border-radius:3px;margin-bottom:22px}
 .case:nth-of-type(1){rotate:-.3deg}
 .case:nth-of-type(2){rotate:.25deg}
 .case:nth-of-type(3){rotate:-.2deg}
-.case-l{padding:32px 32px 34px}
+.case-l{padding:26px 28px 28px}
 .case-l h3{font-size:23px;line-height:1.16;margin:12px 0 14px;max-width:26ch}
-.case-l p{font-size:15.5px;line-height:1.68;color:var(--body)}
-.case-r{padding:32px 32px 34px;border-left:1px dashed var(--line-2);background:var(--sunk)}
+.case-l p{font-size:15.5px;line-height:1.56;color:var(--body)}
+.case-r{padding:26px 28px 28px;border-left:1px dashed var(--line-2);background:var(--sunk)}
 .row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:12px 0;
   border-bottom:1px dashed var(--line)}
 .row:last-of-type{border-bottom:0}
@@ -617,7 +617,7 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .margin-note{position:absolute;left:-118px;top:64px;width:104px;font-family:var(--mono);font-size:10.5px;
   line-height:1.7;color:var(--accent);text-align:right}
 .margin-note svg{position:absolute;right:-34px;top:6px;width:34px;height:40px;overflow:visible}
-.stack{display:flex;flex-wrap:wrap;gap:9px;margin-top:34px;padding-top:26px;border-top:1px dashed var(--line-2)}
+.stack{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px;padding-top:20px;border-top:1px dashed var(--line-2)}
 .stack span{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--muted);
   border:1px solid var(--line);border-radius:2px;padding:6px 10px;background:var(--card-2)}
 
@@ -644,12 +644,12 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
   mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
 .said .tape.l{top:-13px;left:-26px;transform:rotate(-26deg)}
 .said .tape.r{top:-13px;right:-26px;transform:rotate(26deg)}
-.said .body{padding:34px 44px 30px}
+.said .body{padding:28px 36px 26px}
 .said blockquote{margin:0}
-.said .body p{font-size:16px;line-height:1.72;color:var(--body);margin:0 0 14px}
+.said .body p{font-size:16px;line-height:1.62;color:var(--body);margin:0 0 11px}
 .said .body p:first-of-type{font-family:var(--disp);font-weight:500;font-size:20.5px;
   line-height:1.42;letter-spacing:-.014em;color:var(--text);margin-bottom:18px}
-.said .sig{margin-top:26px;padding-top:20px;border-top:1px dashed var(--line-2);
+.said .sig{margin-top:20px;padding-top:16px;border-top:1px dashed var(--line-2);
   display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap}
 .said .sig b{display:block;font-family:var(--disp);font-size:18px;font-weight:600;color:var(--text)}
 .said .sig i{font-style:normal;font-size:14px;color:var(--muted)}
@@ -680,7 +680,7 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
    responds to a swipe is unreachable by keyboard. */
 /* a fixed track, not minmax(0,..): with min 0 the cards just shrink to fit
    the row and nothing ever scrolls */
-.rail{display:grid;grid-auto-flow:column;grid-auto-columns:322px;gap:16px;
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:322px;gap:14px;
   overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;
   padding:4px 4px 14px;scrollbar-color:var(--line-2) transparent}
 .rail::-webkit-scrollbar{height:8px}
@@ -715,10 +715,10 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .area-note{margin-top:18px;font-size:14px;color:var(--muted);max-width:52ch}
 
 /* 08 FAQ */
-.faq details{margin-bottom:12px;overflow:hidden}
+.faq details{margin-bottom:9px;overflow:hidden}
 .faq details:nth-child(odd){rotate:-.16deg}
 .faq details:nth-child(even){rotate:.2deg}
-.faq summary{cursor:pointer;padding:17px 22px;font-family:var(--disp);font-weight:500;font-size:16.5px;
+.faq summary{cursor:pointer;padding:14px 20px;font-family:var(--disp);font-weight:500;font-size:16.5px;
   color:var(--text);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:18px}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:"+";font-family:var(--mono);font-size:17px;color:var(--accent);flex:none}
@@ -747,7 +747,7 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .note-when{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--faint);line-height:1.9}
 .note-card h3{font-size:22px;line-height:1.18;margin-bottom:12px}
-.note-card p{font-size:15px;color:var(--muted);max-width:66ch}
+.note-card p{font-size:15px;line-height:1.5;color:var(--muted);max-width:66ch}
 .note-figs{display:flex;flex-wrap:wrap;gap:26px;margin-top:22px;padding-top:20px;
   border-top:1px dashed var(--line-2)}
 .note-figs b{display:block;font-family:var(--disp);font-size:19px;color:var(--accent);
@@ -757,13 +757,13 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .ul{color:var(--accent);border-bottom:1px solid currentColor;padding-bottom:1px}
 
 /* contact */
-.contact .sheet{padding:clamp(34px,5vw,56px);text-align:center;rotate:.25deg}
+.contact .sheet{padding:clamp(28px,3.6vw,42px);text-align:center;rotate:.25deg}
 .cor{margin:18px 0 14px;font-size:14px;color:var(--muted)}
 .contact h2{font-size:clamp(28px,4vw,46px);line-height:1.08;margin-bottom:16px}
 .contact h2 em{font-style:normal;color:var(--accent)}
 .contact p{color:var(--muted);max-width:56ch;margin:0 auto;font-size:16px}
-.cbtns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
-.cmeta{display:flex;gap:8px 18px;justify-content:center;flex-wrap:wrap;margin-top:30px;
+.cbtns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.cmeta{display:flex;gap:8px 18px;justify-content:center;flex-wrap:wrap;margin-top:24px;
   padding-top:24px;border-top:1px dashed var(--line-2)}
 .cmeta span{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--faint)}
@@ -771,7 +771,7 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .cmeta span:not(:last-child)::after{content:"·";margin-left:18px;color:var(--line-2)}
 
 /* ---------- footer ---------- */
-footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0 46px;position:relative}
+footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:34px 0 36px;position:relative}
 .f-top{display:flex;justify-content:space-between;gap:26px;flex-wrap:wrap;align-items:flex-start}
 .f-links{display:flex;gap:20px;flex-wrap:wrap}
 .f-links a{font-size:14px;color:var(--muted)}
@@ -811,6 +811,10 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
   .case-l,.case-r{padding:26px 20px 28px}
 }
 @media (max-width:640px){
+  /* the compact rhythm goes a little further where the screen is smallest */
+  section{padding:38px 0}
+  .hero{padding:28px 0 40px}
+  .figband{padding:0 0 40px}
   /* The board is a collage: four slips pinned at fixed percentages of a fixed
      height, with threads running between them. There is no phone width where
      that survives — the slips simply land on top of each other and eat each
@@ -1067,11 +1071,53 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
   </div>
 </div>
 
+<!-- ===================== TESTIMONIAL ===================== -->
+<section id="said" class="said">
+  <div class="wrap">
+    <div class="sec-hd rv">
+      <div class="sec-no">01<br>CLIENT</div>
+      <div>
+        <h2>One client, in his own words.</h2>
+        <p class="lede">Alexander Besnard runs LAVOIR, a home-care brand made in Cheltenham. I built
+          the financial side of it. This is the recommendation he wrote afterwards, in full and
+          unedited.</p>
+      </div>
+    </div>
+
+    <article class="sheet rv">
+      <span class="tape l" aria-hidden="true"></span>
+      <span class="tape r" aria-hidden="true"></span>
+      <div class="head">
+        <div class="head-in">
+          <div class="lv">LAVOIR</div>
+          <div class="lvs">Inspired by French heritage &middot; Made in Cheltenham</div>
+        </div>
+      </div>
+      <div class="body">
+        <span class="mark">Client recommendation</span>
+        <blockquote>
+          <p>&ldquo;I&rsquo;d highly recommend Szymon. Numbers and spreadsheets definitely don&rsquo;t
+            come naturally to me, but he has a real talent for taking something that feels complicated
+            and turning it into something clear, simple and genuinely useful.&rdquo;</p>
+          <p>&ldquo;He recently created a financial spreadsheet for me and completely cracked what I
+            needed. It&rsquo;s well thought out, easy to understand and has made a huge difference to
+            how I can actually see and manage the numbers behind the business.&rdquo;</p>
+          <p>&ldquo;A pleasure to work with, and someone I&rsquo;d happily recommend.&rdquo;</p>
+        </blockquote>
+        <div class="sig">
+          <div><b>Alexander Besnard</b><i>Founder, LAVOIR</i></div>
+          <div class="meta">Client &middot; Cheltenham<br><time datetime="2026-09-21">21 September 2026</time></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
 <!-- ===================== SERVICES ===================== -->
 <section id="services">
   <div class="wrap">
     <div class="sec-hd rv">
-      <div class="sec-no">01<br>SERVICES</div>
+      <div class="sec-no">02<br>SERVICES</div>
       <div>
         <h2>Business intelligence and automation services for growing businesses</h2>
         <p class="lede">Every engagement starts with the same question: what are you still doing by hand on a Sunday night that a system should have done overnight? I find it, put a number on the hours it's costing you, then build the fix.</p>
@@ -1122,7 +1168,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
 <section class="band">
   <div class="wrap">
     <div class="sec-hd rv">
-      <div class="sec-no">02<br>WHO</div>
+      <div class="sec-no">03<br>WHO</div>
       <div>
         <h2>Built for small brands outgrowing their spreadsheets</h2>
         <p class="lede">The businesses I help usually have real operational complexity but no dedicated data team — so the owner absorbs it. The spreadsheet that ran the company at ten people starts breaking at thirty, and the person patching it at the weekend is usually you. This is the point where a few days of the right work pays for itself repeatedly, in money and in hours.</p>
@@ -1160,7 +1206,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
 <section>
   <div class="wrap">
     <div class="sec-hd rv">
-      <div class="sec-no">03<br>METHOD</div>
+      <div class="sec-no">04<br>METHOD</div>
       <div><h2>Low risk, in four steps.</h2></div>
     </div>
     <div class="steps">
@@ -1184,7 +1230,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
 <section class="band" id="work">
   <div class="wrap">
     <div class="sec-hd rv">
-      <div class="sec-no">04<br>WORK</div>
+      <div class="sec-no">05<br>WORK</div>
       <div>
         <h2>Measured outcomes, not vague deliverables.</h2>
         <p class="lede">A sample of projects delivered in-house and independently. Client-confidential detail is generalised, but every figure below is real.</p>
@@ -1260,48 +1306,6 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
         <span>Web scraping</span><span>Process automation</span><span>Data cleaning</span><span>KPI reporting</span>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ===================== TESTIMONIAL ===================== -->
-<section id="said" class="said">
-  <div class="wrap">
-    <div class="sec-hd rv">
-      <div class="sec-no">05<br>CLIENT</div>
-      <div>
-        <h2>One client, in his own words.</h2>
-        <p class="lede">Alexander Besnard runs LAVOIR, a home-care brand made in Cheltenham. I built
-          the financial side of it. This is the recommendation he wrote afterwards, in full and
-          unedited.</p>
-      </div>
-    </div>
-
-    <article class="sheet rv">
-      <span class="tape l" aria-hidden="true"></span>
-      <span class="tape r" aria-hidden="true"></span>
-      <div class="head">
-        <div class="head-in">
-          <div class="lv">LAVOIR</div>
-          <div class="lvs">Inspired by French heritage &middot; Made in Cheltenham</div>
-        </div>
-      </div>
-      <div class="body">
-        <span class="mark">Client recommendation</span>
-        <blockquote>
-          <p>&ldquo;I&rsquo;d highly recommend Szymon. Numbers and spreadsheets definitely don&rsquo;t
-            come naturally to me, but he has a real talent for taking something that feels complicated
-            and turning it into something clear, simple and genuinely useful.&rdquo;</p>
-          <p>&ldquo;He recently created a financial spreadsheet for me and completely cracked what I
-            needed. It&rsquo;s well thought out, easy to understand and has made a huge difference to
-            how I can actually see and manage the numbers behind the business.&rdquo;</p>
-          <p>&ldquo;A pleasure to work with, and someone I&rsquo;d happily recommend.&rdquo;</p>
-        </blockquote>
-        <div class="sig">
-          <div><b>Alexander Besnard</b><i>Founder, LAVOIR</i></div>
-          <div class="meta">Client &middot; Cheltenham<br><time datetime="2026-08-18">18 August 2026</time></div>
-        </div>
-      </div>
-    </article>
   </div>
 </section>
 
@@ -1557,7 +1561,7 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
       Szymon Pecherski, Cheltenham, Gloucestershire. Business intelligence, reporting, process automation
       and automation consulting for small and growing businesses across Gloucestershire, the Cotswolds,
       Bristol, Bath and the UK.
-      Last updated <time datetime="2026-08-18">18 August 2026</time>.
+      Last updated <time datetime="2026-09-21">21 September 2026</time>.
     </p>
   </div>
 </footer>
