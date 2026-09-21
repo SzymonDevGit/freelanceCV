@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-<title>Cheltenham Data | Data Analyst in Cheltenham — Szymon Pecherski</title>
+<title>Cheltenham Data | Automation that gives you your time back</title>
 <meta name="description" content="Cheltenham Data — freelance data analyst &amp; BI specialist in Cheltenham. Dashboards, reporting and process automation for small brands across Gloucestershire.">
 <meta name="author" content="Szymon Pecherski">
 <meta name="theme-color" content="#e7dfd1" id="tc">
@@ -21,7 +21,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Cheltenham Data">
-<meta property="og:title" content="Cheltenham Data | Data Analyst in Cheltenham — Szymon Pecherski">
+<meta property="og:title" content="Cheltenham Data | Automation that gives you your time back">
 <meta property="og:description" content="Dashboards, reporting and process automation for growing small brands. £42,500 of commercial income unlocked. 100+ hours automated a year.">
 <meta property="og:url" content="https://cheltenhamdata.co.uk/">
 <meta property="og:locale" content="en_GB">
@@ -31,7 +31,7 @@
 <meta property="og:image:alt" content="Cheltenham Data — data analysis and business intelligence, Cheltenham">
 <meta property="og:image:type" content="image/png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Cheltenham Data | Data Analyst in Cheltenham — Szymon Pecherski">
+<meta name="twitter:title" content="Cheltenham Data | Automation that gives you your time back">
 <meta name="twitter:description" content="Dashboards, reporting and process automation for growing small brands across Gloucestershire and the UK.">
 <meta name="twitter:image" content="https://cheltenhamdata.co.uk/og-image.png">
 <meta name="twitter:image:alt" content="Cheltenham Data — data analysis and business intelligence, Cheltenham">
@@ -1254,11 +1254,12 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
 <section id="said" class="said">
   <div class="wrap">
     <div class="sec-hd rv">
-      <div class="sec-no">05<br>SAID</div>
+      <div class="sec-no">05<br>CLIENT</div>
       <div>
-        <h2>What it&rsquo;s like to work with me.</h2>
-        <p class="lede">Unedited, straight from the client &mdash; a Cheltenham founder who needed the
-          numbers behind their business to make sense.</p>
+        <h2>One client, in his own words.</h2>
+        <p class="lede">Alexander Besnard runs LAVOIR, a home-care brand made in Cheltenham. I built
+          the financial side of it. This is the recommendation he wrote afterwards, in full and
+          unedited.</p>
       </div>
     </div>
 
@@ -1634,16 +1635,35 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
     if(isNaN(target)) return;
     var pre = el.getAttribute('data-p') || '', suf = el.getAttribute('data-s') || '';
     var dp = parseInt(el.getAttribute('data-dp') || '0', 10);
-    var render = function(v){ el.textContent = pre + fmt(v, dp) + suf; };
-    if(reduce || target === 0){ render(target); return; }
-    var dur = 1300, t0 = null;
-    (function step(ts){
-      if(!t0) t0 = ts;
+    var done = pre + fmt(target, dp) + suf;
+    /* A newer run supersedes an older one, so switching tabs twice quickly
+       cannot leave two loops writing to the same element. */
+    var run = el.__run = (el.__run || 0) + 1;
+    var settle = function(){ if(el.__run === run) el.textContent = done; };
+
+    /* The old loop called its first step synchronously, which rendered zero
+       and threw away the figure the HTML had shipped. It only ever got back to
+       the real number if requestAnimationFrame kept firing — so a background
+       tab, iOS low-power mode, or any paint the browser decided to skip left
+       "£0" on screen permanently. Nothing is overwritten now until a frame
+       actually arrives, and a timer guarantees the end value even when frames
+       never do: setTimeout is merely clamped when a tab is hidden, whereas
+       rAF is paused outright. */
+    if(reduce || target === 0 || document.hidden || !window.requestAnimationFrame){
+      settle();
+      return;
+    }
+
+    var dur = 1300, t0 = null, guard = setTimeout(settle, dur + 600);
+    requestAnimationFrame(function step(ts){
+      if(el.__run !== run) return;
+      if(t0 === null) t0 = ts;
       var p = Math.min((ts - t0) / dur, 1);
       var v = target * (1 - Math.pow(1 - p, 4));
-      render(dp ? Math.round(v * Math.pow(10, dp)) / Math.pow(10, dp) : Math.round(v));
+      el.textContent = pre + fmt(dp ? Math.round(v * Math.pow(10, dp)) / Math.pow(10, dp) : Math.round(v), dp) + suf;
       if(p < 1) requestAnimationFrame(step);
-    })(performance.now());
+      else { clearTimeout(guard); settle(); }
+    });
   }
 
   /* --- the steel rule travels with the page and reads off the distance --- */
