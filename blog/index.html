@@ -71,9 +71,7 @@
 <script>
 (function(){
   var t; try{ t = localStorage.getItem('cd-theme'); }catch(e){}
-  if(t !== 'light' && t !== 'dark'){
-    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
+  if(t !== 'light' && t !== 'dark') t = 'light';
   document.documentElement.setAttribute('data-theme', t);
 })();
 </script>
@@ -141,8 +139,7 @@
       <a href="/">Home</a>
       <a href="/#services">Services</a>
       <a href="/#work">Work</a>
-      <a href="/#ai">AI policy</a>
-      <a href="mailto:szymonpecherski@gmail.com">Email</a>
+      <a href="mailto:info@cheltenhamdata.co.uk">Email</a>
       <a href="https://www.linkedin.com/in/szy05/" target="_blank" rel="me noopener noreferrer">LinkedIn</a>
     </div>
     <p style="margin:0">© 2026 Cheltenham Data — the data analysis and business intelligence practice of Szymon Pecherski,

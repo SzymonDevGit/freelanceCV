@@ -58,7 +58,7 @@ DUMMY_IP = "192.0.2.1"          # RFC 5737 TEST-NET-1: reserved, never routable
 DMARC = "v=DMARC1; p=none; rua=mailto:szymonpecherski@gmail.com"
 
 # The address published on the site, and the inbox it forwards to.
-MAIL_FROM = f"szymon@{NEW}"
+MAIL_FROM = f"info@{NEW}"
 MAIL_TO = "szymonpecherski@gmail.com"
 MAIL_RULE = "site contact address"
 

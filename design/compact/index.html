@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <title>B · compact — Cheltenham Data | Automation that gives you your time back</title>
-<meta name="description" content="Cheltenham Data — freelance data analyst &amp; BI specialist in Cheltenham. Dashboards, reporting and process automation for small brands across Gloucestershire.">
+<meta name="description" content="Cheltenham Data — freelance data analyst &amp; BI specialist in Cheltenham. Dashboards, reporting and automation that hand your evenings back.">
 <meta name="author" content="Szymon Pecherski">
 <meta name="theme-color" content="#e7dfd1" id="tc">
 <meta name="color-scheme" content="light dark">
@@ -23,7 +23,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Cheltenham Data">
 <meta property="og:title" content="Cheltenham Data | Automation that gives you your time back">
-<meta property="og:description" content="Dashboards, reporting and process automation for growing small brands. £42,500 of commercial income unlocked. 100+ hours automated a year.">
+<meta property="og:description" content="You didn't start a business to rebuild the same report every Friday. Reporting and automation that hand those hours back — £42,500 unlocked.">
 <meta property="og:url" content="https://cheltenhamdata.co.uk/">
 <meta property="og:locale" content="en_GB">
 <meta property="og:image" content="https://cheltenhamdata.co.uk/og-image.png">
@@ -33,7 +33,7 @@
 <meta property="og:image:type" content="image/png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Cheltenham Data | Automation that gives you your time back">
-<meta name="twitter:description" content="Dashboards, reporting and process automation for growing small brands across Gloucestershire and the UK.">
+<meta name="twitter:description" content="Dashboards, reporting and automation that hand your evenings back. For small brands across Gloucestershire and the UK.">
 <meta name="twitter:image" content="https://cheltenhamdata.co.uk/og-image.png">
 <meta name="twitter:image:alt" content="Cheltenham Data — data analysis and business intelligence, Cheltenham">
 
@@ -49,15 +49,14 @@
 <link rel="preload" href="/fonts/inter-tight-400.woff2" as="font" type="font/woff2" crossorigin>
 
 <!-- Theme, resolved before first paint so the page never flashes the wrong one.
-     No stored choice means follow the operating system. Visitors without
-     JavaScript get the same result from the prefers-color-scheme block in the
-     stylesheet. -->
+     Light is the default: the site is paper, and a first-time visitor should
+     see it that way whatever their operating system is set to. Dark is one
+     click away and remembered. Visitors without JavaScript get light too,
+     because the stylesheet's base palette is the light one. -->
 <script>
 (function(){
   var t; try{ t = localStorage.getItem('cd-theme'); }catch(e){}
-  if(t !== 'light' && t !== 'dark'){
-    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
+  if(t !== 'light' && t !== 'dark') t = 'light';
   document.documentElement.setAttribute('data-theme', t);
 })();
 </script>
@@ -71,12 +70,12 @@
       "@id": "https://cheltenhamdata.co.uk/#business",
       "name": "Cheltenham Data",
       "alternateName": ["Szymon Pecherski — Data & BI Consulting", "Szymon Pecherski Data Analyst Cheltenham"],
-      "description": "Cheltenham Data is the freelance data analysis and business intelligence practice of Szymon Pecherski, a data analyst based in Cheltenham. Business intelligence and reporting, process automation, AI workflow implementation and web data collection for small and growing businesses.",
+      "description": "Cheltenham Data is the freelance data analysis and business intelligence practice of Szymon Pecherski, a data analyst based in Cheltenham. Business intelligence and reporting, process automation, AI workflow implementation and web data collection for small and growing businesses — built to hand owners and their teams their hours back.",
       "url": "https://cheltenhamdata.co.uk/",
       "image": "https://cheltenhamdata.co.uk/og-image.png",
       "logo": "https://cheltenhamdata.co.uk/logo.png",
-      "slogan": "Data analysis and automation that pays for itself.",
-      "email": "szymonpecherski@gmail.com",
+      "slogan": "Data analysis and automation that gives you your time back.",
+      "email": "info@cheltenhamdata.co.uk",
       "priceRange": "££",
       "currenciesAccepted": "GBP",
       "knowsLanguage": "en-GB",
@@ -88,7 +87,7 @@
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "sales",
-        "email": "szymonpecherski@gmail.com",
+        "email": "info@cheltenhamdata.co.uk",
         "areaServed": "GB",
         "availableLanguage": "English"
       },
@@ -156,7 +155,7 @@
       "name": "Szymon Pecherski",
       "jobTitle": "Data Analyst & Business Intelligence Specialist",
       "url": "https://cheltenhamdata.co.uk/",
-      "email": "szymonpecherski@gmail.com",
+      "email": "info@cheltenhamdata.co.uk",
       "homeLocation": { "@type": "Place", "name": "Cheltenham, Gloucestershire, UK" },
       "address": {
         "@type": "PostalAddress",
@@ -210,7 +209,7 @@
       "@id": "https://cheltenhamdata.co.uk/#webpage",
       "url": "https://cheltenhamdata.co.uk/",
       "name": "Cheltenham Data | Data Analyst & BI Specialist in Cheltenham",
-      "description": "Cheltenham Data is a freelance data analysis and business intelligence practice in Cheltenham. Dashboards, reporting and process automation for growing small brands across Gloucestershire and the UK.",
+      "description": "Cheltenham Data is a freelance data analysis and business intelligence practice in Cheltenham. Dashboards, reporting and process automation that hand your evenings back, for growing small brands across Gloucestershire and the UK.",
       "inLanguage": "en-GB",
       "isPartOf": { "@id": "https://cheltenhamdata.co.uk/#website" },
       "about": { "@id": "https://cheltenhamdata.co.uk/#business" },
@@ -225,7 +224,7 @@
         { "@type": "Question", "name": "Do you only work with businesses in Cheltenham?",
           "acceptedAnswer": { "@type": "Answer", "text": "No. I'm based in Cheltenham and happy to work on site across Gloucestershire and the Cotswolds — Gloucester, Stroud, Tewkesbury, Cirencester, Worcester, Evesham — as well as Bristol and Bath. Most work is done remotely, so I take on clients anywhere in the UK." } },
         { "@type": "Question", "name": "I'm a small business. Is this overkill?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Usually the opposite. Small and growing businesses are where a few days of automation work pays back fastest, because nobody has had time to build proper systems yet. If you have people spending hours a week in spreadsheets, that is exactly the problem I solve." } },
+          "acceptedAnswer": { "@type": "Answer", "text": "Usually the opposite. Small and growing businesses are where a few days of automation work pays back fastest, because nobody has had time to build proper systems yet. If you or your team are spending hours a week in spreadsheets, that is exactly the problem I solve — those hours are not coming back on their own, and fixing it is cheaper than the headcount you would otherwise add." } },
         { "@type": "Question", "name": "Who is behind Cheltenham Data?",
           "acceptedAnswer": { "@type": "Answer", "text": "Cheltenham Data is the freelance practice of Szymon Pecherski, a data analyst in Cheltenham. It is a one-person practice, so the person you scope the work with is the person who builds it — there is no account manager and nothing is handed to a subcontractor." } },
         { "@type": "Question", "name": "Are you available while working full time?",
@@ -236,8 +235,6 @@
           "acceptedAnswer": { "@type": "Answer", "text": "You do. Code, dashboards, models and documentation are handed over in full at the end of the project, written to be maintained by your team. No lock-in and no dependency on me to keep it running." } },
         { "@type": "Question", "name": "How do you handle sensitive or regulated data?",
           "acceptedAnswer": { "@type": "Answer", "text": "I have handled regulated financial customer data daily, including DSAR requests, anonymisation and erasure, and contributed to FCA and Cyber Essentials audits. I work inside your existing controls, sign an NDA or DPA, and keep data in your environment." } },
-        { "@type": "Question", "name": "Do you use AI on client work?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Yes, and I disclose exactly how. AI helps me write and refactor code, draft documentation and explore approaches faster. Client data does not go into public AI tools, nothing generated is handed over unreviewed, and every figure in a report traces back to a source you can audit." } },
         { "@type": "Question", "name": "What happens on the first call?",
           "acceptedAnswer": { "@type": "Answer", "text": "You walk me through the process that is costing you time or money. I ask questions, and by the end you will have an honest view of whether it is worth fixing, roughly what it would take, and whether I am the right person for it. Free, no obligation, about thirty minutes." } }
       ]
@@ -265,11 +262,10 @@
    THE BENCH — printed sheets on a desk, marked up in green pen.
 
    Two themes, and dark is not a variable swap: the materials have
-   to behave the other way round. The steel rule goes from dark
-   ticks bitten into bright metal to light ticks scored into dark
-   metal. Tape darkens the sheet beneath it on paper and lightens
-   it in the dark. The cork is one image either way, veiled darker
-   by a multiply layer at night. Shadows lengthen and cool.
+   to behave the other way round. Tape darkens the sheet beneath it
+   on paper and lightens it in the dark. The cork is one image either
+   way, veiled darker by a multiply layer at night. Shadows lengthen
+   and cool.
 
    Every colour is a token. The two palettes below are the whole
    theming layer — nothing else in the stylesheet hard-codes a
@@ -280,7 +276,7 @@
   --bg:#e7dfd1; --bg-2:#eee7db; --card:#f9f4ec; --card-2:#fffdf7; --deep:#dbd1be;
   --sunk:rgba(206,194,172,.26);
   --line:#cfc3ad; --line-2:#b6a68a;
-  --text:#221c15; --body:#443a2d; --muted:#6b6050; --faint:#8c8070;
+  --text:#221c15; --body:#443a2d; --muted:#5c5344; --faint:#6e6252;
 
   --tooth:.075; --grid:rgba(120,92,54,.05); --lamp:rgba(255,251,240,.75);
   --hdr:rgba(231,223,209,.9);
@@ -288,9 +284,6 @@
   --cork-1:#c69c62; --cork-veil:#ffffff;      /* white multiplies to nothing */
   --frame-1:#d9bb90; --frame-2:#b18c56; --frame-3:#c9a874; --frame-edge:#8d6e42;
 
-  --steel-1:#b3aea5; --steel-2:#eae7e1; --steel-3:#cbc6bd; --steel-4:#a29d94;
-  --steel-edge:#8f8a81; --steel-fade:rgba(234,231,225,.9); --spine-ink:#7a746b;
-  --tick:rgba(34,28,21,.5); --tick-2:rgba(34,28,21,.26);
 
   --tape:rgba(146,112,66,.17); --tape-edge:rgba(120,90,52,.13);
   --manila:#e2d2ac; --manila-2:#d5c296; --manila-edge:#b39c6d; --tag-ink:#5c5140;
@@ -307,7 +300,7 @@
   --sans:'Inter Tight',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
   --mono:'Space Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
   --ease:cubic-bezier(.22,1,.36,1);
-  --maxw:1130px; --spine:52px; --travel:0px;
+  --maxw:1130px;
 }
 
 /* Dark, applied two ways on purpose: by attribute for the toggle, and by
@@ -317,7 +310,7 @@
   --bg:#15110d; --bg-2:#1a1611; --card:#221c15; --card-2:#2a2219; --deep:#100d09;
   --sunk:rgba(0,0,0,.22);
   --line:#332a20; --line-2:#4a3c2d;
-  --text:#f1e8db; --body:#c3b5a3; --muted:#9a8b78; --faint:#7c6d5d;
+  --text:#f1e8db; --body:#c3b5a3; --muted:#9a8b78; --faint:#8b7c6a;
 
   --tooth:.05; --grid:rgba(205,156,96,.045); --lamp:rgba(255,226,170,.06);
   --hdr:rgba(21,17,13,.9);
@@ -325,9 +318,6 @@
   --cork-1:#c69c62; --cork-veil:#6a5330;      /* multiplies the tile down */
   --frame-1:#6d5533; --frame-2:#4b3a22; --frame-3:#5d4930; --frame-edge:#2f2415;
 
-  --steel-1:#3b352d; --steel-2:#565048; --steel-3:#443e36; --steel-4:#2c2721;
-  --steel-edge:#211d18; --steel-fade:rgba(21,17,13,.92); --spine-ink:#8d8478;
-  --tick:rgba(241,232,219,.4); --tick-2:rgba(241,232,219,.18);
 
   --tape:rgba(255,240,214,.07); --tape-edge:rgba(255,240,214,.07);
   --manila:#5c4a2b; --manila-2:#4a3b21; --manila-edge:#7a643c; --tag-ink:#e0d2b4;
@@ -340,35 +330,6 @@
   --shadow-m:0 16px 30px -16px rgba(0,0,0,.66);
   --shadow-l:0 26px 46px -20px rgba(0,0,0,.72);
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#15110d; --bg-2:#1a1611; --card:#221c15; --card-2:#2a2219; --deep:#100d09;
-    --sunk:rgba(0,0,0,.22);
-    --line:#332a20; --line-2:#4a3c2d;
-    --text:#f1e8db; --body:#c3b5a3; --muted:#9a8b78; --faint:#7c6d5d;
-
-    --tooth:.05; --grid:rgba(205,156,96,.045); --lamp:rgba(255,226,170,.06);
-    --hdr:rgba(21,17,13,.9);
-
-    --cork-1:#c69c62; --cork-veil:#6a5330;
-    --frame-1:#6d5533; --frame-2:#4b3a22; --frame-3:#5d4930; --frame-edge:#2f2415;
-
-    --steel-1:#3b352d; --steel-2:#565048; --steel-3:#443e36; --steel-4:#2c2721;
-    --steel-edge:#211d18; --steel-fade:rgba(21,17,13,.92); --spine-ink:#8d8478;
-    --tick:rgba(241,232,219,.4); --tick-2:rgba(241,232,219,.18);
-
-    --tape:rgba(255,240,214,.07); --tape-edge:rgba(255,240,214,.07);
-    --manila:#5c4a2b; --manila-2:#4a3b21; --manila-edge:#7a643c; --tag-ink:#e0d2b4;
-
-    --accent:#5fb182; --accent-2:#8ed4ab; --accent-d:#3d8b60; --on-accent:#0e1a13;
-    --accent-soft:rgba(95,177,130,.13); --accent-glow:rgba(95,177,130,.4);
-    --signal:#dda04a; --sig-halo:rgba(221,160,74,.22);
-
-    --shadow-s:0 8px 16px -10px rgba(0,0,0,.6);
-    --shadow-m:0 16px 30px -16px rgba(0,0,0,.66);
-    --shadow-l:0 26px 46px -20px rgba(0,0,0,.72);
-  }
-}
 
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -379,7 +340,7 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
    stops the sticky header sticking; the header and mobile nav are siblings of
    main, so neither is affected. */
 main{overflow-x:clip}
-body{margin:0;padding-left:var(--spine);background:var(--bg);color:var(--body);font-family:var(--sans);
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);
   font-size:16.5px;line-height:1.66;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
@@ -391,7 +352,7 @@ h1,h2,h3{font-family:var(--disp);color:var(--text);margin:0;font-weight:600;lett
   clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--accent);color:var(--on-accent);
   padding:12px 20px;font-family:var(--disp);font-weight:500}
-.skip:focus{left:var(--spine)}
+.skip:focus{left:0}
 .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 34px;position:relative}
 .mark{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
 
@@ -405,29 +366,6 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     radial-gradient(980px 620px at 62% -10%,var(--lamp),transparent 70%)}
 .z{position:relative;z-index:1}
 
-/* ---------- the steel rule ---------- */
-.spine{position:fixed;left:0;top:0;bottom:0;width:var(--spine);z-index:60;
-  background:linear-gradient(90deg,var(--steel-1),var(--steel-2) 38%,var(--steel-3) 72%,var(--steel-4));
-  border-right:1px solid var(--steel-edge);box-shadow:2px 0 10px -3px rgba(0,0,0,.28)}
-.spine .scale{position:absolute;inset:0;background-position:0 var(--travel);
-  background-image:
-    repeating-linear-gradient(180deg,var(--tick) 0 1px,transparent 1px 60px),
-    repeating-linear-gradient(180deg,var(--tick-2) 0 1px,transparent 1px 12px);
-  background-size:17px 60px,9px 12px;background-repeat:repeat-y}
-.spine .scale::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,var(--steel-fade) 0,transparent 80px,
-    transparent calc(100% - 80px),var(--steel-fade) 100%)}
-.cursor{position:absolute;left:0;right:0;top:50%;height:34px;transform:translateY(-50%);
-  border-top:1px solid var(--accent);border-bottom:1px solid var(--accent);
-  background:linear-gradient(90deg,var(--accent-soft),transparent);
-  display:grid;place-items:center}
-.cursor span{font-family:var(--mono);font-size:8.5px;letter-spacing:.06em;color:var(--accent-d);
-  transform:rotate(-90deg);white-space:nowrap}
-:root[data-theme="dark"] .cursor span{color:var(--accent-2)}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .cursor span{color:var(--accent-2)}}
-.spine .brandmark{position:absolute;left:0;right:0;bottom:18px;margin:0 auto;height:150px;
-  text-align:center;font-family:var(--mono);font-size:8.5px;letter-spacing:.28em;color:var(--spine-ink);
-  writing-mode:vertical-rl;transform:rotate(180deg)}
 
 /* ---------- header ---------- */
 header{position:sticky;top:0;z-index:50;background:var(--hdr);backdrop-filter:blur(9px);
@@ -457,9 +395,7 @@ nav.links a:hover{color:var(--accent)}
 .tgl:hover{color:var(--accent);border-color:var(--accent)}
 .tgl svg{display:none}
 :root[data-theme="dark"] .tgl .i-sun{display:block}
-:root[data-theme="light"] .tgl .i-moon{display:block}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tgl .i-sun{display:block}}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .tgl .i-moon{display:block}}
+:root:not([data-theme="dark"]) .tgl .i-moon{display:block}
 
 .burger{display:none;width:38px;height:38px;flex:none;padding:0;cursor:pointer;
   background:var(--card-2);border:1px solid var(--line-2);border-radius:2px;place-items:center}
@@ -506,6 +442,7 @@ h1 em svg{position:absolute;left:-14px;bottom:-14px;width:calc(100% + 28px);heig
 .btn.solid{background:var(--accent);color:var(--on-accent);transform:rotate(-.5deg);
   box-shadow:0 10px 20px -12px var(--accent-glow)}
 .btn.solid:hover{transform:rotate(-.5deg) translateY(-2px)}
+.btn.big{font-size:19px;padding:19px 30px;gap:12px;letter-spacing:-.01em}
 .btn.line{border:1px solid var(--line-2);color:var(--text);transform:rotate(.4deg);background:var(--card-2)}
 .btn.line:hover{border-color:var(--accent);color:var(--accent);transform:rotate(.4deg) translateY(-2px)}
 .clients{margin-top:46px;padding-top:18px;border-top:1px dashed var(--line-2)}
@@ -615,7 +552,7 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .sec-no{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--faint);padding-top:9px;
   line-height:1.7}
 .sec-hd h2{font-size:clamp(27px,3.4vw,42px);line-height:1.08;margin-bottom:14px;max-width:21ch}
-.sec-hd .lede{margin:0;color:var(--muted);max-width:60ch;font-size:16px}
+.sec-hd .lede{margin:0;color:var(--body);max-width:58ch;font-size:16.5px;line-height:1.62}
 .chips{margin-top:18px;display:flex;gap:8px;flex-wrap:wrap}
 .chips span{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--muted);border:1px dashed var(--line-2);border-radius:2px;padding:5px 9px}
@@ -635,7 +572,7 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .svc-item p{font-size:15px;color:var(--body)}
 
 /* 02 who it's for */
-.who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.who-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
 .who-card{padding:26px 24px 28px}
 .who-card:nth-child(1){rotate:-.7deg}
 .who-card:nth-child(2){rotate:.4deg;translate:0 9px}
@@ -643,10 +580,10 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .who-card .sig{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--signal);display:block;margin-bottom:13px}
 .who-card h3{font-size:18.5px;line-height:1.24;margin-bottom:11px}
-.who-card p{font-size:14.5px;color:var(--muted)}
+.who-card p{font-size:15px;color:var(--body)}
 
 /* 03 process */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:20px;position:relative}
 .step{padding:24px 22px 26px}
 .step:nth-child(odd){rotate:-.5deg}
 .step:nth-child(even){rotate:.6deg;translate:0 8px}
@@ -735,40 +672,40 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
   .said .tape{width:74px}
 }
 
-/* 06 experience — a printed schedule, dates in the margin */
-.tl{border-top:1px dashed var(--line-2)}
-.tl-item{display:grid;grid-template-columns:158px 1fr;gap:26px;padding:24px 0;
-  border-bottom:1px dashed var(--line-2)}
-.tl-when{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--faint);padding-top:6px}
-.tl-role{font-family:var(--disp);font-weight:600;font-size:19px;color:var(--text);letter-spacing:-.03em;
-  display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+/* 06 record — a rail, not a schedule.
+
+   Stacked, four roles were four screens of scrolling on a phone and the
+   older ones sat behind a disclosure nobody opened. Side by side they are
+   one screen and one gesture: swipe on touch, drag or arrow-key on desktop.
+   The container is focusable and labelled, because a scroll region that only
+   responds to a swipe is unreachable by keyboard. */
+/* a fixed track, not minmax(0,..): with min 0 the cards just shrink to fit
+   the row and nothing ever scrolls */
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:322px;gap:16px;
+  overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;
+  padding:4px 4px 14px;scrollbar-color:var(--line-2) transparent}
+.rail::-webkit-scrollbar{height:8px}
+.rail::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:4px}
+.rail::-webkit-scrollbar-track{background:transparent}
+.rail:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:3px}
+.rcard{scroll-snap-align:start;display:flex;flex-direction:column;
+  background:linear-gradient(176deg,var(--card-2),var(--card));
+  border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow-m);
+  padding:22px 22px 24px}
+.rcard.now{border-color:var(--accent)}
+.rwhen{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint)}
+.rcard h3{font-size:18.5px;line-height:1.2;margin:11px 0 3px;display:flex;align-items:center;
+  gap:9px;flex-wrap:wrap}
 .tag-now{font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--on-accent);background:var(--accent);padding:3px 7px;border-radius:2px;font-weight:400}
-.tl-co{color:var(--accent);font-size:14.5px;margin-top:2px}
-.tl ul{margin:12px 0 0;padding-left:17px}
-.tl li{margin-bottom:6px;font-size:15px;color:var(--body)}
-.tl li::marker{color:var(--line-2)}
-.tl-foot{margin-top:22px;font-size:14.5px;color:var(--muted)}
-.tl-foot b{color:var(--text);font-weight:600}
-.notes-row{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:36px}
-.notes-row .sheet{padding:22px 22px 24px}
-.notes-row h3{font-size:15.5px;margin-bottom:9px}
-.notes-row p{font-size:14px;color:var(--muted)}
-
-/* 06 AI policy */
-.ai-box{padding:34px 34px 30px}
-.ai-cols{display:grid;grid-template-columns:1fr 1fr;gap:38px}
-.ai-h{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:18px}
-.ai-l{list-style:none;margin:0;padding:0}
-.ai-l li{display:grid;grid-template-columns:auto 1fr;gap:13px;margin-bottom:15px;font-size:14.5px;
-  color:var(--muted);line-height:1.6}
-.ai-l b{color:var(--text);font-weight:600}
-.mk{font-family:var(--mono);font-size:10px;color:var(--accent);padding-top:4px}
-.mk.no{color:var(--signal)}
-.ai-foot{margin-top:26px;padding-top:22px;border-top:1px dashed var(--line-2);font-size:14px;
-  color:var(--muted);max-width:80ch}
+.rco{color:var(--accent);font-size:14px;line-height:1.45}
+.rcard ul{margin:14px 0 0;padding-left:16px}
+.rcard li{margin-bottom:7px;font-size:14.5px;line-height:1.55;color:var(--body)}
+.rcard li::marker{color:var(--line-2)}
+.rnote{margin-top:auto;padding-top:14px;font-size:13.5px;color:var(--muted)}
+.rail-hint{margin-top:6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted)}
 
 /* 07 areas */
 .areas{display:grid;grid-template-columns:1fr 1fr;gap:38px}
@@ -789,6 +726,21 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 .faq details[open] summary::after{content:"–"}
 .faq .ans{padding:0 22px 20px;font-size:15px;color:var(--body);max-width:82ch}
 
+/* disclosure: detail a first-time visitor doesn't need yet.
+   Same +/- affordance as the FAQ so the page only teaches it once.
+   Anything inside a closed <details> never intersects, so nothing in a
+   fold carries .rv — it would open at opacity 0. */
+.fold{border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2);margin-top:30px}
+/* straight after the timeline it continues the same ruled list, so it must
+   not draw a second line on top of the one the last row already drew */
+.fold summary{cursor:pointer;padding:16px 2px;font-family:var(--disp);font-weight:500;font-size:15.5px;
+  color:var(--text);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:18px}
+.fold summary::-webkit-details-marker{display:none}
+.fold summary::after{content:"+";font-family:var(--mono);font-size:17px;color:var(--accent);flex:none}
+.fold[open] summary::after{content:"\2013"}
+.fold summary:hover{color:var(--accent)}
+.fold-body{padding-bottom:30px}
+
 /* 09 notes */
 .note-card{display:grid;grid-template-columns:150px 1fr;gap:28px;padding:30px 30px 32px;
   rotate:-.35deg;transition:translate .3s var(--ease),box-shadow .3s}
@@ -807,6 +759,7 @@ section{padding:clamp(64px,8vw,104px) 0;position:relative}
 
 /* contact */
 .contact .sheet{padding:clamp(34px,5vw,56px);text-align:center;rotate:.25deg}
+.cor{margin:18px 0 14px;font-size:14px;color:var(--muted)}
 .contact h2{font-size:clamp(28px,4vw,46px);line-height:1.08;margin-bottom:16px}
 .contact h2 em{font-style:normal;color:var(--accent)}
 .contact p{color:var(--muted);max-width:56ch;margin:0 auto;font-size:16px}
@@ -831,9 +784,6 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
 .rv.in{opacity:1;transform:none}
 
 @media (max-width:1080px){
-  body{padding-left:0}
-  .spine{display:none}
-  .skip:focus{left:0}
   .hero{grid-template-columns:1fr;gap:56px;padding-top:40px}
   /* The board goes full-width here, and at that size the rotateY projection
      throws its near edge past the gutter and scrolls the page sideways. The
@@ -843,9 +793,8 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
   .cork{inset:-24px -12px -16px -12px}
   .cork::before,.cork::after{inset:10px}
   .cards{grid-template-columns:1fr 1fr}
-  .svc,.areas,.ai-cols{grid-template-columns:1fr}
-  .ai-cols{gap:30px}
-  .who-grid,.steps,.notes-row{grid-template-columns:1fr 1fr}
+  .svc,.areas{grid-template-columns:1fr}
+  .who-grid,.steps{grid-template-columns:1fr 1fr}
   .case{grid-template-columns:1fr}
   .case-r{border-left:0;border-top:1px dashed var(--line-2)}
   .margin-note{position:static;width:auto;text-align:left;margin:0 32px 18px;padding-top:20px}
@@ -857,7 +806,6 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
   .wrap,.mnav{padding-left:20px;padding-right:20px}
   .hd{height:64px}
   .mnav{top:64px}
-  .tl-item{grid-template-columns:1fr;gap:8px}
   .row{flex-wrap:wrap;row-gap:2px}
   .row b{flex:1 1 100%}
   .row u{margin-left:auto}
@@ -882,7 +830,9 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
   /* tilts on the independent property: transform is spoken for above */
   .slip.main{rotate:-.7deg} .slip.s1{rotate:.6deg}
   .slip.s2{rotate:-.5deg} .slip.s3{rotate:.7deg}
-  .cards,.who-grid,.steps,.notes-row{grid-template-columns:1fr}
+  .who-grid,.steps{grid-template-columns:1fr}
+  /* the figure tiles repeat the board above, so they get two columns here */
+  .cards{grid-template-columns:1fr 1fr;gap:12px}
   /* one column: the stagger that reads as a stack on desktop just looks
      like misalignment down a phone */
   .tcard:nth-child(n),.who-card:nth-child(n),.step:nth-child(n){translate:none}
@@ -890,6 +840,44 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
   .sec-hd{grid-template-columns:1fr;gap:10px}
   .sec-no{padding-top:0}
 }
+/* Phone density. The layout above already reflows; this is purely about the
+   vertical budget. At 390px the page ran to eighteen screens, and most of it
+   was air: section padding alone was ~1,400px of it. */
+@media (max-width:640px){
+  section{padding:42px 0}
+  .hero{gap:34px;padding-top:26px}
+  .sec-hd{margin-bottom:26px}
+  /* .sheet carries no padding of its own — each component supplies it, so
+     tighten them individually rather than blanket-padding the wrapper (that
+     double-pads the FAQ, whose summary owns its spacing). */
+  .svc-item{padding:22px 20px 24px}
+  .who-card{padding:20px 18px 22px}
+  .step{padding:19px 18px 21px}
+  .case-l,.case-r{padding:20px 18px 22px}
+  .note-card{padding:22px 20px 24px}
+  .note-figs{display:none}          /* the headline and standfirst carry it */
+  .said .body{padding:24px 22px 22px}
+  .said .body p:first-of-type{font-size:18px}
+  .said .sig{margin-top:20px;padding-top:16px}
+  .contact .sheet{padding:28px 22px}
+  .faq summary{padding:14px 18px;font-size:15.5px}
+  .faq .ans{padding:0 18px 17px}
+  /* bleed the rail through the wrap's gutter so the next card always peeks
+     in at the right edge — that peek is the only affordance telling someone
+     there is more to swipe to */
+  .rail{grid-auto-columns:82vw;gap:12px;
+    margin-left:-20px;margin-right:-20px;padding-left:20px;padding-right:20px;
+    scroll-padding-left:20px}
+  .rcard{padding:20px 18px 22px}
+  .strap{font-size:16.5px;margin-top:22px}
+  .fold summary{padding:14px 2px;font-size:15px}
+  /* the primary action gets the full width of the phone rather than sharing
+     a row with the secondary one */
+  .btn.big{width:100%;justify-content:center;font-size:17.5px;padding:17px 22px}
+  .fold-body{padding-bottom:22px}
+  .stack{gap:7px}
+}
+
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *{animation:none!important;transition-duration:.001ms!important}
@@ -899,11 +887,9 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:44px 0
 
 <style>
 /* ============================ COMPACT VARIANT ============================
-   Everything below is spacing only: no colour, type scale or content differs
-   from the live page. Kept as an override block rather than edits scattered
-   through the sheet so the whole experiment is one reversible diff.
-   Vertical rhythm is cut by roughly a third; nothing below 44px, because the
-   section bands need to stay legible as bands.
+   Spacing and line-height only: no colour, type scale or content differs from
+   the live page. Kept as one override block rather than edits scattered
+   through the sheet, so the whole experiment is a single reversible diff.
    ====================================================================== */
 section{padding:clamp(44px,5.2vw,68px) 0}
 .hero{padding:40px 0 54px;gap:40px}
@@ -913,10 +899,9 @@ section{padding:clamp(44px,5.2vw,68px) 0}
 .svc,.who-grid,.steps,.notes-row{gap:18px}
 .case-l,.case-r{padding:26px 28px 28px}
 .case-l h3{margin:10px 0 11px}
-.case-l p{font-size:15px;line-height:1.6}
 .sheet.case{margin-bottom:22px}
 .said .body{padding:28px 36px 26px}
-.said .body p{margin:0 0 11px;line-height:1.62}
+.said .body p{margin:0 0 11px}
 .said .sig{margin-top:20px;padding-top:16px}
 .tl-item{padding:18px 0}
 .stack{margin-top:26px;padding-top:20px}
@@ -928,7 +913,7 @@ section{padding:clamp(44px,5.2vw,68px) 0}
 footer{padding:34px 0 36px}
 .note-card{padding:22px 24px 24px}
 
-/* Density pass. Padding alone only bought ~10%: the page is mostly text, so
+/* Density pass. Padding alone bought about 10%: the page is mostly text, so
    the rest has to come from line-height. 1.66 -> 1.56 is still comfortably
    inside what long-form body copy wants; nothing drops below 14px. */
 body{line-height:1.56}
@@ -936,7 +921,6 @@ body{line-height:1.56}
 .case-l p{line-height:1.56}
 .svc-item p,.who-card p,.step p,.note-card p{line-height:1.5}
 .tl li{margin-bottom:4px;line-height:1.5}
-.tl-item{padding:16px 0;gap:20px}
 .ai-l li{margin-bottom:11px;line-height:1.5}
 .faq details{margin-bottom:9px}
 .faq summary{padding:14px 20px}
@@ -953,11 +937,6 @@ body{line-height:1.56}
 
 <a class="skip" href="#main">Skip to content</a>
 
-<div class="spine" aria-hidden="true">
-  <div class="scale"></div>
-  <div class="cursor"><span id="read">0000 mm</span></div>
-  <div class="brandmark">CHELTENHAM DATA</div>
-</div>
 
 <header class="z">
   <div class="wrap hd">
@@ -970,7 +949,6 @@ body{line-height:1.56}
       <a href="#services">Services</a>
       <a href="#work">Work</a>
       <a href="#experience">Experience</a>
-      <a href="#ai">AI policy</a>
       <a href="#areas">Areas</a>
       <a href="#faq">FAQ</a>
       <a href="#notes">Notes</a>
@@ -991,7 +969,6 @@ body{line-height:1.56}
   <a href="#services">Services</a>
   <a href="#work">Work</a>
   <a href="#experience">Experience</a>
-  <a href="#ai">AI policy</a>
   <a href="#areas">Areas</a>
   <a href="#faq">FAQ</a>
   <a href="#notes">Notes</a>
@@ -1011,7 +988,7 @@ body{line-height:1.56}
       <i></i><span>Taking on freelance projects — Cheltenham and remote UK-wide</span>
     </span>
 
-    <h1>Data analysis and automation that <em>pays for itself.
+    <h1>Data analysis and automation that <em>gives you your time back.
       <svg class="ink" viewBox="0 0 420 20" preserveAspectRatio="none" aria-hidden="true">
         <path d="M6 12C96 4 232 3 414 8" stroke-width="2.4" vector-effect="non-scaling-stroke" pathLength="1000"/>
         <path d="M14 18C104 11 244 10 408 15" stroke-width="1.4" vector-effect="non-scaling-stroke" pathLength="1000"/>
@@ -1019,13 +996,13 @@ body{line-height:1.56}
     </h1>
 
     <p class="strap"><b>Cheltenham Data</b> is the practice of Szymon Pecherski, a <b>data analyst and
-    business intelligence specialist in Cheltenham</b>. I help small and growing UK businesses replace
-    manual, error-prone processes with automated systems, clean data and reporting people actually
-    use — the same work I've done inside regulated financial services, national wholesale and aerospace.</p>
+    business intelligence specialist in Cheltenham</b>. I take the manual work that eats your evenings —
+    the Friday report, the monthly reconciliation, the copy-paste — and build the system that does it
+    instead.</p>
 
     <div class="cta">
-      <a class="btn solid" href="#contact">Book a free scoping call
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 6l6 6-6 6"/></svg></a>
+      <a class="btn solid big" href="https://calendly.com/cheltenhamdata-info/30min" target="_blank" rel="noopener">Get your evenings back.
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 6l6 6-6 6"/></svg></a>
       <a class="btn line" href="#work">See the results</a>
     </div>
 
@@ -1170,10 +1147,7 @@ body{line-height:1.56}
           <p>&ldquo;He recently created a financial spreadsheet for me and completely cracked what I
             needed. It&rsquo;s well thought out, easy to understand and has made a huge difference to
             how I can actually see and manage the numbers behind the business.&rdquo;</p>
-          <p>&ldquo;Szymon is also incredibly friendly, approachable and clearly very good at what he
-            does. It&rsquo;s great to see a young local entrepreneur building something for himself and
-            just getting on with it. A pleasure to work with, and someone I&rsquo;d happily
-            recommend.&rdquo;</p>
+          <p>&ldquo;A pleasure to work with, and someone I&rsquo;d happily recommend.&rdquo;</p>
         </blockquote>
         <div class="sig">
           <div><b>Alexander Besnard</b><i>Founder, LAVOIR</i></div>
@@ -1191,7 +1165,7 @@ body{line-height:1.56}
       <div class="sec-no">02<br>SERVICES</div>
       <div>
         <h2>Business intelligence and automation services for growing businesses</h2>
-        <p class="lede">Every engagement starts with the same question: where is your team spending hours on something a system should be doing? I find it, put a number on it, then build the fix.</p>
+        <p class="lede">Every engagement starts with the same question: what are you still doing by hand on a Sunday night that a system should have done overnight? I find it, put a number on the hours it's costing you, then build the fix.</p>
       </div>
     </div>
 
@@ -1199,31 +1173,39 @@ body{line-height:1.56}
       <article class="sheet svc-item rv">
         <span class="num">Service i</span>
         <h3>Business intelligence &amp; reporting</h3>
-        <p>Reporting that answers a decision rather than filling a page. I pull data out of spreadsheets, CRMs and databases, clean it, and build dashboards around the KPIs your managers actually act on. At Oriel I built SQL and Crystal Reports reporting that gave managers 20% more accurate insight into their teams.</p>
+        <p>Reporting that answers a decision rather than filling a page. I pull data out of spreadsheets, CRMs and databases, clean it, and build dashboards around the KPIs your managers actually act on.</p>
         <div class="chips"><span>Excel</span><span>SQL</span><span>Power BI</span><span>pandas</span><span>Crystal Reports</span></div>
       </article>
 
       <article class="sheet svc-item rv">
         <span class="num">Service ii</span>
         <h3>Process automation</h3>
-        <p>The copy-paste jobs, the monthly reconciliation, the report someone rebuilds by hand every Friday. I map the process, remove the manual steps with Python or Excel automation, and document it so it survives after I've gone. Typical result: whole days back every month.</p>
+        <p>The copy-paste jobs, the monthly reconciliation, the report someone rebuilds by hand every Friday afternoon. I remove the manual steps with Python or Excel automation and document it so it survives after I've gone. Typical result: whole days a month handed back.</p>
         <div class="chips"><span>Python</span><span>Excel / VBA</span><span>Process mapping</span><span>SOP writing</span></div>
       </article>
 
-      <article class="sheet svc-item rv">
+    </div>
+
+    <details class="fold">
+      <summary>Also: AI workflow implementation, and web scraping &amp; data collection</summary>
+      <div class="fold-body">
+        <div class="svc">
+      <article class="sheet svc-item">
         <span class="num">Service iii</span>
         <h3>AI workflow implementation</h3>
-        <p>Practical AI, not hype. I identify where a language model genuinely saves time — drafting, triage, classification, summarising documents — build it into your existing workflow, and set the guardrails and human review steps around it. If AI is the wrong tool for a job, I'll tell you so.</p>
+        <p>Practical AI, not hype. I find where a language model genuinely saves time — drafting, triage, classification, summarising — then build it into your workflow with guardrails and human review. If AI is the wrong tool, I'll tell you so.</p>
         <div class="chips"><span>Workflow design</span><span>Prompt systems</span><span>Human-in-the-loop</span><span>Data governance</span></div>
       </article>
 
-      <article class="sheet svc-item rv">
+      <article class="sheet svc-item">
         <span class="num">Service iv</span>
         <h3>Web scraping &amp; data collection</h3>
-        <p>When the data you need lives on the web rather than in your systems, I build collectors to gather it — competitor pricing, market listings, supplier catalogues — then clean and structure it into something analysable. Built and delivered ethically, respecting site terms and rate limits.</p>
+        <p>When the data you need lives on the web rather than in your systems, I build collectors to gather it — competitor pricing, market listings, supplier catalogues — then clean and structure it. Ethically built, respecting site terms and rate limits.</p>
         <div class="chips"><span>Python</span><span>BeautifulSoup</span><span>Data cleaning</span><span>Scheduled jobs</span></div>
       </article>
-    </div>
+        </div>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -1234,26 +1216,34 @@ body{line-height:1.56}
       <div class="sec-no">03<br>WHO</div>
       <div>
         <h2>Built for small brands outgrowing their spreadsheets</h2>
-        <p class="lede">The businesses I help usually have real operational complexity but no dedicated data team. The spreadsheet that ran the company at ten people starts breaking at thirty — this is the point where a few days of the right work pays for itself repeatedly.</p>
+        <p class="lede">The businesses I help usually have real operational complexity but no dedicated data team — so the owner absorbs it. The spreadsheet that ran the company at ten people starts breaking at thirty, and the person patching it at the weekend is usually you. This is the point where a few days of the right work pays for itself repeatedly, in money and in hours.</p>
       </div>
     </div>
     <div class="who-grid">
       <div class="sheet who-card rv">
         <span class="sig">Scaling up</span>
         <h3>You're growing faster than your systems</h3>
-        <p>New products, new channels, more suppliers — and the reporting that worked last year now takes a full day to assemble. I rebuild it so growth stops adding admin.</p>
+        <p>New products, new channels, more suppliers — and the reporting that worked last year now takes a full day to assemble. I rebuild it so growth stops costing you evenings and weekends.</p>
       </div>
-      <div class="sheet who-card rv">
+    </div>
+
+    <details class="fold">
+      <summary>Two more reasons people call — margin without headcount, and nobody owning the numbers</summary>
+      <div class="fold-body">
+        <div class="who-grid">
+      <div class="sheet who-card">
         <span class="sig">Cost pressure</span>
         <h3>You need margin without adding headcount</h3>
-        <p>Optimising supplier terms unlocked £42,500 at one wholesaler. Automation removed 100+ hours a year at another. Both were cheaper than hiring.</p>
+        <p>Optimising supplier terms unlocked £42,500 at one wholesaler. Automation removed 100+ hours a year at another — hours that went back to the team rather than into overtime. Both were cheaper than hiring.</p>
       </div>
-      <div class="sheet who-card rv">
+      <div class="sheet who-card">
         <span class="sig">No data team</span>
         <h3>Nobody owns the numbers</h3>
         <p>Everyone reports differently, nobody trusts the totals, and decisions get made on gut feel. I build one source of truth your team can maintain themselves.</p>
       </div>
-    </div>
+        </div>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -1265,11 +1255,19 @@ body{line-height:1.56}
       <div><h2>Low risk, in four steps.</h2></div>
     </div>
     <div class="steps">
-      <div class="sheet step rv"><b>Step one</b><h3>Free scoping call</h3><p>Thirty minutes. You show me the process that's costing you time; I tell you honestly whether it's worth automating and roughly what it takes.</p></div>
-      <div class="sheet step rv"><b>Step two</b><h3>Fixed proposal</h3><p>A written scope with a fixed price, a deadline and a defined outcome. No hourly drift, no surprise invoices.</p></div>
-      <div class="sheet step rv"><b>Step three</b><h3>Build &amp; review</h3><p>I build in short cycles and show you working output early, so course-corrections happen in week one rather than at handover.</p></div>
-      <div class="sheet step rv"><b>Step four</b><h3>Handover that lasts</h3><p>Documentation and SOPs written in plain English, plus a walkthrough for your team. You own everything I build.</p></div>
+      <div class="sheet step rv"><b>Step one</b><h3>Free scoping call</h3><p>Thirty minutes. You show me the process that's eating your week; I put an honest number on the hours it costs, tell you whether it's worth automating, and roughly what it takes.</p></div>
     </div>
+
+    <details class="fold">
+      <summary>Then: fixed proposal, build &amp; review, handover that lasts</summary>
+      <div class="fold-body">
+        <div class="steps">
+      <div class="sheet step"><b>Step two</b><h3>Fixed proposal</h3><p>A written scope with a fixed price, a deadline and a defined outcome. No hourly drift, no surprise invoices.</p></div>
+      <div class="sheet step"><b>Step three</b><h3>Build &amp; review</h3><p>I build in short cycles and show you working output early, so course-corrections happen in week one rather than at handover.</p></div>
+      <div class="sheet step"><b>Step four</b><h3>Handover that lasts</h3><p>Documentation and SOPs written in plain English, plus a walkthrough for your team. You own everything I build.</p></div>
+        </div>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -1307,7 +1305,11 @@ body{line-height:1.56}
       <div class="stamp"><span>Figures<br>verified</span></div>
     </article>
 
-    <article class="sheet case rv">
+    <details class="fold">
+      <summary>Two more results — 20 procedures automated, and a job market scraped</summary>
+      <div class="fold-body">
+
+    <article class="sheet case">
       <div class="case-l">
         <span class="mark">Automation — operations</span>
         <h3>Twenty manual procedures automated out of existence</h3>
@@ -1322,7 +1324,7 @@ body{line-height:1.56}
       </div>
     </article>
 
-    <article class="sheet case rv">
+    <article class="sheet case">
       <div class="case-l">
         <span class="mark">Data collection — market research</span>
         <h3>Scraping a job market to find where demand really sits</h3>
@@ -1338,10 +1340,14 @@ body{line-height:1.56}
     </article>
 
     <div class="rv">
+      </div>
+    </details>
+
       <h2 class="sr">Tools and technologies</h2>
       <div class="stack">
         <span>Python</span><span>SQL</span><span>Microsoft Excel</span><span>Power BI</span><span>pandas</span>
-        <span>AWS</span><span>Salesforce</span><span>ServiceNow</span><span>Crystal Reports</span>
+        <span>Dataiku</span><span>Streamlit</span><span>Spotfire</span><span>AWS</span><span>Salesforce</span>
+        <span>ServiceNow</span><span>Crystal Reports</span><span>Git</span>
         <span>Web scraping</span><span>Process automation</span><span>Data cleaning</span><span>KPI reporting</span>
       </div>
     </div>
@@ -1359,104 +1365,69 @@ body{line-height:1.56}
       </div>
     </div>
 
-    <div class="tl">
-      <div class="tl-item rv">
-        <div class="tl-when">Aug 2026 — present</div>
-        <div>
-          <div class="tl-role">Data Analyst<span class="tag-now">Current</span></div>
-          <div class="tl-co">GE Aerospace</div>
-          <ul><li>In the data function at one of the world's largest aerospace manufacturers.</li></ul>
-        </div>
-      </div>
+    <div class="rail rv" tabindex="0" role="region" aria-label="Career history, scroll sideways for earlier roles">
 
-      <div class="tl-item rv">
-        <div class="tl-when">Mar 2026 — Aug 2026</div>
-        <div>
-          <div class="tl-role">Application Support Analyst</div>
-          <div class="tl-co">St. James's Place</div>
-          <ul>
-            <li>2nd &amp; 3rd line support across Salesforce, iBusiness, SFTP and AWS via ServiceNow.</li>
-            <li>Resolved 47.55% of all requests (545 of 1,146) in my first month, in a team of 20.</li>
-            <li>Handled regulated financial customer data daily — DSAR requests, anonymisation and data erasure.</li>
-            <li>Investigated automation job failures through log analysis and SFTP/data-transfer troubleshooting.</li>
-          </ul>
-        </div>
-      </div>
+      <article class="rcard now">
+        <div class="rwhen">Aug 2026 — present</div>
+        <h3>Data Analyst<span class="tag-now">Current</span></h3>
+        <div class="rco">GE Aerospace &middot; Contract, hybrid &middot; Cheltenham</div>
+        <ul>
+          <li>Streamlined and automated 5+ data pipelines with Dataiku and Python.</li>
+          <li>Built dashboards in Streamlit and Spotfire.</li>
+          <li>Used LLMs to build web apps, data functions and scripts that remove manual work — over 12 hours a month.</li>
+        </ul>
+      </article>
 
-      <div class="tl-item rv">
-        <div class="tl-when">Aug 2025 — Feb 2026</div>
-        <div>
-          <div class="tl-role">Commercial Analyst</div>
-          <div class="tl-co">Creed Foodservice</div>
-          <ul>
-            <li>Optimised supplier terms, increasing commercial income by £42,500 at 30% ROI.</li>
-            <li>Built reconciliation and reporting tools across 3 companies and 1,200+ supplier codes.</li>
-            <li>Automated manual processes saving over 100 hours annually.</li>
-            <li>Led cross-functional projects delivered consistently on time.</li>
-          </ul>
-        </div>
-      </div>
+      <article class="rcard">
+        <div class="rwhen">Mar 2026 — Aug 2026</div>
+        <h3>Application Support Analyst</h3>
+        <div class="rco">St. James's Place</div>
+        <ul>
+          <li>2nd &amp; 3rd line support across Salesforce, iBusiness, SFTP and AWS via ServiceNow.</li>
+          <li>Resolved 47.55% of all requests (545 of 1,146) in my first month, in a team of 20.</li>
+          <li>Handled regulated financial customer data daily — DSAR requests, anonymisation and erasure.</li>
+          <li>Investigated automation job failures through log analysis and SFTP troubleshooting.</li>
+        </ul>
+      </article>
 
-      <div class="tl-item rv">
-        <div class="tl-when">Feb 2024 — Aug 2025</div>
-        <div>
-          <div class="tl-role">Business Analyst</div>
-          <div class="tl-co">Oriel Collections</div>
-          <ul>
-            <li>Automated 20+ procedures, cutting 30 hours/month of manual work and lifting team efficiency 15%.</li>
-            <li>Built SQL and Crystal Reports reporting giving managers 20% more accurate team insight.</li>
-            <li>Managed and contributed to 50+ projects; assessed requirements, risk and rollback for 10+ major changes.</li>
-            <li>Concluded around 25% of all audits for FCA and Cyber Essentials compliance.</li>
-            <li>Awarded Employee of the Month for operational support and performance.</li>
-          </ul>
-        </div>
-      </div>
+      <article class="rcard">
+        <div class="rwhen">Aug 2025 — Feb 2026</div>
+        <h3>Commercial Analyst</h3>
+        <div class="rco">Creed Foodservice</div>
+        <ul>
+          <li>Optimised supplier terms, increasing commercial income by £42,500 at 30% ROI.</li>
+          <li>Built reconciliation and reporting tools across 3 companies and 1,200+ supplier codes.</li>
+          <li>Automated manual processes saving over 100 hours annually.</li>
+          <li>Led cross-functional projects delivered consistently on time.</li>
+        </ul>
+      </article>
+
+      <article class="rcard">
+        <div class="rwhen">Feb 2024 — Aug 2025</div>
+        <h3>Business Analyst</h3>
+        <div class="rco">Oriel Collections</div>
+        <ul>
+          <li>Automated 20+ procedures, cutting 30 hours/month and lifting team efficiency 15%.</li>
+          <li>Built SQL and Crystal Reports reporting giving managers 20% more accurate insight.</li>
+          <li>Managed 50+ projects; assessed requirements, risk and rollback for 10+ major changes.</li>
+          <li>Concluded around 25% of all audits for FCA and Cyber Essentials compliance.</li>
+        </ul>
+        <p class="rnote">Joined Aug 2023 as a Negotiator, promoted into the analyst role within six months.</p>
+      </article>
+
+      <article class="rcard">
+        <div class="rwhen">Alongside</div>
+        <h3>Training &amp; certification</h3>
+        <div class="rco">Kept current, not collected</div>
+        <ul>
+          <li><b>DataCamp</b> — Python for Data Analysis track, Communicating Data Insights.</li>
+          <li><b>AWS</b> — Concepts; Cloud Technology &amp; Services Concepts (2026), with hands-on support experience.</li>
+          <li><b>LinkedIn Learning</b> — Delivering Support Across Languages, De-Escalating Conversations.</li>
+        </ul>
+      </article>
+
     </div>
-
-    <p class="tl-foot rv"><b>Before that:</b> joined Oriel Collections in Aug 2023 as a Negotiator and was promoted into the Business Analyst role within six months.</p>
-
-    <div class="notes-row">
-      <div class="sheet rv"><h3>Continuous training</h3><p>DataCamp — Python for Data Analysis track (Introduction, Intermediate, Data Manipulation &amp; Joining with pandas), Communicating Data Insights.</p></div>
-      <div class="sheet rv"><h3>Cloud &amp; infrastructure</h3><p>AWS Concepts; AWS Cloud Technology &amp; Services Concepts (2026). Hands-on AWS support experience at St. James's Place.</p></div>
-      <div class="sheet rv"><h3>Working with people</h3><p>LinkedIn Learning — Delivering Support Across Languages, De-Escalating Conversations. Comfortable with technical and non-technical stakeholders.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== AI POLICY ===================== -->
-<section class="band" id="ai">
-  <div class="wrap">
-    <div class="sec-hd rv">
-      <div class="sec-no">07<br>AI POLICY</div>
-      <div>
-        <h2>Yes, I use AI. Here's exactly how.</h2>
-        <p class="lede">You deserve to know this up front rather than discover it later. AI is a tool I use to work faster — never a substitute for the analysis, the judgement or the accountability you're paying for. Every deliverable is reviewed, tested and understood by me before it reaches you, and I can explain any line of it.</p>
-      </div>
-    </div>
-
-    <div class="sheet ai-box rv">
-      <div class="ai-cols">
-        <div>
-          <div class="ai-h">Where AI helps</div>
-          <ul class="ai-l">
-            <li><span class="mk">01</span><span><b>Writing and refactoring code.</b> Scripts I then read, test and validate against real data before anything ships.</span></li>
-            <li><span class="mk">02</span><span><b>Drafting documentation and SOPs.</b> First drafts I rewrite for your context, terminology and audience.</span></li>
-            <li><span class="mk">03</span><span><b>Exploring approaches faster.</b> Pressure-testing options so you get a better solution in less time.</span></li>
-            <li><span class="mk">04</span><span><b>Building AI into your workflows.</b> When that is the actual deliverable you've asked for.</span></li>
-          </ul>
-        </div>
-        <div>
-          <div class="ai-h">Where it doesn't</div>
-          <ul class="ai-l">
-            <li><span class="mk no">—</span><span><b>Your data doesn't go into public AI tools.</b> Client data stays in your environment unless you explicitly agree otherwise in writing.</span></li>
-            <li><span class="mk no">—</span><span><b>No unreviewed output.</b> Nothing generated is handed over without me verifying it against source data.</span></li>
-            <li><span class="mk no">—</span><span><b>No AI-invented numbers.</b> Every figure in a report traces back to a source you can audit.</span></li>
-            <li><span class="mk no">—</span><span><b>The accountability is mine.</b> If something is wrong, that's on me to find and fix — not on a model.</span></li>
-          </ul>
-        </div>
-      </div>
-      <p class="ai-foot">Working in regulated financial services taught me to treat data handling seriously — DSARs, anonymisation, erasure, FCA and Cyber Essentials audits. The same standard applies to how I use AI on your work. If you have an AI policy of your own, send it over and I'll work inside it.</p>
-    </div>
+    <p class="rail-hint">Scroll sideways for earlier roles &rarr;</p>
   </div>
 </section>
 
@@ -1464,13 +1435,16 @@ body{line-height:1.56}
 <section id="areas">
   <div class="wrap">
     <div class="sec-hd rv">
-      <div class="sec-no">08<br>AREAS</div>
+      <div class="sec-no">07<br>AREAS</div>
       <div>
         <h2>Data analyst serving Cheltenham, Gloucestershire and the UK</h2>
         <p class="lede">I'm based in Cheltenham and happy to work on site across Gloucestershire, the Cotswolds and the wider South West. Most projects run remotely, so distance is rarely the deciding factor — I take on clients anywhere in the UK.</p>
       </div>
     </div>
-    <div class="areas rv">
+    <details class="fold">
+      <summary>Towns I cover, on site and remote</summary>
+      <div class="fold-body">
+        <div class="areas">
       <div>
         <h3>On site</h3>
         <div class="area-list">
@@ -1485,7 +1459,9 @@ body{line-height:1.56}
         </div>
         <p class="area-note">Local clients tend to get one or two on-site days for discovery and handover, with the build done remotely. It keeps costs down without losing the face-to-face bit that makes scoping accurate.</p>
       </div>
-    </div>
+        </div>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -1493,7 +1469,7 @@ body{line-height:1.56}
 <section class="band" id="faq">
   <div class="wrap">
     <div class="sec-hd rv">
-      <div class="sec-no">09<br>FAQ</div>
+      <div class="sec-no">08<br>FAQ</div>
       <div><h2>Before you get in touch.</h2></div>
     </div>
     <div class="faq">
@@ -1503,7 +1479,7 @@ body{line-height:1.56}
       </details>
       <details class="sheet rv">
         <summary>I'm a small business. Is this overkill?</summary>
-        <div class="ans">Usually the opposite. Small and growing businesses are where a few days of automation work pays back fastest, because nobody has had time to build proper systems yet. If you have people spending hours a week in spreadsheets, that's exactly the problem I solve — and it's cheaper than the headcount you'd otherwise add.</div>
+        <div class="ans">Usually the opposite. Small and growing businesses are where a few days of automation work pays back fastest, because nobody has had time to build proper systems yet. If you or your team are spending hours a week in spreadsheets, that's exactly the problem I solve — those hours aren't coming back on their own, and fixing it is cheaper than the headcount you'd otherwise add.</div>
       </details>
       <details class="sheet rv">
         <summary>Who is behind Cheltenham Data?</summary>
@@ -1523,11 +1499,7 @@ body{line-height:1.56}
       </details>
       <details class="sheet rv">
         <summary>How do you handle sensitive or regulated data?</summary>
-        <div class="ans">I've handled regulated financial customer data daily, including DSAR requests, anonymisation and erasure, and contributed to FCA and Cyber Essentials audits. I'll work inside your existing controls, sign an NDA or DPA, and keep data in your environment. See the AI policy above for specifics on AI tooling.</div>
-      </details>
-      <details class="sheet rv">
-        <summary>Do you use AI on client work?</summary>
-        <div class="ans">Yes, and I disclose exactly how — the full policy is in the section above. In short: AI helps me write and refactor code, draft documentation and explore approaches faster. Your data doesn't go into public AI tools, nothing generated is handed over unreviewed, and every figure in a report traces back to a source you can audit.</div>
+        <div class="ans">I've handled regulated financial customer data daily, including DSAR requests, anonymisation and erasure, and contributed to FCA and Cyber Essentials audits. I'll work inside your existing controls, sign an NDA or DPA, and keep data in your environment.</div>
       </details>
       <details class="sheet rv">
         <summary>What happens on the first call?</summary>
@@ -1541,7 +1513,7 @@ body{line-height:1.56}
 <section id="notes">
   <div class="wrap">
     <div class="sec-hd rv">
-      <div class="sec-no">10<br>NOTES</div>
+      <div class="sec-no">09<br>NOTES</div>
       <div>
         <h2>Notes on data, automation and AI</h2>
         <p class="lede">Occasional write-ups where I do the analysis myself rather than repeat someone else's statistic. Every figure comes from data you can download and check.</p>
@@ -1563,7 +1535,10 @@ body{line-height:1.56}
       </div>
     </a>
 
-    <a class="sheet note-card rv" href="/blog/ai-hallucination-rates-2024-vs-2026/">
+    <details class="fold">
+      <summary>Also: AI hallucination rates went up, not down</summary>
+      <div class="fold-body">
+    <a class="sheet note-card" href="/blog/ai-hallucination-rates-2024-vs-2026/">
       <div class="note-when">2 August 2026<br>Analysis</div>
       <div>
         <h3>AI hallucination rates went up, not down</h3>
@@ -1579,6 +1554,9 @@ body{line-height:1.56}
       </div>
     </a>
 
+      </div>
+    </details>
+
     <p class="note-more rv"><a href="/blog/" class="ul">All notes</a></p>
   </div>
 </section>
@@ -1588,11 +1566,16 @@ body{line-height:1.56}
   <div class="wrap">
     <div class="sheet rv">
       <h2>Let's find the hours your business is <em>losing.</em></h2>
-      <p>Tell me about the process that's driving you mad. If I can fix it, I'll tell you how. If I can't, I'll tell you that too.</p>
+      <p>Tell me about the job that keeps you at the laptop after everyone else has gone home. If I can automate it, I'll tell you how, and what those hours are worth. If I can't, I'll tell you that too.</p>
       <div class="cbtns">
-        <a class="btn solid" href="mailto:szymonpecherski@gmail.com?subject=Project%20enquiry&amp;body=Hi%20Szymon%2C%0A%0AHere's%20the%20process%20I'd%20like%20help%20with%3A%0A%0A">
+        <a class="btn solid big" href="https://calendly.com/cheltenhamdata-info/30min" target="_blank" rel="noopener">Get your evenings back.
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 6l6 6-6 6"/></svg></a>
+      </div>
+      <p class="cor">Or just email me &mdash; whichever you prefer.</p>
+      <div class="cbtns">
+        <a class="btn line" href="mailto:info@cheltenhamdata.co.uk?subject=Project%20enquiry&amp;body=Hi%20Szymon%2C%0A%0AHere's%20the%20process%20I'd%20like%20help%20with%3A%0A%0A">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3.2 6.2 8.8 6.4 8.8-6.4"/></svg>
-          szymonpecherski@gmail.com
+          info@cheltenhamdata.co.uk
         </a>
         <a class="btn line" href="https://www.linkedin.com/in/szy05/" target="_blank" rel="me noopener noreferrer">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0M.25 8.25h4.5V24h-4.5zM8.5 8.25h4.31v2.15h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.4 3 5.4 6.9V24h-4.5v-7.9c0-1.88-.03-4.3-2.62-4.3-2.62 0-3.02 2.05-3.02 4.16V24H8.5z"/></svg>
@@ -1613,17 +1596,16 @@ body{line-height:1.56}
       <div class="brand" style="padding-bottom:0">Cheltenham Data<i>.</i><small>Szymon Pecherski</small></div>
       <div class="f-links">
         <a href="#services">Services</a><a href="#work">Work</a><a href="#experience">Experience</a>
-        <a href="#ai">AI policy</a><a href="#areas">Areas</a><a href="#faq">FAQ</a><a href="/blog/">Notes</a>
-        <a href="mailto:szymonpecherski@gmail.com">Email</a>
+        <a href="#areas">Areas</a><a href="#faq">FAQ</a><a href="/blog/">Notes</a>
+        <a href="mailto:info@cheltenhamdata.co.uk">Email</a>
         <a href="https://www.linkedin.com/in/szy05/" target="_blank" rel="me noopener noreferrer">LinkedIn</a>
       </div>
     </div>
     <p class="f-note">
       © <span id="yr">2026</span> Cheltenham Data — the data analysis and business intelligence practice of
       Szymon Pecherski, Cheltenham, Gloucestershire. Business intelligence, reporting, process automation
-      and AI workflow consulting for small and growing businesses across Gloucestershire, the Cotswolds,
-      Bristol, Bath and the UK. I use AI tools in my workflow and review every deliverable personally; the
-      full policy is <a href="#ai" class="ul">here</a>.
+      and automation consulting for small and growing businesses across Gloucestershire, the Cotswolds,
+      Bristol, Bath and the UK.
       Last updated <time datetime="2026-08-18">18 August 2026</time>.
     </p>
   </div>
@@ -1719,20 +1701,6 @@ body{line-height:1.56}
     });
   }
 
-  /* --- the steel rule travels with the page and reads off the distance --- */
-  var read = document.getElementById('read'), ticking = false;
-  function onScroll(){
-    if(ticking) return;
-    ticking = true;
-    requestAnimationFrame(function(){
-      var y = window.scrollY || 0;
-      root.style.setProperty('--travel', (-y % 60) + 'px');
-      read.textContent = String(Math.round(y)).padStart(4, '0') + ' mm';
-      ticking = false;
-    });
-  }
-  window.addEventListener('scroll', onScroll, {passive:true});
-  onScroll();
 
   /* --- the evidence board: one claim per tab, wired to the facts behind it.
          All four states live in the markup, so nothing here is the only copy
