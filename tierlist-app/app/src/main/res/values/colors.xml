@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="night">#FF2B2340</color>
+    <color name="dusk">#FF3F3760</color>
+    <color name="sun">#FFFFD23F</color>
+    <color name="icon_bg">#FF6E6390</color>
+</resources>

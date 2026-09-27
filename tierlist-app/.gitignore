@@ -1,0 +1,9 @@
+# build.sh output (Rately.apk itself is committed)
+build/
+*.idsig
+
+# Android Studio / Gradle
+.gradle/
+.idea/
+local.properties
+app/build/

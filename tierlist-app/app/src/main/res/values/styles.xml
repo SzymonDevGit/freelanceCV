@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Rately" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/dusk</item>
+        <item name="android:statusBarColor">@color/night</item>
+        <item name="android:navigationBarColor">@color/night</item>
+        <item name="android:colorAccent">@color/sun</item>
+        <item name="android:colorPrimary">@color/dusk</item>
+        <item name="android:colorPrimaryDark">@color/night</item>
+    </style>
+</resources>

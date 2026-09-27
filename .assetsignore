@@ -15,5 +15,8 @@
 /.assetsignore
 /wrangler.jsonc
 
+# The Rately Android app: source, signing key and APK. Lives in GitHub only.
+/tierlist-app/
+
 # Kept deliberately: robots.txt, sitemap.xml, _headers, the domain
 # verification .txt, and /design/ (noindex mockups, but linked for review).
