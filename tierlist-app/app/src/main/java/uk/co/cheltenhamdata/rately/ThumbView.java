@@ -7,20 +7,31 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.widget.ImageView;
 
-/** A square picture with rounded corners and an ink outline. */
-final class ThumbView extends ImageView {
+/** A square picture with rounded corners, an ink outline and, optionally, its caption. */
+class ThumbView extends ImageView {
 
     private final Path clip = new Path();
     private final RectF rect = new RectF();
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint captionPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final float radius;
     private final float stroke;
+    private Caption caption;
 
     ThumbView(Context c, float radiusPx, float strokePx) {
         super(c);
         radius = radiusPx;
         stroke = strokePx;
         setScaleType(ScaleType.CENTER_CROP);
+    }
+
+    void setCaption(Caption c) {
+        caption = c;
+        invalidate();
+    }
+
+    Caption getCaption() {
+        return caption;
     }
 
     @Override protected void onSizeChanged(int w, int h, int ow, int oh) {
@@ -37,6 +48,9 @@ final class ThumbView extends ImageView {
         c.save();
         c.clipPath(clip);
         super.onDraw(c);
+        if (caption != null) {
+            caption.draw(c, captionPaint, Toon.bold(getContext()), 0, 0, Math.min(getWidth(), getHeight()));
+        }
         c.restore();
         if (stroke > 0) {
             paint.setStyle(Paint.Style.STROKE);

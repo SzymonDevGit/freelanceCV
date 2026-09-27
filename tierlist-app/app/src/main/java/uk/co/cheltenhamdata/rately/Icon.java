@@ -24,6 +24,7 @@ final class Icon extends Drawable {
     static final int EDIT = 9;
     static final int UP = 10;
     static final int DOWN = 11;
+    static final int TEXT = 12;
 
     private final int type;
     private final int size;
@@ -53,6 +54,11 @@ final class Icon extends Drawable {
                 break;
             case DOWN:
                 p.moveTo(5, 9); p.lineTo(12, 16); p.lineTo(19, 9);
+                break;
+            case TEXT:
+                p.moveTo(5.5f, 7.5f); p.lineTo(5.5f, 5.5f); p.lineTo(18.5f, 5.5f); p.lineTo(18.5f, 7.5f);
+                p.moveTo(12, 5.5f); p.lineTo(12, 18.5f);
+                p.moveTo(9.5f, 18.5f); p.lineTo(14.5f, 18.5f);
                 break;
             case CLOSE:
                 p.moveTo(6, 6); p.lineTo(18, 18); p.moveTo(18, 6); p.lineTo(6, 18);

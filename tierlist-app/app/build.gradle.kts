@@ -10,8 +10,8 @@ android {
         applicationId = "uk.co.cheltenhamdata.rately"
         minSdk = 23
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
     }
 
     // Same key as build.sh, so either build can update an installed copy without

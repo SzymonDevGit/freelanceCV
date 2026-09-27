@@ -32,6 +32,7 @@ public class BoardActivity extends Activity {
     static final String EXTRA_ID = "list";
     private static final int REQ_PICK = 1;
     private static final int REQ_CROP = 2;
+    private static final int REQ_CAPTION = 3;
     /** MediaStore.ACTION_PICK_IMAGES and its extra, API 33; the app compiles against 23. */
     private static final String ACTION_PICK_IMAGES = "android.provider.action.PICK_IMAGES";
     private static final String EXTRA_PICK_IMAGES_MAX = "android.provider.extra.PICK_IMAGES_MAX";
@@ -316,6 +317,7 @@ public class BoardActivity extends Activity {
     private View thumbFor(final TierList.Item it, int size) {
         final ThumbView v = new ThumbView(this, dp(10), dp(2.5f));
         Thumbs.into(v, Store.image(this, it.image), size);
+        v.setCaption(it.caption);
         v.setClickable(true);
         Toon.pressSquish(v);
         v.setOnClickListener(new View.OnClickListener() {
@@ -357,6 +359,7 @@ public class BoardActivity extends Activity {
         int side = Math.min(dialogW - dp(46), (int) (getResources().getDisplayMetrics().heightPixels * 0.42f));
         ThumbView big = new ThumbView(this, dp(16), dp(3));
         Thumbs.into(big, Store.image(this, it.image), side);
+        big.setCaption(it.caption);
         LinearLayout.LayoutParams bigLp = Toon.lp(side, side);
         bigLp.gravity = Gravity.CENTER_HORIZONTAL;
         box.addView(big, bigLp);
@@ -387,6 +390,16 @@ public class BoardActivity extends Activity {
         }
         box.addView(tiers, Toon.lp(-1, -2));
 
+        TextView text = Toon.button(this, "", Toon.LILAC);
+        Toon.withIcon(this, text, Icon.TEXT, it.caption == null ? "Add text" : "Edit text");
+        text.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                d.dismiss();
+                editCaption(it);
+            }
+        });
+        box.addView(text, Toon.margins(Toon.lp(-1, -2), 0, dp(16), 0, 0));
+
         LinearLayout actions = Toon.row(this);
         TextView unrate = Toon.button(this, "To rate", Toon.LILAC);
         unrate.setEnabled(current != null);
@@ -410,8 +423,16 @@ public class BoardActivity extends Activity {
             }
         });
         actions.addView(delete, Toon.lp(0, -2, 1));
-        box.addView(actions, Toon.margins(Toon.lp(-1, -2), 0, dp(16), 0, 0));
+        box.addView(actions, Toon.margins(Toon.lp(-1, -2), 0, dp(10), 0, 0));
         Toon.show(this, d);
+    }
+
+    private void editCaption(TierList.Item it) {
+        Intent i = new Intent(this, CaptionActivity.class)
+                .putExtra(CaptionActivity.EXTRA_IMAGE, Store.image(this, it.image).getAbsolutePath())
+                .putExtra(CaptionActivity.EXTRA_ITEM, it.id);
+        if (it.caption != null) i.putExtra(CaptionActivity.EXTRA_CAPTION, it.caption.toJsonString());
+        startActivityForResult(i, REQ_CAPTION);
     }
 
     private void rename() {
@@ -529,6 +550,12 @@ public class BoardActivity extends Activity {
             startActivityForResult(crop, REQ_CROP);
         } else if (req == REQ_CROP) {
             if (data.getIntExtra(CropActivity.RESULT_ADDED, 0) > 0) rate();
+        } else if (req == REQ_CAPTION) {
+            TierList.Item it = list.findItem(data.getStringExtra(CaptionActivity.EXTRA_ITEM));
+            if (it == null) return;
+            it.caption = Caption.fromJson(data.getStringExtra(CaptionActivity.EXTRA_CAPTION));
+            Store.save(this, list);
+            render();
         }
     }
 }

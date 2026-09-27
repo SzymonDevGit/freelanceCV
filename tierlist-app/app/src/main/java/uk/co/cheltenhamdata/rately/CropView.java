@@ -29,12 +29,14 @@ final class CropView extends View {
     private final Path shade = new Path();
     private final Paint bmpPaint = new Paint(Paint.FILTER_BITMAP_FLAG | Paint.ANTI_ALIAS_FLAG);
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint captionPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final ScaleGestureDetector scaler;
     private final GestureDetector gestures;
     private final float radius;
     private float minScale = 1;
     private boolean touching;
     private String message = "Loading…";
+    private Caption caption;
 
     CropView(Context c) {
         super(c);
@@ -89,6 +91,12 @@ final class CropView extends View {
 
     Bitmap getBitmap() {
         return bitmap;
+    }
+
+    /** Text shown over the framed square; it stays put while the photo moves. */
+    void setCaption(Caption c) {
+        caption = c;
+        invalidate();
     }
 
     void setMessage(String m) {
@@ -178,6 +186,10 @@ final class CropView extends View {
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(0xB8231C36);
         c.drawPath(shade, paint);
+
+        if (caption != null && bitmap != null) {
+            caption.draw(c, captionPaint, Toon.bold(getContext()), frame.left, frame.top, frame.width());
+        }
 
         if (touching && bitmap != null) {
             paint.setStyle(Paint.Style.STROKE);

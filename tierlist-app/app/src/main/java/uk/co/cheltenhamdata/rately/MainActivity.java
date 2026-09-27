@@ -149,6 +149,7 @@ public class MainActivity extends Activity {
             for (int i = 0; i < shown; i++) {
                 ThumbView t = new ThumbView(this, dp(9), dp(2.5f));
                 Thumbs.into(t, Store.image(this, items.get(i).image), size);
+                t.setCaption(items.get(i).caption);
                 strip.addView(t, Toon.margins(Toon.lp(size, size), 0, 0, dp(7), 0));
             }
             if (items.size() > shown) {

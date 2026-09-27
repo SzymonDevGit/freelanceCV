@@ -219,6 +219,7 @@ public class RateActivity extends Activity {
             return;
         }
         Thumbs.into(photo, Store.image(this, list.queue.get(0).image), photoPx);
+        photo.setCaption(list.queue.get(0).caption);
         for (int i = 1; i < Math.min(3, list.queue.size()); i++) {
             Thumbs.prefetch(Store.image(this, list.queue.get(i).image), photoPx);
         }
@@ -267,6 +268,7 @@ public class RateActivity extends Activity {
         if (d == null) return;
         final ThumbView ghost = new ThumbView(this, dp(16), dp(3));
         ghost.setImageDrawable(d.getConstantState() != null ? d.getConstantState().newDrawable() : d);
+        ghost.setCaption(photo.getCaption());
         int[] rootAt = new int[2];
         int[] photoAt = new int[2];
         int[] targetAt = new int[2];

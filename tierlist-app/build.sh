@@ -13,8 +13,8 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 APP_ID="uk.co.cheltenhamdata.rately"
-VERSION_CODE="${VERSION_CODE:-1}"
-VERSION_NAME="${VERSION_NAME:-1.0}"
+VERSION_CODE="${VERSION_CODE:-2}"
+VERSION_NAME="${VERSION_NAME:-1.1}"
 MIN_SDK=23
 TARGET_SDK=34
 

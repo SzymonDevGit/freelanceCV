@@ -26,6 +26,8 @@ final class TierList {
         String id;
         /** File name inside Store.imagesDir(). */
         String image;
+        /** Text over the picture, or null. */
+        Caption caption;
     }
 
     private static final String[] DEFAULT_LABELS = {"S", "A", "B", "C", "D", "F"};
@@ -190,6 +192,7 @@ final class TierList {
             JSONObject io = new JSONObject();
             io.put("id", it.id);
             io.put("img", it.image);
+            if (it.caption != null && !it.caption.isEmpty()) io.put("cap", it.caption.toJson());
             a.put(io);
         }
         return a;
@@ -221,6 +224,7 @@ final class TierList {
             Item it = new Item();
             it.id = io.getString("id");
             it.image = io.getString("img");
+            it.caption = Caption.fromJson(io.optJSONObject("cap"));
             into.add(it);
         }
     }

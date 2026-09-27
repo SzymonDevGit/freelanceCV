@@ -19,6 +19,9 @@ cheltenhamdata.co.uk.
 It needs Android 6.0 or newer and asks for no permissions. Photos come in
 through the system photo picker.
 
+To update, install the new `Rately.apk` over the old one. Your tier lists are
+kept.
+
 ## Using it
 
 - **Home** lists every tier list, most recently changed first. Tap **New tier
@@ -29,14 +32,20 @@ through the system photo picker.
   - **Rate** starts quick rating.
   - Long-press a picture and drag it to another row, to a position within a
     row, or back to the dock.
-  - Tap a picture to move it with one tap, send it back to the to-rate pile,
-    or delete it.
+  - Tap a picture to move it with one tap, add or edit its text, send it back
+    to the to-rate pile, or delete it.
   - The pencil button edits tiers: rename, recolour, reorder, add or remove
     them. Removing a tier sends its pictures back to the to-rate pile.
   - The ⋯ menu can rename the list, re-rate everything or delete the list.
 - **Crop** shows each new photo under a square frame. Pinch to zoom, drag to
-  move and double-tap to reset. **Use this + auto-crop N more** keeps your
-  current crop and centre-crops the rest, for when you're in a hurry.
+  move and double-tap to reset. **Add text** puts a caption on the photo.
+  **Use this + auto-crop N more** keeps your current crop and centre-crops the
+  rest, for when you're in a hurry.
+- **Text on pictures**: type up to three lines, drag the text anywhere on the
+  picture, and pick Small, Medium or Large and one of eight colours. It uses
+  the same outlined cartoon lettering as the rest of the app. The text is
+  stored separately from the photo, so you can edit or remove it any time
+  from the board. It shows everywhere the picture does, scaled with it.
 - **Quick rate** shows one big card at a time. Tap a tier and the card flies
   into it while the next one pops up. **Undo** steps back through the ratings
   and **Skip** sends a card to the back of the pile.
@@ -89,6 +98,7 @@ app/src/main/
     BoardActivity   tier rows, drag and drop, the to-rate dock, the photo picker
     RateActivity    quick rating
     CropActivity    the crop flow; CropView is the pinch-and-drag square cropper
+    CaptionActivity the text editor; Caption stores and draws the text
     TierEditor      the edit-tiers dialog
     TierList, Store the data model and JSON persistence
     Images, Thumbs  decoding, EXIF rotation, saving, and the cached thumbnail loader
