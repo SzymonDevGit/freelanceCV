@@ -82,7 +82,10 @@
         "https://www.linkedin.com/in/szy05/",
         "https://github.com/SzymonDevGit"
       ],
-      "review": { "@id": "https://cheltenhamdata.co.uk/#review-besnard" },
+      "review": [
+        { "@id": "https://cheltenhamdata.co.uk/#review-besnard" },
+        { "@id": "https://cheltenhamdata.co.uk/#review-hancy" }
+      ],
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "sales",
@@ -188,6 +191,20 @@
         "worksFor": { "@type": "Organization", "name": "LAVOIR" }
       },
       "reviewBody": "I'd highly recommend Szymon. Numbers and spreadsheets definitely don't come naturally to me, but he has a real talent for taking something that feels complicated and turning it into something clear, simple and genuinely useful. He recently created a financial spreadsheet for me and completely cracked what I needed. It's well thought out, easy to understand and has made a huge difference to how I can actually see and manage the numbers behind the business. Szymon is also incredibly friendly, approachable and clearly very good at what he does. It's great to see a young local entrepreneur building something for himself and just getting on with it. A pleasure to work with, and someone I'd happily recommend."
+    },
+    {
+      "@type": "Review",
+      "@id": "https://cheltenhamdata.co.uk/#review-hancy",
+      "itemReviewed": { "@id": "https://cheltenhamdata.co.uk/#business" },
+      "datePublished": "2026-10-26",
+      "inLanguage": "en-GB",
+      "author": {
+        "@type": "Person",
+        "name": "Joshua Hancy",
+        "jobTitle": "Founder",
+        "worksFor": { "@type": "Organization", "name": "Hancy Media" }
+      },
+      "reviewBody": "Szymon helped me build my website for Hancy Media, and I'm really pleased with how it turned out. He was great to work with throughout the process, always quick to respond, happy to answer questions and willing to offer advice whenever I needed it. I particularly appreciated that he took the time to explain things and help me understand how to manage the website myself going forward. Really happy with the final result and would definitely recommend Szymon to anyone looking to get a website built. Thanks again for all your help!"
     },
     {
       "@type": "WebSite",
@@ -626,6 +643,8 @@ section{padding:clamp(44px,5.2vw,68px) 0;position:relative}
    banner file is missing or slow the strip still reads as LAVOIR's letterhead
    rather than collapsing to a broken image. Swap --lv-banner to ship it. */
 .said .sheet{max-width:820px;margin:0 auto;rotate:-1.1deg;box-shadow:var(--shadow-l)}
+/* a second letter pinned below the first, leaning the other way */
+.said .sheet + .sheet{margin-top:56px;rotate:.9deg}
 .said .head{position:relative;aspect-ratio:1128/191;overflow:hidden;
   border-bottom:1px solid var(--line);border-radius:2px 2px 0 0;
   background:var(--lv-banner,none) center/cover no-repeat,
@@ -636,6 +655,10 @@ section{padding:clamp(44px,5.2vw,68px) 0;position:relative}
   letter-spacing:.42em;text-indent:.42em;color:#4a4034}
 .said .lvs{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;
   text-transform:uppercase;color:#7b6f5e}
+/* Hancy Media's masthead: same recipe, cooler paper */
+.said .hm .head{background:linear-gradient(120deg,#e6e9ee,#d7dce4 55%,#c9d0da)}
+.said .hm .lv{color:#2f3a4a}
+.said .hm .lvs{color:#5d6878}
 /* two tape tabs, same recipe as the figure cards above */
 .said .tape{position:absolute;width:104px;height:27px;background:var(--tape);
   border-left:1px solid var(--tape-edge);border-right:1px solid var(--tape-edge);
@@ -665,6 +688,7 @@ section{padding:clamp(44px,5.2vw,68px) 0;position:relative}
 }
 @media (max-width:700px){
   .said .sheet{rotate:-.7deg}
+  .said .sheet + .sheet{margin-top:40px;rotate:.6deg}
   .said .lv{font-size:20px}
   .said .lvs{font-size:7.5px;letter-spacing:.13em}
   .said .body{padding:26px 24px 24px}
@@ -1077,10 +1101,10 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:34px 0
     <div class="sec-hd rv">
       <div class="sec-no">01<br>CLIENT</div>
       <div>
-        <h2>One client, in his own words.</h2>
+        <h2>Two clients, in their own words.</h2>
         <p class="lede">Alexander Besnard runs LAVOIR, a home-care brand made in Cheltenham. I built
-          the financial side of it. This is the recommendation he wrote afterwards, in full and
-          unedited.</p>
+          the financial side of it. Joshua Hancy founded Hancy Media, and I built his website.
+          These are the recommendations they wrote afterwards.</p>
       </div>
     </div>
 
@@ -1107,6 +1131,34 @@ footer{border-top:1px dashed var(--line-2);background:var(--deep);padding:34px 0
         <div class="sig">
           <div><b>Alexander Besnard</b><i>Founder, LAVOIR</i></div>
           <div class="meta">Client &middot; Cheltenham<br><time datetime="2026-09-21">21 September 2026</time></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="sheet hm rv">
+      <span class="tape l" aria-hidden="true"></span>
+      <span class="tape r" aria-hidden="true"></span>
+      <div class="head">
+        <div class="head-in">
+          <div class="lv">HANCY MEDIA</div>
+          <div class="lvs">Business development &middot; Partnerships &middot; Marketing</div>
+        </div>
+      </div>
+      <div class="body">
+        <span class="mark">Client recommendation</span>
+        <blockquote>
+          <p>&ldquo;Szymon helped me build my website for Hancy Media, and I&rsquo;m really pleased
+            with how it turned out.&rdquo;</p>
+          <p>&ldquo;He was great to work with throughout the process, always quick to respond, happy
+            to answer questions and willing to offer advice whenever I needed it. I particularly
+            appreciated that he took the time to explain things and help me understand how to manage
+            the website myself going forward.&rdquo;</p>
+          <p>&ldquo;Really happy with the final result and would definitely recommend Szymon to anyone
+            looking to get a website built.&rdquo;</p>
+        </blockquote>
+        <div class="sig">
+          <div><b>Joshua Hancy</b><i>Founder, Hancy Media</i></div>
+          <div class="meta">Client &middot; Website build<br><time datetime="2026-10-26">26 October 2026</time></div>
         </div>
       </div>
     </article>
